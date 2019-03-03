@@ -1,0 +1,3 @@
+django-environ
+pytest==4.3.0
+pytest-django
