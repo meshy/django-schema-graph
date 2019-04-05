@@ -6,7 +6,16 @@ from django.test import TestCase
 class TestGetSchema(TestCase):
     @classmethod
     def setUpTestData(self):
-        self.nodes, self.edges = get_schema()
+        (
+            self.nodes,
+            self.fk,
+            self.o2o,
+            self.m2m,
+            self.implicit_fk,
+            self.implicit_o2o,
+            self.implicit_m2m,
+            self.is_a,
+        ) = get_schema()
 
     def test_nodes(self):
         expected = [

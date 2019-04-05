@@ -7,4 +7,14 @@ def get_schema():
     for app in applications:
         for model in app.get_models():
             nodes.append((app.name, model.__name__))
-    return sorted(nodes), []
+
+    return (
+        sorted(nodes),
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+    )
