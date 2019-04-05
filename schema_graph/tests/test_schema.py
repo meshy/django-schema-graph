@@ -4,11 +4,25 @@ from django.test import TestCase
 
 
 class TestGetSchema(TestCase):
-    def setUp(self):
+    @classmethod
+    def setUpTestData(self):
         self.nodes, self.edges = get_schema()
 
     def test_nodes(self):
-        self.fail()
+        expected = [
+            ('django.contrib.auth', 'Group'),
+            ('django.contrib.auth', 'Permission'),
+            ('django.contrib.auth', 'User'),
+            ('django.contrib.contenttypes', 'ContentType'),
+            ('django.contrib.sessions', 'Session'),
+            ('django.contrib.sites', 'Site'),
+            ('schema_graph.tests', 'NoOutgoingConnections'),
+            ('schema_graph.tests', 'OutgoingForeignKey'),
+            ('schema_graph.tests', 'OutgoingManyToMany'),
+            ('schema_graph.tests', 'OutgoingOneToOne'),
+            ('schema_graph.tests', 'SelfReference'),
+        ]
+        self.assertEqual(self.nodes, expected)
 
     def test_foreign_key(self):
         self.fail()
