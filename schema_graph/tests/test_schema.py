@@ -34,7 +34,21 @@ class TestGetSchema(TestCase):
         self.assertEqual(self.nodes, expected)
 
     def test_foreign_key(self):
-        self.fail()
+        expected = [
+            (
+                ('django.contrib.auth', 'Permission'),
+                ('django.contrib.contenttypes', 'ContentType'),
+            ),
+            (
+                ('schema_graph.tests', 'OutgoingForeignKey'),
+                ('schema_graph.tests', 'NoOutgoingConnections'),
+            ),
+            (
+                ('schema_graph.tests', 'SelfReference'),
+                ('schema_graph.tests', 'SelfReference'),
+            ),
+        ]
+        self.assertEqual(self.fk, expected)
 
     def test_one_to_one(self):
         self.fail()
