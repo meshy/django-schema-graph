@@ -25,6 +25,7 @@ class TestGetSchema(TestCase):
             ('django.contrib.contenttypes', 'ContentType'),
             ('django.contrib.sessions', 'Session'),
             ('django.contrib.sites', 'Site'),
+            ('schema_graph.tests', 'AnotherOneToOne'),
             ('schema_graph.tests', 'NoOutgoingConnections'),
             ('schema_graph.tests', 'OutgoingForeignKey'),
             ('schema_graph.tests', 'OutgoingManyToMany'),
@@ -51,7 +52,17 @@ class TestGetSchema(TestCase):
         self.assertEqual(self.fk, expected)
 
     def test_one_to_one(self):
-        self.fail()
+        expected = [
+            (
+                ('schema_graph.tests', 'AnotherOneToOne'),
+                ('schema_graph.tests', 'NoOutgoingConnections'),
+            ),
+            (
+                ('schema_graph.tests', 'OutgoingOneToOne'),
+                ('schema_graph.tests', 'NoOutgoingConnections'),
+            ),
+        ]
+        self.assertEqual(self.o2o, expected)
 
     def test_many_to_many(self):
         self.fail()

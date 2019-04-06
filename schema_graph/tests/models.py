@@ -17,5 +17,9 @@ class OutgoingOneToOne(models.Model):
     connected = models.OneToOneField('NoOutgoingConnections', on_delete=models.CASCADE)
 
 
+class AnotherOneToOne(models.Model):
+    connected = models.OneToOneField('NoOutgoingConnections', on_delete=models.CASCADE)
+
+
 class SelfReference(models.Model):
     parent = models.ForeignKey('self', on_delete=models.CASCADE)

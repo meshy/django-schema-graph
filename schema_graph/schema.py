@@ -4,6 +4,8 @@ from django.apps import apps
 def get_schema():
     nodes = []
     foreign_keys = []
+    one_to_one = []
+
     for app in apps.get_app_configs():
         for model in app.get_models():
             model_id = (app.name, model.__name__)
@@ -17,11 +19,13 @@ def get_schema():
                 relationship = (model_id, related_model_id)
                 if field.many_to_one:
                     foreign_keys.append(relationship)
+                elif field.one_to_one and not field.auto_created:
+                    one_to_one.append(relationship)
 
     return (
         sorted(nodes),
         sorted(foreign_keys),
-        [],
+        sorted(one_to_one),
         [],
         [],
         [],
