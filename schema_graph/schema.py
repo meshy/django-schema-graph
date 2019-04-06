@@ -14,8 +14,9 @@ def get_schema():
                 related_model = field.related_model
                 related_app = apps.get_app_config(related_model._meta.app_label)
                 related_model_id = (related_app.name, related_model.__name__)
+                relationship = (model_id, related_model_id)
                 if field.many_to_one:
-                    foreign_keys.append((model_id, related_model_id))
+                    foreign_keys.append(relationship)
 
     return (
         sorted(nodes),
