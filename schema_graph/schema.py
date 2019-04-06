@@ -5,6 +5,7 @@ def get_schema():
     nodes = []
     foreign_keys = []
     one_to_one = []
+    many_to_many = []
 
     for app in apps.get_app_configs():
         for model in app.get_models():
@@ -21,12 +22,14 @@ def get_schema():
                     foreign_keys.append(relationship)
                 elif field.one_to_one and not field.auto_created:
                     one_to_one.append(relationship)
+                elif field.many_to_many and not field.auto_created:
+                    many_to_many.append(relationship)
 
     return (
         sorted(nodes),
         sorted(foreign_keys),
         sorted(one_to_one),
-        [],
+        sorted(many_to_many),
         [],
         [],
         [],

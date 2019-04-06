@@ -65,7 +65,25 @@ class TestGetSchema(TestCase):
         self.assertEqual(self.o2o, expected)
 
     def test_many_to_many(self):
-        self.fail()
+        expected = [
+            (
+                ('django.contrib.auth', 'Group'),
+                ('django.contrib.auth', 'Permission'),
+            ),
+            (
+                ('django.contrib.auth', 'User'),
+                ('django.contrib.auth', 'Group'),
+            ),
+            (
+                ('django.contrib.auth', 'User'),
+                ('django.contrib.auth', 'Permission'),
+            ),
+            (
+                ('schema_graph.tests', 'OutgoingManyToMany'),
+                ('schema_graph.tests', 'NoOutgoingConnections'),
+            ),
+        ]
+        self.assertEqual(self.m2m, expected)
 
     def test_implicit_foreign_key(self):
         self.fail()
