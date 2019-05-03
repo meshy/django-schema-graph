@@ -19,34 +19,34 @@ class TestGetSchema(TestCase):
 
     def test_nodes(self):
         expected = [
-            ('django.contrib.auth', 'Group'),
-            ('django.contrib.auth', 'Permission'),
-            ('django.contrib.auth', 'User'),
-            ('django.contrib.contenttypes', 'ContentType'),
-            ('django.contrib.sessions', 'Session'),
-            ('django.contrib.sites', 'Site'),
-            ('schema_graph.tests', 'AnotherOneToOne'),
-            ('schema_graph.tests', 'NoOutgoingConnections'),
-            ('schema_graph.tests', 'OutgoingForeignKey'),
-            ('schema_graph.tests', 'OutgoingManyToMany'),
-            ('schema_graph.tests', 'OutgoingOneToOne'),
-            ('schema_graph.tests', 'SelfReference'),
+            ("django.contrib.auth", "Group"),
+            ("django.contrib.auth", "Permission"),
+            ("django.contrib.auth", "User"),
+            ("django.contrib.contenttypes", "ContentType"),
+            ("django.contrib.sessions", "Session"),
+            ("django.contrib.sites", "Site"),
+            ("schema_graph.tests", "AnotherOneToOne"),
+            ("schema_graph.tests", "NoOutgoingConnections"),
+            ("schema_graph.tests", "OutgoingForeignKey"),
+            ("schema_graph.tests", "OutgoingManyToMany"),
+            ("schema_graph.tests", "OutgoingOneToOne"),
+            ("schema_graph.tests", "SelfReference"),
         ]
         self.assertEqual(self.nodes, expected)
 
     def test_foreign_key(self):
         expected = [
             (
-                ('django.contrib.auth', 'Permission'),
-                ('django.contrib.contenttypes', 'ContentType'),
+                ("django.contrib.auth", "Permission"),
+                ("django.contrib.contenttypes", "ContentType"),
             ),
             (
-                ('schema_graph.tests', 'OutgoingForeignKey'),
-                ('schema_graph.tests', 'NoOutgoingConnections'),
+                ("schema_graph.tests", "OutgoingForeignKey"),
+                ("schema_graph.tests", "NoOutgoingConnections"),
             ),
             (
-                ('schema_graph.tests', 'SelfReference'),
-                ('schema_graph.tests', 'SelfReference'),
+                ("schema_graph.tests", "SelfReference"),
+                ("schema_graph.tests", "SelfReference"),
             ),
         ]
         self.assertEqual(self.fk, expected)
@@ -54,33 +54,24 @@ class TestGetSchema(TestCase):
     def test_one_to_one(self):
         expected = [
             (
-                ('schema_graph.tests', 'AnotherOneToOne'),
-                ('schema_graph.tests', 'NoOutgoingConnections'),
+                ("schema_graph.tests", "AnotherOneToOne"),
+                ("schema_graph.tests", "NoOutgoingConnections"),
             ),
             (
-                ('schema_graph.tests', 'OutgoingOneToOne'),
-                ('schema_graph.tests', 'NoOutgoingConnections'),
+                ("schema_graph.tests", "OutgoingOneToOne"),
+                ("schema_graph.tests", "NoOutgoingConnections"),
             ),
         ]
         self.assertEqual(self.o2o, expected)
 
     def test_many_to_many(self):
         expected = [
+            (("django.contrib.auth", "Group"), ("django.contrib.auth", "Permission")),
+            (("django.contrib.auth", "User"), ("django.contrib.auth", "Group")),
+            (("django.contrib.auth", "User"), ("django.contrib.auth", "Permission")),
             (
-                ('django.contrib.auth', 'Group'),
-                ('django.contrib.auth', 'Permission'),
-            ),
-            (
-                ('django.contrib.auth', 'User'),
-                ('django.contrib.auth', 'Group'),
-            ),
-            (
-                ('django.contrib.auth', 'User'),
-                ('django.contrib.auth', 'Permission'),
-            ),
-            (
-                ('schema_graph.tests', 'OutgoingManyToMany'),
-                ('schema_graph.tests', 'NoOutgoingConnections'),
+                ("schema_graph.tests", "OutgoingManyToMany"),
+                ("schema_graph.tests", "NoOutgoingConnections"),
             ),
         ]
         self.assertEqual(self.m2m, expected)
