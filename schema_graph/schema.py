@@ -14,6 +14,36 @@ def get_model_id(model, app=None):
     return (app.name, model.__name__)
 
 
+def get_field_relationships(model):
+    foreign_keys = []
+    one_to_one = []
+    many_to_many = []
+
+    model_id = get_model_id(model)
+
+    for field in model._meta.get_fields():
+        # Ignore non-relation fields
+        if not field.is_relation:
+            continue
+        # Skip fields defined on superclasses
+        if field.model != model:
+            continue
+        related_model = field.related_model
+        related_model_id = get_model_id(related_model)
+        relationship = (model_id, related_model_id)
+        # Foreign key
+        if field.many_to_one:
+            foreign_keys.append(relationship)
+        # One-to-one
+        elif field.one_to_one and not field.auto_created:
+            one_to_one.append(relationship)
+        # Many-to-many
+        elif field.many_to_many and not field.auto_created:
+            many_to_many.append(relationship)
+
+    return foreign_keys, one_to_one, many_to_many
+
+
 def get_schema():
     nodes = []
     foreign_keys = []
@@ -32,24 +62,11 @@ def get_schema():
                 relationship = model_id, parent_model_id
                 inheritance.append(relationship)
 
-        for field in model._meta.get_fields():
-            if not field.is_relation:
-                continue
-            # Skip fields defined on superclasses
-            if field.model != model:
-                continue
-            related_model = field.related_model
-            related_model_id = get_model_id(related_model)
-            relationship = (model_id, related_model_id)
-            # Foreign key
-            if field.many_to_one:
-                foreign_keys.append(relationship)
-            # One-to-one
-            elif field.one_to_one and not field.auto_created:
-                one_to_one.append(relationship)
-            # Many-to-many
-            elif field.many_to_many and not field.auto_created:
-                many_to_many.append(relationship)
+        # Fields
+        fks, o2o, m2m = get_field_relationships(model)
+        foreign_keys.extend(fks)
+        one_to_one.extend(o2o)
+        many_to_many.extend(m2m)
 
     return (
         sorted(nodes),
