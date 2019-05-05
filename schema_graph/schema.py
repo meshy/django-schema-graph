@@ -35,6 +35,9 @@ def get_schema():
         for field in model._meta.get_fields():
             if not field.is_relation:
                 continue
+            # Skip fields defined on superclasses
+            if field.model != model:
+                continue
             related_model = field.related_model
             related_model_id = get_model_id(related_model)
             relationship = (model_id, related_model_id)
