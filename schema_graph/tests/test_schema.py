@@ -22,6 +22,9 @@ class TestGetSchema(TestCase):
             ("schema_graph.tests", "OutgoingManyToMany"),
             ("schema_graph.tests", "OutgoingOneToOne"),
             ("schema_graph.tests", "SelfReference"),
+            ("schema_graph.tests", "SubSubclass"),
+            ("schema_graph.tests", "Subclass"),
+            ("schema_graph.tests", "Subclass2"),
         ]
         self.assertEqual(self.nodes, expected)
 
@@ -66,3 +69,17 @@ class TestGetSchema(TestCase):
             ),
         ]
         self.assertEqual(self.m2m, expected)
+
+    def test_inheritance(self):
+        expected = [
+            (("schema_graph.tests", "SubSubclass"), ("schema_graph.tests", "Subclass")),
+            (
+                ("schema_graph.tests", "Subclass"),
+                ("schema_graph.tests", "NoOutgoingConnections"),
+            ),
+            (
+                ("schema_graph.tests", "Subclass2"),
+                ("schema_graph.tests", "OutgoingForeignKey"),
+            ),
+        ]
+        assert self.is_a == expected

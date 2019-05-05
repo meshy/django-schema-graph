@@ -19,10 +19,19 @@ def get_schema():
     foreign_keys = []
     one_to_one = []
     many_to_many = []
+    inheritance = []
 
     for app, model in get_app_models():
         model_id = get_model_id(model, app)
         nodes.append(model_id)
+
+        # Subclassing
+        if model._meta.parents:
+            for parent_model in model._meta.parents:
+                parent_model_id = get_model_id(parent_model)
+                relationship = model_id, parent_model_id
+                inheritance.append(relationship)
+
         for field in model._meta.get_fields():
             if not field.is_relation:
                 continue
@@ -44,5 +53,5 @@ def get_schema():
         sorted(foreign_keys),
         sorted(one_to_one),
         sorted(many_to_many),
-        [],
+        sorted(inheritance),
     )

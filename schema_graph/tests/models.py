@@ -23,3 +23,15 @@ class AnotherOneToOne(models.Model):
 
 class SelfReference(models.Model):
     parent = models.ForeignKey("self", on_delete=models.CASCADE)
+
+
+class Subclass(NoOutgoingConnections):
+    pass
+
+
+class SubSubclass(Subclass):
+    pass
+
+
+class Subclass2(OutgoingForeignKey):
+    pass
