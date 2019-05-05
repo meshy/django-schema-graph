@@ -31,7 +31,4 @@ def get_schema():
         sorted(one_to_one),
         sorted(many_to_many),
         [],
-        [],
-        [],
-        [],
     )
