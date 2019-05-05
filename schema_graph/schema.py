@@ -18,10 +18,13 @@ def get_schema():
                 related_app = apps.get_app_config(related_model._meta.app_label)
                 related_model_id = (related_app.name, related_model.__name__)
                 relationship = (model_id, related_model_id)
+                # Foreign key
                 if field.many_to_one:
                     foreign_keys.append(relationship)
+                # One-to-one
                 elif field.one_to_one and not field.auto_created:
                     one_to_one.append(relationship)
+                # Many-to-many
                 elif field.many_to_many and not field.auto_created:
                     many_to_many.append(relationship)
 
