@@ -1,0 +1,27 @@
+# EditorConfig: https://EditorConfig.org
+
+root = true
+
+[*]
+end_of_line = lf
+indent_style = space
+insert_final_newline = true
+charset = utf-8
+indent_size = 4
+tab_width = 4
+trim_trailing_whitespace = true
+
+[*.py]
+indent_size = 4
+quote_type = double
+max_line_length = 88
+
+[*.{html,js,css}]
+indent_size = 2
+tab_width = 2
+
+[*.diff]
+trim_trailing_whitespace = false
+
+[*.md]
+max_line_length = 79
