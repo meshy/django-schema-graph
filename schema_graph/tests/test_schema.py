@@ -1,6 +1,6 @@
-from schema_graph.schema import get_schema
-
 from django.test import TestCase
+
+from schema_graph.schema import get_schema
 
 
 class TestGetSchema(TestCase):
