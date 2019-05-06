@@ -17,6 +17,7 @@ class TestGetSchema(TestCase):
             ("django.contrib.sessions", "Session"),
             ("django.contrib.sites", "Site"),
             ("schema_graph.tests", "AnotherOneToOne"),
+            ("schema_graph.tests", "Concrete"),
             ("schema_graph.tests", "NoOutgoingConnections"),
             ("schema_graph.tests", "OutgoingForeignKey"),
             ("schema_graph.tests", "OutgoingManyToMany"),
@@ -35,6 +36,10 @@ class TestGetSchema(TestCase):
             (
                 ("django.contrib.auth", "Permission"),
                 ("django.contrib.contenttypes", "ContentType"),
+            ),
+            (
+                ("schema_graph.tests", "Concrete"),
+                ("schema_graph.tests", "NoOutgoingConnections"),
             ),
             (
                 ("schema_graph.tests", "OutgoingForeignKey"),

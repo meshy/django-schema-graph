@@ -37,6 +37,17 @@ class Subclass2(OutgoingForeignKey):
     pass
 
 
+class Abstract(models.Model):
+    connected = models.ForeignKey("NoOutgoingConnections", on_delete=models.CASCADE)
+
+    class Meta:
+        abstract = True
+
+
+class Concrete(Abstract):
+    pass
+
+
 class ProxyNode2(OutgoingOneToOne):
     class Meta:
         proxy = True
