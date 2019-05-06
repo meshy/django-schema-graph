@@ -35,3 +35,13 @@ class SubSubclass(Subclass):
 
 class Subclass2(OutgoingForeignKey):
     pass
+
+
+class ProxyNode2(OutgoingOneToOne):
+    class Meta:
+        proxy = True
+
+
+class ProxyNode(OutgoingManyToMany):
+    class Meta:
+        proxy = True

@@ -6,7 +6,7 @@ from schema_graph.schema import get_schema
 class TestGetSchema(TestCase):
     @classmethod
     def setUpTestData(self):
-        (self.nodes, self.fk, self.o2o, self.m2m, self.is_a) = get_schema()
+        (self.nodes, self.fk, self.o2o, self.m2m, self.is_a, self.proxy) = get_schema()
 
     def test_nodes(self):
         expected = [
@@ -21,6 +21,8 @@ class TestGetSchema(TestCase):
             ("schema_graph.tests", "OutgoingForeignKey"),
             ("schema_graph.tests", "OutgoingManyToMany"),
             ("schema_graph.tests", "OutgoingOneToOne"),
+            ("schema_graph.tests", "ProxyNode"),
+            ("schema_graph.tests", "ProxyNode2"),
             ("schema_graph.tests", "SelfReference"),
             ("schema_graph.tests", "SubSubclass"),
             ("schema_graph.tests", "Subclass"),
@@ -83,3 +85,16 @@ class TestGetSchema(TestCase):
             ),
         ]
         assert self.is_a == expected
+
+    def test_proxy(self):
+        expected = [
+            (
+                ("schema_graph.tests", "ProxyNode"),
+                ("schema_graph.tests", "OutgoingManyToMany"),
+            ),
+            (
+                ("schema_graph.tests", "ProxyNode2"),
+                ("schema_graph.tests", "OutgoingOneToOne"),
+            ),
+        ]
+        self.assertEqual(self.proxy, expected)

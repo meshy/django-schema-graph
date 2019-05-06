@@ -50,10 +50,18 @@ def get_schema():
     one_to_one = []
     many_to_many = []
     inheritance = []
+    proxy = []
 
     for app, model in get_app_models():
         model_id = get_model_id(model, app)
         nodes.append(model_id)
+
+        # Proxy models
+        if model._meta.proxy:
+            related_model_id = get_model_id(model._meta.proxy_for_model)
+            relationship = (model_id, related_model_id)
+            proxy.append(relationship)
+            continue
 
         # Subclassing
         if model._meta.parents:
@@ -74,4 +82,5 @@ def get_schema():
         sorted(one_to_one),
         sorted(many_to_many),
         sorted(inheritance),
+        sorted(proxy),
     )
