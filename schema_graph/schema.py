@@ -1,4 +1,21 @@
+from collections import namedtuple
+
 from django.apps import apps
+
+
+Schema = namedtuple(
+    "Schema",
+    [
+        # Vertices
+        "models",
+        "proxies",
+        # Edges
+        "foreign_keys",
+        "inheritance",
+        "many_to_manys",
+        "one_to_ones",
+    ],
+)
 
 
 def get_app_models():
@@ -76,11 +93,13 @@ def get_schema():
         one_to_one.extend(o2o)
         many_to_many.extend(m2m)
 
-    return (
-        sorted(nodes),
-        sorted(foreign_keys),
-        sorted(one_to_one),
-        sorted(many_to_many),
-        sorted(inheritance),
-        sorted(proxy),
+    return Schema(
+        # Vertices
+        models=sorted(nodes),
+        proxies=sorted(proxy),
+        # Edges
+        foreign_keys=sorted(foreign_keys),
+        inheritance=sorted(inheritance),
+        many_to_manys=sorted(many_to_many),
+        one_to_ones=sorted(one_to_one),
     )

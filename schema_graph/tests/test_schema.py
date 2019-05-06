@@ -6,7 +6,15 @@ from schema_graph.schema import get_schema
 class TestGetSchema(TestCase):
     @classmethod
     def setUpTestData(self):
-        (self.nodes, self.fk, self.o2o, self.m2m, self.is_a, self.proxy) = get_schema()
+        schema = get_schema()
+        # Vertices
+        self.nodes = schema.models
+        self.proxy = schema.proxies
+        # Edges
+        self.fk = schema.foreign_keys
+        self.o2o = schema.one_to_ones
+        self.m2m = schema.many_to_manys
+        self.is_a = schema.inheritance
 
     def test_nodes(self):
         expected = [
