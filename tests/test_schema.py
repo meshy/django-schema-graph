@@ -37,7 +37,7 @@ class TestGetSchema(TestCase):
             ("tests", "Subclass"),
             ("tests", "Subclass2"),
         ]
-        self.assertEqual(self.nodes, expected)
+        assert self.nodes == expected
 
     def test_foreign_key(self):
         expected = [
@@ -49,14 +49,14 @@ class TestGetSchema(TestCase):
             (("tests", "OutgoingForeignKey"), ("tests", "NoOutgoingConnections")),
             (("tests", "SelfReference"), ("tests", "SelfReference")),
         ]
-        self.assertEqual(self.fk, expected)
+        assert self.fk == expected
 
     def test_one_to_one(self):
         expected = [
             (("tests", "AnotherOneToOne"), ("tests", "NoOutgoingConnections")),
             (("tests", "OutgoingOneToOne"), ("tests", "NoOutgoingConnections")),
         ]
-        self.assertEqual(self.o2o, expected)
+        assert self.o2o == expected
 
     def test_many_to_many(self):
         expected = [
@@ -65,7 +65,7 @@ class TestGetSchema(TestCase):
             (("django.contrib.auth", "User"), ("django.contrib.auth", "Permission")),
             (("tests", "OutgoingManyToMany"), ("tests", "NoOutgoingConnections")),
         ]
-        self.assertEqual(self.m2m, expected)
+        assert self.m2m == expected
 
     def test_inheritance(self):
         expected = [
@@ -80,4 +80,4 @@ class TestGetSchema(TestCase):
             (("tests", "ProxyNode"), ("tests", "OutgoingManyToMany")),
             (("tests", "ProxyNode2"), ("tests", "OutgoingOneToOne")),
         ]
-        self.assertEqual(self.proxy, expected)
+        assert self.proxy == expected
