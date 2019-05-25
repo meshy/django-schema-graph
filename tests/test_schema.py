@@ -45,31 +45,16 @@ class TestGetSchema(TestCase):
                 ("django.contrib.auth", "Permission"),
                 ("django.contrib.contenttypes", "ContentType"),
             ),
-            (
-                ("tests", "Concrete"),
-                ("tests", "NoOutgoingConnections"),
-            ),
-            (
-                ("tests", "OutgoingForeignKey"),
-                ("tests", "NoOutgoingConnections"),
-            ),
-            (
-                ("tests", "SelfReference"),
-                ("tests", "SelfReference"),
-            ),
+            (("tests", "Concrete"), ("tests", "NoOutgoingConnections")),
+            (("tests", "OutgoingForeignKey"), ("tests", "NoOutgoingConnections")),
+            (("tests", "SelfReference"), ("tests", "SelfReference")),
         ]
         self.assertEqual(self.fk, expected)
 
     def test_one_to_one(self):
         expected = [
-            (
-                ("tests", "AnotherOneToOne"),
-                ("tests", "NoOutgoingConnections"),
-            ),
-            (
-                ("tests", "OutgoingOneToOne"),
-                ("tests", "NoOutgoingConnections"),
-            ),
+            (("tests", "AnotherOneToOne"), ("tests", "NoOutgoingConnections")),
+            (("tests", "OutgoingOneToOne"), ("tests", "NoOutgoingConnections")),
         ]
         self.assertEqual(self.o2o, expected)
 
@@ -78,36 +63,21 @@ class TestGetSchema(TestCase):
             (("django.contrib.auth", "Group"), ("django.contrib.auth", "Permission")),
             (("django.contrib.auth", "User"), ("django.contrib.auth", "Group")),
             (("django.contrib.auth", "User"), ("django.contrib.auth", "Permission")),
-            (
-                ("tests", "OutgoingManyToMany"),
-                ("tests", "NoOutgoingConnections"),
-            ),
+            (("tests", "OutgoingManyToMany"), ("tests", "NoOutgoingConnections")),
         ]
         self.assertEqual(self.m2m, expected)
 
     def test_inheritance(self):
         expected = [
             (("tests", "SubSubclass"), ("tests", "Subclass")),
-            (
-                ("tests", "Subclass"),
-                ("tests", "NoOutgoingConnections"),
-            ),
-            (
-                ("tests", "Subclass2"),
-                ("tests", "OutgoingForeignKey"),
-            ),
+            (("tests", "Subclass"), ("tests", "NoOutgoingConnections")),
+            (("tests", "Subclass2"), ("tests", "OutgoingForeignKey")),
         ]
         assert self.is_a == expected
 
     def test_proxy(self):
         expected = [
-            (
-                ("tests", "ProxyNode"),
-                ("tests", "OutgoingManyToMany"),
-            ),
-            (
-                ("tests", "ProxyNode2"),
-                ("tests", "OutgoingOneToOne"),
-            ),
+            (("tests", "ProxyNode"), ("tests", "OutgoingManyToMany")),
+            (("tests", "ProxyNode2"), ("tests", "OutgoingOneToOne")),
         ]
         self.assertEqual(self.proxy, expected)
