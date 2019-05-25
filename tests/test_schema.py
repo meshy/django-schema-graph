@@ -4,18 +4,6 @@ from schema_graph.schema import get_schema
 
 
 class TestGetSchema(TestCase):
-    @classmethod
-    def setUpTestData(self):
-        schema = get_schema()
-        # Vertices
-        self.nodes = schema.models
-        self.proxy = schema.proxies
-        # Edges
-        self.fk = schema.foreign_keys
-        self.o2o = schema.one_to_ones
-        self.m2m = schema.many_to_manys
-        self.is_a = schema.inheritance
-
     def test_nodes(self):
         expected = [
             ("django.contrib.auth", "Group"),
@@ -37,7 +25,7 @@ class TestGetSchema(TestCase):
             ("tests", "Subclass"),
             ("tests", "Subclass2"),
         ]
-        assert self.nodes == expected
+        assert get_schema().models == expected
 
     def test_foreign_key(self):
         expected = [
@@ -49,14 +37,14 @@ class TestGetSchema(TestCase):
             (("tests", "OutgoingForeignKey"), ("tests", "NoOutgoingConnections")),
             (("tests", "SelfReference"), ("tests", "SelfReference")),
         ]
-        assert self.fk == expected
+        assert get_schema().foreign_keys == expected
 
     def test_one_to_one(self):
         expected = [
             (("tests", "AnotherOneToOne"), ("tests", "NoOutgoingConnections")),
             (("tests", "OutgoingOneToOne"), ("tests", "NoOutgoingConnections")),
         ]
-        assert self.o2o == expected
+        assert get_schema().one_to_ones == expected
 
     def test_many_to_many(self):
         expected = [
@@ -65,7 +53,7 @@ class TestGetSchema(TestCase):
             (("django.contrib.auth", "User"), ("django.contrib.auth", "Permission")),
             (("tests", "OutgoingManyToMany"), ("tests", "NoOutgoingConnections")),
         ]
-        assert self.m2m == expected
+        assert get_schema().many_to_manys == expected
 
     def test_inheritance(self):
         expected = [
@@ -73,11 +61,11 @@ class TestGetSchema(TestCase):
             (("tests", "Subclass"), ("tests", "NoOutgoingConnections")),
             (("tests", "Subclass2"), ("tests", "OutgoingForeignKey")),
         ]
-        assert self.is_a == expected
+        assert get_schema().inheritance == expected
 
     def test_proxy(self):
         expected = [
             (("tests", "ProxyNode"), ("tests", "OutgoingManyToMany")),
             (("tests", "ProxyNode2"), ("tests", "OutgoingOneToOne")),
         ]
-        assert self.proxy == expected
+        assert get_schema().proxies == expected
