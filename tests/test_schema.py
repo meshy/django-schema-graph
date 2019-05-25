@@ -24,18 +24,18 @@ class TestGetSchema(TestCase):
             ("django.contrib.contenttypes", "ContentType"),
             ("django.contrib.sessions", "Session"),
             ("django.contrib.sites", "Site"),
-            ("schema_graph.tests", "AnotherOneToOne"),
-            ("schema_graph.tests", "Concrete"),
-            ("schema_graph.tests", "NoOutgoingConnections"),
-            ("schema_graph.tests", "OutgoingForeignKey"),
-            ("schema_graph.tests", "OutgoingManyToMany"),
-            ("schema_graph.tests", "OutgoingOneToOne"),
-            ("schema_graph.tests", "ProxyNode"),
-            ("schema_graph.tests", "ProxyNode2"),
-            ("schema_graph.tests", "SelfReference"),
-            ("schema_graph.tests", "SubSubclass"),
-            ("schema_graph.tests", "Subclass"),
-            ("schema_graph.tests", "Subclass2"),
+            ("tests", "AnotherOneToOne"),
+            ("tests", "Concrete"),
+            ("tests", "NoOutgoingConnections"),
+            ("tests", "OutgoingForeignKey"),
+            ("tests", "OutgoingManyToMany"),
+            ("tests", "OutgoingOneToOne"),
+            ("tests", "ProxyNode"),
+            ("tests", "ProxyNode2"),
+            ("tests", "SelfReference"),
+            ("tests", "SubSubclass"),
+            ("tests", "Subclass"),
+            ("tests", "Subclass2"),
         ]
         self.assertEqual(self.nodes, expected)
 
@@ -46,16 +46,16 @@ class TestGetSchema(TestCase):
                 ("django.contrib.contenttypes", "ContentType"),
             ),
             (
-                ("schema_graph.tests", "Concrete"),
-                ("schema_graph.tests", "NoOutgoingConnections"),
+                ("tests", "Concrete"),
+                ("tests", "NoOutgoingConnections"),
             ),
             (
-                ("schema_graph.tests", "OutgoingForeignKey"),
-                ("schema_graph.tests", "NoOutgoingConnections"),
+                ("tests", "OutgoingForeignKey"),
+                ("tests", "NoOutgoingConnections"),
             ),
             (
-                ("schema_graph.tests", "SelfReference"),
-                ("schema_graph.tests", "SelfReference"),
+                ("tests", "SelfReference"),
+                ("tests", "SelfReference"),
             ),
         ]
         self.assertEqual(self.fk, expected)
@@ -63,12 +63,12 @@ class TestGetSchema(TestCase):
     def test_one_to_one(self):
         expected = [
             (
-                ("schema_graph.tests", "AnotherOneToOne"),
-                ("schema_graph.tests", "NoOutgoingConnections"),
+                ("tests", "AnotherOneToOne"),
+                ("tests", "NoOutgoingConnections"),
             ),
             (
-                ("schema_graph.tests", "OutgoingOneToOne"),
-                ("schema_graph.tests", "NoOutgoingConnections"),
+                ("tests", "OutgoingOneToOne"),
+                ("tests", "NoOutgoingConnections"),
             ),
         ]
         self.assertEqual(self.o2o, expected)
@@ -79,22 +79,22 @@ class TestGetSchema(TestCase):
             (("django.contrib.auth", "User"), ("django.contrib.auth", "Group")),
             (("django.contrib.auth", "User"), ("django.contrib.auth", "Permission")),
             (
-                ("schema_graph.tests", "OutgoingManyToMany"),
-                ("schema_graph.tests", "NoOutgoingConnections"),
+                ("tests", "OutgoingManyToMany"),
+                ("tests", "NoOutgoingConnections"),
             ),
         ]
         self.assertEqual(self.m2m, expected)
 
     def test_inheritance(self):
         expected = [
-            (("schema_graph.tests", "SubSubclass"), ("schema_graph.tests", "Subclass")),
+            (("tests", "SubSubclass"), ("tests", "Subclass")),
             (
-                ("schema_graph.tests", "Subclass"),
-                ("schema_graph.tests", "NoOutgoingConnections"),
+                ("tests", "Subclass"),
+                ("tests", "NoOutgoingConnections"),
             ),
             (
-                ("schema_graph.tests", "Subclass2"),
-                ("schema_graph.tests", "OutgoingForeignKey"),
+                ("tests", "Subclass2"),
+                ("tests", "OutgoingForeignKey"),
             ),
         ]
         assert self.is_a == expected
@@ -102,12 +102,12 @@ class TestGetSchema(TestCase):
     def test_proxy(self):
         expected = [
             (
-                ("schema_graph.tests", "ProxyNode"),
-                ("schema_graph.tests", "OutgoingManyToMany"),
+                ("tests", "ProxyNode"),
+                ("tests", "OutgoingManyToMany"),
             ),
             (
-                ("schema_graph.tests", "ProxyNode2"),
-                ("schema_graph.tests", "OutgoingOneToOne"),
+                ("tests", "ProxyNode2"),
+                ("tests", "OutgoingOneToOne"),
             ),
         ]
         self.assertEqual(self.proxy, expected)
