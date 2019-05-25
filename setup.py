@@ -29,7 +29,7 @@ setup(
     include_package_data=True,
     license="MIT",
     name="django-schema-graph",
-    packages=find_packages(),
+    packages=find_packages(exclude=["tests", "tests.*"]),
     url="https://github.com/meshy/django-schema-graph",
     version=version,
 )
