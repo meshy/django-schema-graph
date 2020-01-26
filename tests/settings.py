@@ -8,6 +8,7 @@ DATABASES = {"default": env.db(default="sqlite://:memory:")}
 SECRET_KEY = "not-for-production"
 INSTALLED_APPS = [
     "tests",
+    "schema_graph",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
@@ -15,3 +16,6 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
 ]
+TEMPLATES = (
+    {"BACKEND": "django.template.backends.django.DjangoTemplates", "APP_DIRS": True},
+)
