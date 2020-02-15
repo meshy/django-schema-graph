@@ -1,3 +1,5 @@
+import json
+
 import pytest
 from django.http import Http404
 from django.test import RequestFactory, override_settings
@@ -16,10 +18,10 @@ def test_context():
     view = Schema(request=request)
     context = view.get_context_data()
     schema = get_schema()
-    assert context["models"] == schema.models
-    assert context["foreign_keys"] == schema.foreign_keys
-    assert context["many_to_manys"] == schema.many_to_manys
-    assert context["one_to_ones"] == schema.one_to_ones
+    assert context["models"] == json.dumps(schema.models)
+    assert context["foreign_keys"] == json.dumps(schema.foreign_keys)
+    assert context["many_to_manys"] == json.dumps(schema.many_to_manys)
+    assert context["one_to_ones"] == json.dumps(schema.one_to_ones)
 
 
 def test_content():

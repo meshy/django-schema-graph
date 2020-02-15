@@ -1,3 +1,5 @@
+import json
+
 from django.conf import settings
 from django.http import Http404
 from django.utils.decorators import method_decorator
@@ -26,10 +28,10 @@ class Schema(TemplateView):
         schema = get_schema()
         kwargs.update(
             {
-                "models": schema.models,
-                "foreign_keys": schema.foreign_keys,
-                "many_to_manys": schema.many_to_manys,
-                "one_to_ones": schema.one_to_ones,
+                "models": json.dumps(schema.models),
+                "foreign_keys": json.dumps(schema.foreign_keys),
+                "many_to_manys": json.dumps(schema.many_to_manys),
+                "one_to_ones": json.dumps(schema.one_to_ones),
             }
         )
         return super(Schema, self).get_context_data(**kwargs)
