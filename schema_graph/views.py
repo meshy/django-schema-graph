@@ -23,5 +23,13 @@ class Schema(TemplateView):
         return super(Schema, self).dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
-        kwargs["schema"] = get_schema()
+        schema = get_schema()
+        kwargs.update(
+            {
+                "models": schema.models,
+                "foreign_keys": schema.foreign_keys,
+                "many_to_manys": schema.many_to_manys,
+                "one_to_ones": schema.one_to_ones,
+            }
+        )
         return super(Schema, self).get_context_data(**kwargs)

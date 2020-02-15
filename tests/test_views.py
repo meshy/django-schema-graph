@@ -15,7 +15,11 @@ def test_context():
     request = create_request()
     view = Schema(request=request)
     context = view.get_context_data()
-    assert context == {"schema": get_schema(), "view": view}
+    schema = get_schema()
+    assert context["models"] == schema.models
+    assert context["foreign_keys"] == schema.foreign_keys
+    assert context["many_to_manys"] == schema.many_to_manys
+    assert context["one_to_ones"] == schema.one_to_ones
 
 
 def test_content():
