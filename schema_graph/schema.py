@@ -1,21 +1,17 @@
-from collections import namedtuple
-
+from attr import attrib, attrs
 from django.apps import apps
 
 
-Schema = namedtuple(
-    "Schema",
-    [
-        # Vertices
-        "models",
-        "proxies",
-        # Edges
-        "foreign_keys",
-        "inheritance",
-        "many_to_manys",
-        "one_to_ones",
-    ],
-)
+@attrs
+class Schema(object):
+    # Vertices
+    models = attrib()
+    proxies = attrib()
+    # Edges
+    foreign_keys = attrib()
+    inheritance = attrib()
+    many_to_manys = attrib()
+    one_to_ones = attrib()
 
 
 def get_app_models():

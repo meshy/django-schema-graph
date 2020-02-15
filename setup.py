@@ -27,6 +27,7 @@ setup(
     ],
     description="An interactive graph of your Django model structure.",
     include_package_data=True,
+    install_requires=["attrs"],
     license="MIT",
     name="django-schema-graph",
     packages=find_packages(exclude=["tests", "tests.*"]),
