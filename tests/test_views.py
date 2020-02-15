@@ -25,7 +25,7 @@ def test_content():
     with override_settings(DEBUG=True):
         response = view(request)
 
-    assert response.rendered_content.startswith("<!docstring html>")
+    assert response.rendered_content.startswith("<!doctype html>")
 
 
 def test_debug():
