@@ -1,5 +1,39 @@
-<!doctype html>
+{% load static %}<!doctype html>
 <html>
-  <head></head>
-  <body></body>
+  <head>
+    <script src='https://cdn.jsdelivr.net/npm/vis-network@7.3.4/dist/vis-network.min.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/vue2vis@0.0.16/dist/vue2vis.min.js'></script>
+    <script type="module">
+      import Vue from "https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.esm.browser.js";
+      import App from '{% static "schema_graph/App.js" %}';
+
+      const models = {{ models|safe }};
+      const connections = {
+        foreignkey: {{ foreign_keys|safe }},
+        many2many: {{ many_to_manys|safe }},
+        one2one: {{ one_to_ones|safe }},
+      };
+
+      Vue.component('network', vue2vis.Network);
+      new Vue({
+        render: h => h(App, {props: {models, connections}}),
+      }).$mount(`#schema-graph-app`);
+    </script>
+  <style>
+    body {
+      margin: 0;
+    }
+    .main-app {
+        display: flex;
+        height: 100vh;
+    }
+    .main-app > .graph {
+        flex-grow: 1;
+    }
+  </style>
+  </head>
+
+  <body>
+    <div id="schema-graph-app"></div>
+  </body>
 </html>
