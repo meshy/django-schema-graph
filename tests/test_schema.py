@@ -10,6 +10,7 @@ def test_models():
         "tests": (
             "AnotherOneToOne",
             "Concrete",
+            "GenericFK",
             "NoOutgoingConnections",
             "OutgoingForeignKey",
             "OutgoingManyToMany",
@@ -32,6 +33,7 @@ def test_foreign_key():
             ("django.contrib.contenttypes", "ContentType"),
         ),
         (("tests", "Concrete"), ("tests", "NoOutgoingConnections")),
+        (("tests", "GenericFK"), ("django.contrib.contenttypes", "ContentType")),
         (("tests", "OutgoingForeignKey"), ("tests", "NoOutgoingConnections")),
         (("tests", "SelfReference"), ("tests", "SelfReference")),
     ]

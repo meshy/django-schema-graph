@@ -44,6 +44,9 @@ def get_field_relationships(model):
         if field.model != model:
             continue
         related_model = field.related_model
+        # GenericForeignKey
+        if related_model is None:
+            continue
         related_model_id = get_model_id(related_model)
         relationship = (model_id, related_model_id)
         # Foreign key
