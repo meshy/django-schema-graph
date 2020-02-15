@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 from attr import attrib, attrs
 from django.apps import apps
 
@@ -58,7 +60,7 @@ def get_field_relationships(model):
 
 
 def get_schema():
-    nodes = []
+    nodes = defaultdict(tuple)
     foreign_keys = []
     one_to_one = []
     many_to_many = []
@@ -66,8 +68,8 @@ def get_schema():
     proxy = []
 
     for app, model in get_app_models():
-        model_id = get_model_id(model, app)
-        nodes.append(model_id)
+        app_label, model_name = model_id = get_model_id(model, app)
+        nodes[app_label] += (model_name,)
 
         # Proxy models
         if model._meta.proxy:
@@ -89,9 +91,12 @@ def get_schema():
         one_to_one.extend(o2o)
         many_to_many.extend(m2m)
 
+    for app_label in nodes:
+        nodes[app_label] = tuple(sorted(nodes[app_label]))
+
     return Schema(
         # Vertices
-        models=sorted(nodes),
+        models=dict(nodes),
         proxies=sorted(proxy),
         # Edges
         foreign_keys=sorted(foreign_keys),

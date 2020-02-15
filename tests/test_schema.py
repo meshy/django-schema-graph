@@ -2,26 +2,26 @@ from schema_graph.schema import get_schema
 
 
 def test_models():
-    expected = [
-        ("django.contrib.auth", "Group"),
-        ("django.contrib.auth", "Permission"),
-        ("django.contrib.auth", "User"),
-        ("django.contrib.contenttypes", "ContentType"),
-        ("django.contrib.sessions", "Session"),
-        ("django.contrib.sites", "Site"),
-        ("tests", "AnotherOneToOne"),
-        ("tests", "Concrete"),
-        ("tests", "NoOutgoingConnections"),
-        ("tests", "OutgoingForeignKey"),
-        ("tests", "OutgoingManyToMany"),
-        ("tests", "OutgoingOneToOne"),
-        ("tests", "ProxyNode"),
-        ("tests", "ProxyNode2"),
-        ("tests", "SelfReference"),
-        ("tests", "SubSubclass"),
-        ("tests", "Subclass"),
-        ("tests", "Subclass2"),
-    ]
+    expected = {
+        "django.contrib.auth": ("Group", "Permission", "User"),
+        "django.contrib.contenttypes": ("ContentType",),
+        "django.contrib.sessions": ("Session",),
+        "django.contrib.sites": ("Site",),
+        "tests": (
+            "AnotherOneToOne",
+            "Concrete",
+            "NoOutgoingConnections",
+            "OutgoingForeignKey",
+            "OutgoingManyToMany",
+            "OutgoingOneToOne",
+            "ProxyNode",
+            "ProxyNode2",
+            "SelfReference",
+            "SubSubclass",
+            "Subclass",
+            "Subclass2",
+        ),
+    }
     assert get_schema().models == expected
 
 
