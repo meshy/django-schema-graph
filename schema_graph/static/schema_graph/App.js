@@ -12,7 +12,8 @@ const template = `
   </div>
 `;
 
-const getColor = (index, numColors) => `hsl(${index * (360 / numColors)},50%,70%)`;
+const getColor = (index, numColors) => `hsl(${index * (360 / numColors)},50%,85%)`;
+const getBorderColor = (index, numColors) => `hsl(${index * (360 / numColors)},70%,40%)`;
 const joinModelStrings = (appModelPair) => `${appModelPair[0]}/${appModelPair[1]}`;
 const fixModelStrings = (edges) => edges.map((pair) => {
   return [joinModelStrings(pair[0]), joinModelStrings(pair[1])]
@@ -55,7 +56,10 @@ export default {
               app,
               id: joinModelStrings([app, model]),
               label: model,
-              color: getColor(appIndex, Object.keys(models).length),
+              color: {
+                background: getColor(appIndex, Object.keys(models).length),
+                border: getBorderColor(appIndex, Object.keys(models).length),
+              },
             }
           ))
         ]
