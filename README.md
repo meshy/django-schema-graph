@@ -15,6 +15,7 @@ INSTALLED_APPS = [
 Add to your URLs.
 
 ```python
+from schema_graph.views import Schema
 urlpatterns += [
     path("schema/" Schema.as_view()),
 ]
