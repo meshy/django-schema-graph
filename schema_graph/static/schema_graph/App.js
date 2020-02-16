@@ -5,7 +5,10 @@ const template = `
       :nodes=nodes
       :edges=edges
       :options=options
+      @stabilization-progress="stabilizationProgress"
+      @stabilization-iterations-done="stabilizationIterationsDone"
     />
+    <vue-progress-bar></vue-progress-bar>
   </div>
 `;
 
@@ -66,11 +69,22 @@ export default {
       ...fixModelStrings(connections.many2many).map(([from, to]) => ({...edge_m2m, from, to})),
       ...fixModelStrings(connections.one2one).map(([from, to]) => ({...edge_1to1, from, to})),
     ];
+    const stabilizationProgress = (ev) => {
+      const progress = (ev.iterations / ev.total) * 100;
+      console.log(`Stabilization progress ${progress}%`);
+      this.$Progress.set(progress);
+    }
+    const stabilizationIterationsDone = () => {
+      console.log('Stabilization complete');
+      this.$Progress.finish();
+    }
 
     return {
       nodes,
       edges,
       options,
+      stabilizationProgress,
+      stabilizationIterationsDone,
     };
   }
 };
