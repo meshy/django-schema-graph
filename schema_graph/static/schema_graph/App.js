@@ -65,7 +65,7 @@ export default {
       ...fixModelStrings(connections.foreignkey).map(([from, to]) => ({...edge_fk, from, to})),
       ...fixModelStrings(connections.many2many).map(([from, to]) => ({...edge_m2m, from, to})),
       ...fixModelStrings(connections.one2one).map(([from, to]) => ({...edge_1to1, from, to})),
-      ];
+    ];
 
     return {
       nodes,
