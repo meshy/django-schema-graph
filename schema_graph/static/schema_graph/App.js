@@ -10,6 +10,10 @@ const template = `
 `;
 
 const getColor = (index, numColors) => `hsl(${index * (360 / numColors)},50%,70%)`;
+const joinModelStrings = (appModelPair) => `${appModelPair[0]}/${appModelPair[1]}`;
+const fixModelStrings = (edges) => edges.map((pair) => {
+  return [joinModelStrings(pair[0]), joinModelStrings(pair[1])]
+});
 
 
 const edge_fk = {arrows: 'to'};
@@ -37,7 +41,6 @@ export default {
   data() {
     const models = this.models;
     const connections = this.connections;
-    const joinModelStrings = (appModelPair) => `${appModelPair[0]}/${appModelPair[1]}`;
     const groupedNodes = new Map(
       Object
       .keys(models)
@@ -57,9 +60,6 @@ export default {
     );
 
     const nodes = [].concat.apply([], Array.from(groupedNodes.keys()).map(app => groupedNodes.get(app)));
-    const fixModelStrings = (edges) => edges.map((pair) => {
-      return [joinModelStrings(pair[0]), joinModelStrings(pair[1])]
-    });
 
     const edges = [
       ...fixModelStrings(connections.foreignkey).map(([from, to]) => ({...edge_fk, from, to})),
