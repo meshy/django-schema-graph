@@ -1,27 +1,14 @@
 {% load static %}<!doctype html>
 <html>
   <head>
-    <script src='https://cdn.jsdelivr.net/npm/vis-network@7.3.4/dist/vis-network.min.js'></script>
-    <script src='https://cdn.jsdelivr.net/npm/vue2vis@0.0.16/dist/vue2vis.min.js'></script>
-    <script src='https://cdn.jsdelivr.net/npm/vue-progressbar@0.7.5/dist/vue-progressbar.min.js'></script>
-    <script type="module">
-      import Vue from "https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.esm.browser.js";
-      import App from '{% static "schema_graph/App.js" %}';
-
-      const models = {{ models|safe }};
-      const connections = {
+    <script defer src='{% static "schema_graph/main.js" %}'></script>
+    <script>
+      window.models = {{ models|safe }};
+      window.connections = {
         foreignkey: {{ foreign_keys|safe }},
         many2many: {{ many_to_manys|safe }},
-        one2one: {{ one_to_ones|safe }},
+        one2one: {{ one_to_ones|safe }}
       };
-
-      Vue.use(VueProgressBar, {
-        transition: {speed: '0s', opacity: '0.6s', termination: 300}
-      })
-      Vue.component('network', vue2vis.Network);
-      new Vue({
-        render: h => h(App, {props: {models, connections}}),
-      }).$mount(`#schema-graph-app`);
     </script>
   <style>
     body {
