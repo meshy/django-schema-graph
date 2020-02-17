@@ -6,8 +6,8 @@
   "repository": "git@github.com:meshy/django-schema-graph.git",
   "author": "Charlie Denton <charlie@meshy.co.uk>",
   "scripts": {
-    "build": "webpack-cli --config webpack.common.js",
-    "watch": "webpack-cli --config webpack.common.js --watch"
+    "build": "webpack-cli --config webpack.prod.js",
+    "watch": "webpack-cli --config webpack.dev.js --watch"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
@@ -22,7 +22,8 @@
     "vue-template-compiler": "^2.6.11",
     "vue2vis": "^0.0.16",
     "webpack": "^4.41.6",
-    "webpack-cli": "^3.3.11"
+    "webpack-cli": "^3.3.11",
+    "webpack-merge": "^4.2.2"
   },
   "dependencies": {
     "@babel/polyfill": "^7.8.3"
