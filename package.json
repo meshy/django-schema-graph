@@ -6,8 +6,8 @@
   "repository": "git@github.com:meshy/django-schema-graph.git",
   "author": "Charlie Denton <charlie@meshy.co.uk>",
   "scripts": {
-    "build": "webpack-cli --config webpack.config.js",
-    "watch": "webpack-cli --config webpack.config.js --watch"
+    "build": "webpack-cli --config webpack.common.js",
+    "watch": "webpack-cli --config webpack.common.js --watch"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
