@@ -1,0 +1,30 @@
+{
+  "name": "django-schema-graph",
+  "version": "0.0.1",
+  "license": "MIT",
+  "main": "index.js",
+  "repository": "git@github.com:meshy/django-schema-graph.git",
+  "author": "Charlie Denton <charlie@meshy.co.uk>",
+  "scripts": {
+    "build": "webpack-cli --config webpack.config.js",
+    "watch": "webpack-cli --config webpack.config.js --watch"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.4",
+    "@babel/preset-env": "^7.8.4",
+    "babel-loader": "^8.0.6",
+    "css-loader": "^3.4.2",
+    "vis-network": "^7.3.4",
+    "vue": "^2.6.11",
+    "vue-loader": "^15.9.0",
+    "vue-progressbar": "^0.7.5",
+    "vue-template-compiler": "^2.6.11",
+    "vue2vis": "^0.0.16",
+    "webpack": "^4.41.6",
+    "webpack-cli": "^3.3.11"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.8.3"
+  }
+}
