@@ -12,6 +12,16 @@
   </div>
 </template>
 
+<style scoped>
+  .main-app {
+    display: flex;
+    height: 100vh;
+  }
+  .main-app > .graph {
+    flex-grow: 1;
+  }
+</style>
+
 <script>
 const getColor = (index, numColors) => `hsl(${index * (360 / numColors)},50%,85%)`;
 const getBorderColor = (index, numColors) => `hsl(${index * (360 / numColors)},70%,40%)`;
