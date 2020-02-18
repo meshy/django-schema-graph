@@ -17,5 +17,11 @@ jobs:
       <<: *shared_job
     - python: "3.8"
       <<: *shared_job
+    - language: node_js
+      node_js: node
+      script:
+        - yarn
+        - yarn run build
+        - git diff --exit-code
 notifications:
   email: false
