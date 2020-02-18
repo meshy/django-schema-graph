@@ -1,1 +1,3 @@
-/django_db_graph.egg-info
+/build
+/django_schema_graph.egg-info
+schema_graph/static/schema_graph/main.js

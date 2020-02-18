@@ -16,7 +16,7 @@ indent_size = 4
 quote_type = double
 max_line_length = 88
 
-[*.{html,js,css}]
+[*.{html,js,json,css,yml,vue}]
 indent_size = 2
 tab_width = 2
 

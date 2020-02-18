@@ -1,4 +1,4 @@
-const template = `
+<template>
   <div class="main-app">
     <network
       class="graph"
@@ -10,8 +10,19 @@ const template = `
     />
     <vue-progress-bar></vue-progress-bar>
   </div>
-`;
+</template>
 
+<style scoped>
+  .main-app {
+    display: flex;
+    height: 100vh;
+  }
+  .main-app > .graph {
+    flex-grow: 1;
+  }
+</style>
+
+<script>
 const getColor = (index, numColors) => `hsl(${index * (360 / numColors)},50%,85%)`;
 const getBorderColor = (index, numColors) => `hsl(${index * (360 / numColors)},70%,40%)`;
 const joinModelStrings = (appModelPair) => `${appModelPair[0]}/${appModelPair[1]}`;
@@ -37,11 +48,20 @@ const options = {
 };
 
 
-
 export default {
   name: 'App',
-  template,
   props: ['models', 'connections'],
+  methods: {
+    stabilizationProgress: function (ev) {
+      const progress = (ev.iterations / ev.total) * 100;
+      console.log(`Stabilization progress ${progress}%`);
+      this.$Progress.set(progress);
+    },
+    stabilizationIterationsDone: function () {
+      console.log('Stabilization complete');
+      this.$Progress.finish();
+    }
+  },
   data() {
     const models = this.models;
     const connections = this.connections;
@@ -73,22 +93,12 @@ export default {
       ...fixModelStrings(connections.many2many).map(([from, to]) => ({...edge_m2m, from, to})),
       ...fixModelStrings(connections.one2one).map(([from, to]) => ({...edge_1to1, from, to})),
     ];
-    const stabilizationProgress = (ev) => {
-      const progress = (ev.iterations / ev.total) * 100;
-      console.log(`Stabilization progress ${progress}%`);
-      this.$Progress.set(progress);
-    }
-    const stabilizationIterationsDone = () => {
-      console.log('Stabilization complete');
-      this.$Progress.finish();
-    }
 
     return {
       nodes,
       edges,
       options,
-      stabilizationProgress,
-      stabilizationIterationsDone,
     };
   }
 };
+</script>
