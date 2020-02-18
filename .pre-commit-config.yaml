@@ -5,8 +5,10 @@ repos:
     hooks:
       - id: check-merge-conflict
       - id: end-of-file-fixer
+        exclude: "schema_graph/static/schema_graph/main.js"
       - id: flake8
       - id: trailing-whitespace
+        exclude: "schema_graph/static/schema_graph/main.js"
 
   - repo: https://github.com/pre-commit/mirrors-isort
     rev: v4.3.20
