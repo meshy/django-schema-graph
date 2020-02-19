@@ -1,6 +1,8 @@
 # Changelog for django-schema-graph
 
-## [Unreleased]
+## [UNRELEASED]
+
+## [0.0.1]
 
 ### Added
 - Basic schema graph. Interactive, but no dynamic data yet. Tested with Django
