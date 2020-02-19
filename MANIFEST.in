@@ -1,0 +1,4 @@
+include README*
+recursive-include */templates *
+recursive-include schema_graph/static/ *
+exclude schema_graph/static/schema_graph/.empty-file
