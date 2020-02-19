@@ -4,6 +4,9 @@ from setuptools import find_packages, setup
 version = "0.0.1"
 
 
+with open("README.md", "r") as fh:
+    long_description = fh.read()
+
 setup(
     author="Charlie Denton",
     author_email="charlie@meshy.co.uk",
@@ -35,6 +38,8 @@ setup(
     include_package_data=True,
     install_requires=["attrs"],
     license="MIT",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     name="django-schema-graph",
     packages=find_packages(exclude=["tests", "tests.*"]),
     url="https://github.com/meshy/django-schema-graph",
