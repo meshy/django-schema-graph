@@ -28,7 +28,7 @@ class VerifyVersionCommand(Command):
     def run(self):
         tag = os.getenv("GITHUB_REF")
 
-        if tag == "v" + version:
+        if tag == "refs/tags/v" + version:
             print("Git tag: {0} matches expected version.".format(tag))
         else:
             info = "Git tag: {0} does not match the version of this app: v{1}".format(
