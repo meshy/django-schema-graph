@@ -12,9 +12,7 @@ with open("README.md", "r") as fh:
 
 
 class VerifyVersionCommand(Command):
-    """
-    Custom command to verify that the git tag matches our version.
-    """
+    """Custom command to verify that the git tag matches our version."""
 
     description = "verify that the git tag matches our version"
     user_options = []
