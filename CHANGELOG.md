@@ -2,6 +2,12 @@
 
 ## [UNRELEASED]
 
+## [0.0.2]
+
+### Changed
+- Hopefully nothing other than version number. This tests automatic releases to
+  PyPI with GitHub actions.
+
 ## [0.0.1]
 
 ### Added
