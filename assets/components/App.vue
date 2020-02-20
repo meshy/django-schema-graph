@@ -23,6 +23,8 @@
 </style>
 
 <script>
+import { Network } from "vue2vis";
+
 const getColor = (index, numColors) => `hsl(${index * (360 / numColors)},50%,85%)`;
 const getBorderColor = (index, numColors) => `hsl(${index * (360 / numColors)},70%,40%)`;
 const joinModelStrings = (appModelPair) => `${appModelPair[0]}/${appModelPair[1]}`;
@@ -50,6 +52,7 @@ const options = {
 
 export default {
   name: 'App',
+  components: {Network},
   props: ['models', 'connections'],
   methods: {
     stabilizationProgress: function (ev) {
