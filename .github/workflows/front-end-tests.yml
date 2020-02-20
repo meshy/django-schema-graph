@@ -1,5 +1,5 @@
 ---
-name: Front-end tests
+name: JavaScript tests
 
 on: [push]
 
