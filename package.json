@@ -1,6 +1,5 @@
 {
   "name": "django-schema-graph",
-  "version": "0.0.1",
   "license": "MIT",
   "main": "index.js",
   "repository": "git@github.com:meshy/django-schema-graph.git",
