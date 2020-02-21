@@ -14,6 +14,10 @@
     "@babel/preset-env": "^7.8.4",
     "babel-loader": "^8.0.6",
     "css-loader": "^3.4.2",
+    "deepmerge": "^4.2.2",
+    "fibers": "^4.0.2",
+    "sass": "^1.25.0",
+    "sass-loader": "^8.0.2",
     "vis-network": "^7.3.4",
     "vue": "^2.6.11",
     "vue-loader": "^15.9.0",
@@ -25,6 +29,7 @@
     "webpack-merge": "^4.2.2"
   },
   "dependencies": {
-    "@babel/polyfill": "^7.8.3"
+    "@babel/polyfill": "^7.8.3",
+    "vuetify": "^2.2.14"
   }
 }

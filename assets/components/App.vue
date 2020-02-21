@@ -1,5 +1,19 @@
 <template>
   <div class="main-app">
+    <v-btn
+      fixed left top fab small
+      @click="sidebar = true"
+      color="#64B5F6"
+      >
+      <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+        <path fill="currentColor" d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" />
+      </svg>
+    </v-btn>
+    <v-navigation-drawer
+      app temporary
+      v-model="sidebar"
+      >
+    </v-navigation-drawer>
     <network
       class="graph"
       :nodes=nodes
@@ -13,6 +27,9 @@
 </template>
 
 <style scoped>
+  .v-btn:not(.v-btn--text):not(.v-btn--outlined):focus::before {
+    opacity: 0; /* Override vuetify */
+  }
   .main-app {
     display: flex;
     height: 100vh;
@@ -24,6 +41,7 @@
 
 <script>
 import { Network } from "vue2vis";
+import { VBtn, VNavigationDrawer } from 'vuetify/lib';
 
 const getColor = (index, numColors) => `hsl(${index * (360 / numColors)},50%,85%)`;
 const getBorderColor = (index, numColors) => `hsl(${index * (360 / numColors)},70%,40%)`;
@@ -52,7 +70,7 @@ const options = {
 
 export default {
   name: 'App',
-  components: {Network},
+  components: {Network, VBtn, VNavigationDrawer},
   props: ['models', 'connections'],
   methods: {
     stabilizationProgress: function (ev) {
@@ -101,6 +119,7 @@ export default {
       nodes,
       edges,
       options,
+      sidebar: false,
     };
   }
 };
