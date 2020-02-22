@@ -5,7 +5,7 @@
       v-if="loaded"
       @click="sidebar = true"
     >
-      <v-icon>{{ mdiMenu }}</v-icon>
+      <v-icon>mdi-menu</v-icon>
     </v-btn>
     <v-navigation-drawer app temporary v-model="sidebar">
     </v-navigation-drawer>
@@ -36,7 +36,6 @@
 
 <script>
 import Network from "./Network.vue";
-import { mdiMenu } from '@mdi/js'
 
 const getColor = (index, numColors) => `hsl(${index * (360 / numColors)},50%,85%)`;
 const getBorderColor = (index, numColors) => `hsl(${index * (360 / numColors)},70%,40%)`;
@@ -115,7 +114,6 @@ export default {
     ];
 
     return {
-      mdiMenu,
       loaded,
       nodes,
       edges,
