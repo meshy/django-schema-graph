@@ -40,7 +40,7 @@
 </style>
 
 <script>
-import { Network } from "vue2vis";
+import Network from "./Network.vue";
 import { VBtn, VNavigationDrawer } from 'vuetify/lib';
 
 const getColor = (index, numColors) => `hsl(${index * (360 / numColors)},50%,85%)`;
