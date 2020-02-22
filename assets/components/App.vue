@@ -5,9 +5,7 @@
       v-if="loaded"
       @click="sidebar = true"
     >
-      <svg style="width:24px;height:24px" viewBox="0 0 24 24">
-        <path fill="currentColor" d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" />
-      </svg>
+      <v-icon>{{ mdiMenu }}</v-icon>
     </v-btn>
     <v-navigation-drawer app temporary v-model="sidebar">
     </v-navigation-drawer>
@@ -38,7 +36,8 @@
 
 <script>
 import Network from "./Network.vue";
-import { VBtn, VNavigationDrawer } from 'vuetify/lib';
+import { mdiMenu } from '@mdi/js'
+import { VBtn, VIcon, VNavigationDrawer } from 'vuetify/lib';
 
 const getColor = (index, numColors) => `hsl(${index * (360 / numColors)},50%,85%)`;
 const getBorderColor = (index, numColors) => `hsl(${index * (360 / numColors)},70%,40%)`;
@@ -70,7 +69,7 @@ let loaded = false;
 
 export default {
   name: 'App',
-  components: {Network, VBtn, VNavigationDrawer},
+  components: {Network, VBtn, VIcon, VNavigationDrawer},
   props: ['models', 'connections'],
   methods: {
     stabilizationProgress: function (ev) {
@@ -117,6 +116,7 @@ export default {
     ];
 
     return {
+      mdiMenu,
       loaded,
       nodes,
       edges,
