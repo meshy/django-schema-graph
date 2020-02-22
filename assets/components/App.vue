@@ -11,24 +11,28 @@
 
       <v-list expand>
         <v-list-group
-          v-for="modelList, app in models"
+          v-for="app in Object.keys(activeModels)"
           :key="app"
+          :color="activeModels[app].color"
         >
+
           <template v-slot:activator>
             <v-list-item-content>
               <v-list-item-title v-text="app"></v-list-item-title>
             </v-list-item-content>
           </template>
-          <v-list-item subgroup dense link
-            v-for="model in modelList"
-            :key="model"
+          <v-list-item dense link
+            v-for="model, modelIndex in activeModels[app].models"
+            :key="model.id"
           >
             <v-list-item-content>
-              <v-list-item-title v-text="model"></v-list-item-title>
+              <v-list-item-title v-text="model.label"></v-list-item-title>
             </v-list-item-content>
           </v-list-item>
+
         </v-list-group>
       </v-list>
+
     </v-navigation-drawer>
     <network
       class="graph"
@@ -85,6 +89,20 @@ const options = {
 
 let loaded = false;
 
+let activeModels = {};
+Object.keys(models).forEach((app, i) => {
+  activeModels[app] = {
+    models: {},
+    color: getBorderColor(i, Object.keys(models).length),
+  };
+  for (const model of models[app]) {
+    activeModels[app].models[model] = {
+      id: joinModelStrings([app, model]),
+      label: model,
+    };
+  };
+});
+
 
 export default {
   name: 'App',
@@ -135,6 +153,7 @@ export default {
     ];
 
     return {
+      activeModels,
       loaded,
       nodes,
       edges,
