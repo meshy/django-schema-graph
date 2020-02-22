@@ -37,7 +37,6 @@
 <script>
 import Network from "./Network.vue";
 import { mdiMenu } from '@mdi/js'
-import { VBtn, VIcon, VNavigationDrawer } from 'vuetify/lib';
 
 const getColor = (index, numColors) => `hsl(${index * (360 / numColors)},50%,85%)`;
 const getBorderColor = (index, numColors) => `hsl(${index * (360 / numColors)},70%,40%)`;
@@ -69,7 +68,7 @@ let loaded = false;
 
 export default {
   name: 'App',
-  components: {Network, VBtn, VIcon, VNavigationDrawer},
+  components: {Network},
   props: ['models', 'connections'],
   methods: {
     stabilizationProgress: function (ev) {

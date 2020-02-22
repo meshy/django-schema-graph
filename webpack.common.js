@@ -1,6 +1,7 @@
 var path = require("path")
 var webpack = require('webpack')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin')
 
 
 module.exports = {
@@ -39,6 +40,7 @@ module.exports = {
   },
 
   plugins: [
+    new VuetifyLoaderPlugin(),
     new VueLoaderPlugin()
   ],
 
