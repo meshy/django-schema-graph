@@ -1,19 +1,15 @@
 <template>
   <div class="main-app">
-    <v-btn
-      fixed left top fab small
-      @click="sidebar = true"
+    <v-btn fixed left top fab small
       color="#64B5F6"
       v-if="loaded"
-      >
+      @click="sidebar = true"
+    >
       <svg style="width:24px;height:24px" viewBox="0 0 24 24">
         <path fill="currentColor" d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" />
       </svg>
     </v-btn>
-    <v-navigation-drawer
-      app temporary
-      v-model="sidebar"
-      >
+    <v-navigation-drawer app temporary v-model="sidebar">
     </v-navigation-drawer>
     <network
       class="graph"
