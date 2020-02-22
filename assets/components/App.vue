@@ -13,6 +13,7 @@
         <v-list-group
           v-for="app in Object.keys(activeModels)"
           :key="app"
+          v-model:value="activeModels[app].active"
           :color="activeModels[app].color"
         >
 
@@ -92,6 +93,7 @@ let loaded = false;
 let activeModels = {};
 Object.keys(models).forEach((app, i) => {
   activeModels[app] = {
+    active: true,
     models: {},
     color: getBorderColor(i, Object.keys(models).length),
   };
