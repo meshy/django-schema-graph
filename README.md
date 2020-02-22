@@ -17,18 +17,12 @@ Add to your URLs.
 ```python
 from schema_graph.views import Schema
 urlpatterns += [
+    # On Django 2+:
     path("schema/" Schema.as_view()),
-]
-```
-
-Or, on Django < 2:
-
-```python
-urlpatterns += [
+    # Or, on Django < 2:
     url(r"^schema/$", Schema.as_view()),
 ]
 ```
-
 
 # Use
 
