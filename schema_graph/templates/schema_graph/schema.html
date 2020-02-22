@@ -2,6 +2,7 @@
 <html>
   <head>
     <script defer src='{% static "schema_graph/main.js" %}'></script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
     <script>
       window.models = {{ models|safe }};
       window.connections = {
@@ -13,6 +14,7 @@
     <style>
       html {
         overflow-y: auto !important; /* Override vuetify */
+        font-family: "Roboto", sans-serif;
       }
       body {
         margin: 0;
