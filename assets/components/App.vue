@@ -8,7 +8,8 @@
       <v-icon>mdi-menu</v-icon>
     </v-btn>
     <v-navigation-drawer app temporary v-model="sidebar">
-      <v-list>
+
+      <v-list expand>
         <v-list-group
           v-for="modelList, app in models"
           :key="app"
