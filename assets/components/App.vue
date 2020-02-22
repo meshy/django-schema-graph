@@ -8,6 +8,26 @@
       <v-icon>mdi-menu</v-icon>
     </v-btn>
     <v-navigation-drawer app temporary v-model="sidebar">
+      <v-list>
+        <v-list-group
+          v-for="modelList, app in models"
+          :key="app"
+        >
+          <template v-slot:activator>
+            <v-list-item-content>
+              <v-list-item-title v-text="app"></v-list-item-title>
+            </v-list-item-content>
+          </template>
+          <v-list-item subgroup dense link
+            v-for="model in modelList"
+            :key="model"
+          >
+            <v-list-item-content>
+              <v-list-item-title v-text="model"></v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-group>
+      </v-list>
     </v-navigation-drawer>
     <network
       class="graph"
