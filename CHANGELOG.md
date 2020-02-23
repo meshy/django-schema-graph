@@ -2,6 +2,12 @@
 
 ## [UNRELEASED]
 
+### Added
+
+- Ability to dynamically change the apps and models being displayed via a new
+  sidebar.
+- Colours. So many pretty colours.
+
 ## [0.0.2]
 
 ### Changed

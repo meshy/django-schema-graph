@@ -1,6 +1,7 @@
 var path = require("path")
 var webpack = require('webpack')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin')
 
 
 module.exports = {
@@ -17,11 +18,29 @@ module.exports = {
     rules: [
       { test: /\.vue$/, loader: 'vue-loader' },
       { test: /\.js$/, loader: 'babel-loader', exclude: path.resolve(__dirname, 'node_modules/') },
-      { test: /\.css$/, use: [ 'vue-style-loader', 'css-loader' ] }
+      { test: /\.css$/, use: [ 'vue-style-loader', 'css-loader' ] },
+      {
+        test: /\.s(c|a)ss$/,
+        use: [
+          'vue-style-loader',
+          'css-loader',
+          {
+            loader: 'sass-loader',
+            options: {
+              implementation: require('sass'),
+              sassOptions: {
+                fiber: require('fibers'),
+                indentedSyntax: true
+              },
+            },
+          },
+        ],
+      },
     ],
   },
 
   plugins: [
+    new VuetifyLoaderPlugin(),
     new VueLoaderPlugin()
   ],
 

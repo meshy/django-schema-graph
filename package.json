@@ -14,17 +14,22 @@
     "@babel/preset-env": "^7.8.4",
     "babel-loader": "^8.0.6",
     "css-loader": "^3.4.2",
+    "deepmerge": "^4.2.2",
+    "fibers": "^4.0.2",
+    "sass": "^1.25.0",
+    "sass-loader": "^8.0.2",
     "vis-network": "^7.3.4",
     "vue": "^2.6.11",
     "vue-loader": "^15.9.0",
     "vue-progressbar": "^0.7.5",
     "vue-template-compiler": "^2.6.11",
-    "vue2vis": "^0.0.16",
+    "vuetify-loader": "^1.4.3",
     "webpack": "^4.41.6",
     "webpack-cli": "^3.3.11",
     "webpack-merge": "^4.2.2"
   },
   "dependencies": {
-    "@babel/polyfill": "^7.8.3"
+    "@babel/polyfill": "^7.8.3",
+    "vuetify": "^2.2.14"
   }
 }

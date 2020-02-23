@@ -2,6 +2,8 @@
 <html>
   <head>
     <script defer src='{% static "schema_graph/main.js" %}'></script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
     <script>
       window.models = {{ models|safe }};
       window.connections = {
@@ -11,6 +13,10 @@
       };
     </script>
     <style>
+      html {
+        overflow-y: auto !important; /* Override vuetify */
+        font-family: "Roboto", sans-serif;
+      }
       body {
         margin: 0;
       }

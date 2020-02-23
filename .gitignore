@@ -1,3 +1,12 @@
-/build
-/django_schema_graph.egg-info
+*.egg-info
+*.log
+*.orig
+*.pyc
+*.swo
+*.swp
+.idea
+.tox
+build
+dist
+node_modules
 schema_graph/static/schema_graph/main.js
