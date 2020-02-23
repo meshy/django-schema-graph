@@ -14,7 +14,7 @@
           v-for="app in Object.keys(activeModels)"
           :key="app"
           v-model:value="activeModels[app].active"
-          :color="activeModels[app].color"
+          :color="activeModels[app].hardColor"
         >
 
           <template v-slot:activator>
@@ -32,7 +32,7 @@
             </v-list-item-content>
             <v-list-item-action>
               <v-checkbox
-                :color="activeModels[app].color"
+                :color="activeModels[app].hardColor"
                 :input-value="model.active"
               ></v-checkbox>
             </v-list-item-action>
@@ -117,11 +117,12 @@ export default {
     let loaded = false;
 
     let activeModels = {};
-    Object.keys(models).forEach((app, i) => {
+    Object.keys(models).sort().forEach((app, i) => {
       activeModels[app] = {
         active: true,
         models: {},
-        color: getBorderColor(i, Object.keys(models).length),
+        hardColor: getBorderColor(i, Object.keys(models).length),
+        softColor: getColor(i, Object.keys(models).length),
       };
       for (const model of models[app]) {
         activeModels[app].models[model] = {
@@ -158,8 +159,8 @@ export default {
                 id: joinModelStrings([app, model]),
                 label: model,
                 color: {
-                  background: getColor(appIndex, Object.keys(models).length),
-                  border: getBorderColor(appIndex, Object.keys(models).length),
+                  background: this.activeModels[app].softColor,
+                  border: this.activeModels[app].hardColor,
                 },
               });
             }
