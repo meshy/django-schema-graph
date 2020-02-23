@@ -39,14 +39,14 @@ urlpatterns += [
 ]
 ```
 
-# Use
+## Use
 
 Browse to `/schema/` (assuming that's where you put it in your URLs).
 
 Note: `DEBUG` mode is required, on the assumption that you don't want to leak
 sensitive information about your website outside of local development.
 
-# Alternatives
+## Alternatives
 
 - [`django-spaghetti-and-meatballs`](https://github.com/LegoStormtroopr/django-spaghetti-and-meatballs)
   is great. At the time of writing, it offers a lot more detailed information
