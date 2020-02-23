@@ -1,5 +1,14 @@
 # Django Schema Graph
 
+Django-schema-graph makes a colourful diagram out of your Django models. The
+diagram is interactive, and makes it easy to toggle models and apps on/off at
+will.
+
+It looks like this:
+
+![Django Schema Graph screenshot](docs-images/schema-graph.png)
+
+
 ## Installation
 
 Install from PyPI:
