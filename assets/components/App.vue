@@ -132,29 +132,6 @@ export default {
       };
     });
 
-    const groupedNodes = new Map(
-      Object
-      .keys(models)
-      .map((app, appIndex) => (
-        [
-          app,
-          models[app].map(model => (
-            {
-              app,
-              id: joinModelStrings([app, model]),
-              label: model,
-              color: {
-                background: getColor(appIndex, Object.keys(models).length),
-                border: getBorderColor(appIndex, Object.keys(models).length),
-              },
-            }
-          ))
-        ]
-      ))
-    );
-
-    const nodes = [].concat.apply([], Array.from(groupedNodes.keys()).map(app => groupedNodes.get(app)));
-
     const edges = [
       ...fixModelStrings(connections.foreignkey).map(([from, to]) => ({...edge_fk, from, to})),
       ...fixModelStrings(connections.many2many).map(([from, to]) => ({...edge_m2m, from, to})),
@@ -164,11 +141,33 @@ export default {
     return {
       activeModels,
       loaded,
-      nodes,
       edges,
       options,
       sidebar: false,
     };
-  }
+  },
+  computed: {
+    nodes: function () {
+      var nodes = [];
+      Object.keys(models).forEach((app, appIndex) => {
+        if (this.activeModels[app].active) {
+          models[app].forEach((model) => {
+            if (this.activeModels[app].models[model].active) {
+              nodes.push({
+                app,
+                id: joinModelStrings([app, model]),
+                label: model,
+                color: {
+                  background: getColor(appIndex, Object.keys(models).length),
+                  border: getBorderColor(appIndex, Object.keys(models).length),
+                },
+              });
+            }
+          });
+        }
+      });
+      return nodes;
+    },
+  },
 };
 </script>
