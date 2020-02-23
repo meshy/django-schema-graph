@@ -2,6 +2,12 @@
 
 ## Installation
 
+Install from PyPI:
+
+```bash
+pip install django-schema-graph
+```
+
 Add to `INSTALLED_APPS`:
 
 ```python
