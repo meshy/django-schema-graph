@@ -19,7 +19,10 @@
 
           <template v-slot:activator>
             <v-list-item-content>
-              <v-list-item-title v-text="app"></v-list-item-title>
+              <v-list-item-title
+                v-text="app"
+                v-bind:style="{color: activeModels[app].hardColor}"
+              ></v-list-item-title>
             </v-list-item-content>
           </template>
           <v-list-item dense link
