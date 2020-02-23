@@ -1,6 +1,6 @@
 # Changelog for django-schema-graph
 
-## [UNRELEASED]
+## [1.0.0]
 
 ### Added
 
