@@ -25,10 +25,17 @@
           <v-list-item dense link
             v-for="model, modelIndex in activeModels[app].models"
             :key="model.id"
+            @click="model.active = !model.active"
           >
             <v-list-item-content>
               <v-list-item-title v-text="model.label"></v-list-item-title>
             </v-list-item-content>
+            <v-list-item-action>
+              <v-checkbox
+                :color="activeModels[app].color"
+                :input-value="model.active"
+              ></v-checkbox>
+            </v-list-item-action>
           </v-list-item>
 
         </v-list-group>
@@ -99,6 +106,7 @@ Object.keys(models).forEach((app, i) => {
   };
   for (const model of models[app]) {
     activeModels[app].models[model] = {
+      active: true,
       id: joinModelStrings([app, model]),
       label: model,
     };
