@@ -95,25 +95,6 @@ const options = {
 };
 
 
-let loaded = false;
-
-let activeModels = {};
-Object.keys(models).forEach((app, i) => {
-  activeModels[app] = {
-    active: true,
-    models: {},
-    color: getBorderColor(i, Object.keys(models).length),
-  };
-  for (const model of models[app]) {
-    activeModels[app].models[model] = {
-      active: true,
-      id: joinModelStrings([app, model]),
-      label: model,
-    };
-  };
-});
-
-
 export default {
   name: 'App',
   components: {Network},
@@ -133,6 +114,24 @@ export default {
   data() {
     const models = this.models;
     const connections = this.connections;
+    let loaded = false;
+
+    let activeModels = {};
+    Object.keys(models).forEach((app, i) => {
+      activeModels[app] = {
+        active: true,
+        models: {},
+        color: getBorderColor(i, Object.keys(models).length),
+      };
+      for (const model of models[app]) {
+        activeModels[app].models[model] = {
+          active: true,
+          id: joinModelStrings([app, model]),
+          label: model,
+        };
+      };
+    });
+
     const groupedNodes = new Map(
       Object
       .keys(models)
