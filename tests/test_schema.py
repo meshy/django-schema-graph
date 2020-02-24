@@ -23,12 +23,49 @@ def test_abstract_models():
     assert get_schema().abstract_models == expected
 
 
+def test_apps():
+    expected = [
+        "django.contrib.auth",
+        "django.contrib.contenttypes",
+        "django.contrib.sessions",
+        "django.contrib.sites",
+        "tests.app_a",
+        "tests.app_b",
+        "tests.app_c",
+        "tests.app_d",
+        "tests.basic",
+        "tests.generic",
+        "tests.inheritance",
+        "tests.installed",
+        "tests.proxy",
+    ]
+    assert get_schema().apps == expected
+
+
+def test_app_dependencies():
+    expected = [
+        ("django.contrib.auth", "django.contrib.contenttypes"),
+        ("tests.app_a", "django.contrib.auth"),
+        ("tests.app_b", "django.contrib.auth"),
+        ("tests.app_c", "tests.app_b"),
+        ("tests.app_d", "tests.app_b"),
+        ("tests.app_d", "tests.app_c"),
+        ("tests.generic", "django.contrib.contenttypes"),
+        ("tests.installed", "tests.not_installed.models"),
+    ]
+    assert get_schema().app_dependencies == expected
+
+
 def test_models():
     expected = {
         "django.contrib.auth": ("Group", "Permission", "User"),
         "django.contrib.contenttypes": ("ContentType",),
         "django.contrib.sessions": ("Session",),
         "django.contrib.sites": ("Site",),
+        "tests.app_a": ("InterAppSubclass",),
+        "tests.app_b": ("InterAppForeignKey",),
+        "tests.app_c": ("InterAppOneToOne",),
+        "tests.app_d": ("InterAppManyToMany", "InterAppProxy"),
         "tests.basic": (
             "OutgoingForeignKey",
             "OutgoingManyToMany",
@@ -60,6 +97,7 @@ def test_foreign_key():
             ("django.contrib.auth", "Permission"),
             ("django.contrib.contenttypes", "ContentType"),
         ),
+        (("tests.app_b", "InterAppForeignKey"), ("django.contrib.auth", "User")),
         (("tests.basic", "OutgoingForeignKey"), ("tests.basic", "Target")),
         (("tests.basic", "SelfReference"), ("tests.basic", "SelfReference")),
         (
@@ -72,6 +110,7 @@ def test_foreign_key():
 
 def test_one_to_one():
     expected = [
+        (("tests.app_c", "InterAppOneToOne"), ("tests.app_b", "InterAppForeignKey")),
         (("tests.basic", "OutgoingOneToOne"), ("tests.basic", "Target")),
         (
             ("tests.inheritance", "ConcreteSubclass2"),
@@ -86,6 +125,7 @@ def test_many_to_many():
         (("django.contrib.auth", "Group"), ("django.contrib.auth", "Permission")),
         (("django.contrib.auth", "User"), ("django.contrib.auth", "Group")),
         (("django.contrib.auth", "User"), ("django.contrib.auth", "Permission")),
+        (("tests.app_d", "InterAppManyToMany"), ("tests.app_b", "InterAppForeignKey")),
         (("tests.basic", "OutgoingManyToMany"), ("tests.basic", "Target")),
     ]
     assert get_schema().many_to_manys == expected
@@ -106,6 +146,7 @@ def test_inheritance():
             ("django.contrib.sessions", "Session"),
             ("django.contrib.sessions", "AbstractBaseSession"),
         ),
+        (("tests.app_a", "InterAppSubclass"), ("django.contrib.auth", "Group")),
         (
             ("tests.inheritance", "AbstractMultipleInheritance"),
             ("tests.inheritance", "AbstractSubclass1"),
@@ -166,6 +207,7 @@ def test_inheritance():
 
 def test_proxy():
     expected = [
+        (("tests.app_d", "InterAppProxy"), ("tests.app_c", "InterAppOneToOne")),
         (("tests.proxy", "ProxyNode"), ("tests.proxy", "Target")),
         (("tests.proxy", "ProxyNode2"), ("tests.proxy", "Target")),
     ]

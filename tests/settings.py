@@ -9,6 +9,10 @@ DATABASES = {"default": env.db(default="sqlite://:memory:")}
 ROOT_URLCONF = "tests.urls"
 SECRET_KEY = "not-for-production"
 INSTALLED_APPS = [
+    "tests.app_a",
+    "tests.app_b",
+    "tests.app_c",
+    "tests.app_d",
     "tests.basic",
     "tests.generic",
     "tests.inheritance",
