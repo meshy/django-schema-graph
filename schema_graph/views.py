@@ -28,6 +28,7 @@ class Schema(TemplateView):
         schema = get_schema()
         kwargs.update(
             {
+                "abstract_models": json.dumps(schema.abstract_models),
                 "models": json.dumps(schema.models),
                 "foreign_keys": json.dumps(schema.foreign_keys),
                 "many_to_manys": json.dumps(schema.many_to_manys),

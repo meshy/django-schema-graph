@@ -103,7 +103,7 @@ const options = {
 export default {
   name: 'App',
   components: {Network},
-  props: ['models', 'connections'],
+  props: ['abstractModels', 'models', 'connections'],
   methods: {
     stabilizationProgress: function (ev) {
       const progress = (ev.iterations / ev.total) * 100;
@@ -121,7 +121,7 @@ export default {
     const connections = this.connections;
     let loaded = false;
 
-    const allApps = Object.keys(models).sort();
+    const allApps = Object.keys(models).concat(Object.keys(abstractModels)).sort();
     let activeModels = {};
     allApps.forEach((app, i) => {
       activeModels[app] = {
@@ -133,6 +133,15 @@ export default {
     });
     Object.keys(models).forEach((app) => {
       for (const model of models[app]) {
+        activeModels[app].models[model] = {
+          active: true,
+          id: joinModelStrings([app, model]),
+          label: model,
+        };
+      };
+    });
+    Object.keys(abstractModels).forEach((app) => {
+      for (const model of abstractModels[app]) {
         activeModels[app].models[model] = {
           active: true,
           id: joinModelStrings([app, model]),
@@ -172,6 +181,24 @@ export default {
                   background: this.activeModels[app].softColor,
                   border: this.activeModels[app].hardColor,
                 },
+              });
+            }
+          });
+        }
+      });
+      Object.keys(abstractModels).forEach((app, appIndex) => {
+        if (this.activeModels[app].active) {
+          abstractModels[app].forEach((model) => {
+            if (this.activeModels[app].models[model].active) {
+              nodes.push({
+                app,
+                id: joinModelStrings([app, model]),
+                label: model,
+                color: {
+                  background: this.activeModels[app].softColor,
+                  border: this.activeModels[app].hardColor,
+                },
+                shapeProperties: {borderDashes: true},
               });
             }
           });
