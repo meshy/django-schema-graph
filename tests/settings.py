@@ -4,7 +4,9 @@ import environ
 env = environ.Env()
 
 
+DEBUG = True
 DATABASES = {"default": env.db(default="sqlite://:memory:")}
+ROOT_URLCONF = "tests.urls"
 SECRET_KEY = "not-for-production"
 INSTALLED_APPS = [
     "tests",
