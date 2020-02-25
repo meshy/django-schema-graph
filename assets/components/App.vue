@@ -121,14 +121,17 @@ export default {
     const connections = this.connections;
     let loaded = false;
 
+    const allApps = Object.keys(models).sort();
     let activeModels = {};
-    Object.keys(models).sort().forEach((app, i) => {
+    allApps.forEach((app, i) => {
       activeModels[app] = {
         active: true,
         models: {},
-        hardColor: getBorderColor(i, Object.keys(models).length),
-        softColor: getColor(i, Object.keys(models).length),
+        hardColor: getBorderColor(i, allApps.length),
+        softColor: getColor(i, allApps.length),
       };
+    });
+    Object.keys(models).forEach((app) => {
       for (const model of models[app]) {
         activeModels[app].models[model] = {
           active: true,
