@@ -32,6 +32,7 @@ class Schema(TemplateView):
                 "foreign_keys": json.dumps(schema.foreign_keys),
                 "many_to_manys": json.dumps(schema.many_to_manys),
                 "one_to_ones": json.dumps(schema.one_to_ones),
+                "inheritance": json.dumps(schema.inheritance),
                 "proxies": json.dumps(schema.proxies),
             }
         )

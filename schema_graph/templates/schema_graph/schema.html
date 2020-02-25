@@ -10,6 +10,7 @@
         foreignkey: {{ foreign_keys|safe }},
         many2many: {{ many_to_manys|safe }},
         one2one: {{ one_to_ones|safe }},
+        subclass: {{ inheritance|safe }},
         proxy: {{ proxies|safe }},
       };
     </script>

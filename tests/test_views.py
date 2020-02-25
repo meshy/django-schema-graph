@@ -22,6 +22,7 @@ def test_context():
     assert context["foreign_keys"] == json.dumps(schema.foreign_keys)
     assert context["many_to_manys"] == json.dumps(schema.many_to_manys)
     assert context["one_to_ones"] == json.dumps(schema.one_to_ones)
+    assert context["inheritance"] == json.dumps(schema.inheritance)
     assert context["proxies"] == json.dumps(schema.proxies)
 
 
