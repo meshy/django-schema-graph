@@ -84,6 +84,7 @@ const fixModelStrings = (edges) => edges.map((pair) => {
 const edge_fk = {arrows: 'to'};
 const edge_m2m = {arrows: 'from;to'};
 const edge_1to1 = {arrows: {middle: {enabled: true}}};
+const edge_proxy = {dashes: true, arrows: 'to', label: 'Proxy'};
 
 
 const options = {
@@ -140,6 +141,7 @@ export default {
       ...fixModelStrings(connections.foreignkey).map(([from, to]) => ({...edge_fk, from, to})),
       ...fixModelStrings(connections.many2many).map(([from, to]) => ({...edge_m2m, from, to})),
       ...fixModelStrings(connections.one2one).map(([from, to]) => ({...edge_1to1, from, to})),
+      ...fixModelStrings(connections.proxy).map(([from, to]) => ({...edge_proxy, from, to})),
     ];
 
     return {
