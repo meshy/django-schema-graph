@@ -28,7 +28,7 @@ def test_models():
         "django.contrib.contenttypes": ("ContentType",),
         "django.contrib.sessions": ("Session",),
         "django.contrib.sites": ("Site",),
-        "tests": ("GenericFK", "NoOutgoingConnections", "ProxyNode", "ProxyNode2"),
+        "tests": ("GenericFK",),
         "tests.basic": (
             "OutgoingForeignKey",
             "OutgoingManyToMany",
@@ -47,6 +47,7 @@ def test_models():
             "SubSubclass",
             "Subclass",
         ),
+        "tests.proxy": ("ProxyNode", "ProxyNode2", "Target"),
     }
     assert get_schema().models == expected
 
@@ -156,7 +157,7 @@ def test_inheritance():
 
 def test_proxy():
     expected = [
-        (("tests", "ProxyNode"), ("tests", "NoOutgoingConnections")),
-        (("tests", "ProxyNode2"), ("tests", "NoOutgoingConnections")),
+        (("tests.proxy", "ProxyNode"), ("tests.proxy", "Target")),
+        (("tests.proxy", "ProxyNode2"), ("tests.proxy", "Target")),
     ]
     assert get_schema().proxies == expected

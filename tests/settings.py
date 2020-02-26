@@ -12,6 +12,7 @@ INSTALLED_APPS = [
     "tests",
     "tests.basic",
     "tests.inheritance",
+    "tests.proxy",
     "schema_graph",
     "django.contrib.auth",
     "django.contrib.contenttypes",
