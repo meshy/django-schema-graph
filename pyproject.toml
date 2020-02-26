@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "django-schema-graph"
+version = "1.2.0"
+description = "An interactive graph of your Django model structure."
+authors = ["Charlie Denton <charlie@meshy.co.uk>"]
+license = "MIT"
+packages = [
+    { include = "schema_graph" },
+]
+include = ["schema_graph/static/schema_graph/main.js"]
+
+
+[tool.poetry.dependencies]
+python = "~2.7 || ^3.5"
+attrs = ""
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
