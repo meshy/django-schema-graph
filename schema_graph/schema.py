@@ -25,9 +25,10 @@ def get_app_models():
 
 
 def get_model_id(model):
-    app = apps.get_app_config(model._meta.app_label)
+    model_meta = model._meta
+    app_label = apps.get_app_config(model_meta.app_label).name
 
-    return (app.name, model.__name__)
+    return (app_label, model.__name__)
 
 
 def get_field_relationships(model):
