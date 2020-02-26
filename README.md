@@ -49,6 +49,11 @@ Browse to `/schema/` (assuming that's where you put it in your URLs).
 Note: `DEBUG` mode is required, on the assumption that you don't want to leak
 sensitive information about your website outside of local development.
 
+# Support
+
+Tested with Django 1.8, and 1.11 - 3.0 on Python 2.7 and 3.5 - 3.8 (where those
+combinations make sense).
+
 ## Alternatives
 
 - [`django-spaghetti-and-meatballs`](https://github.com/LegoStormtroopr/django-spaghetti-and-meatballs)
