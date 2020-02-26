@@ -25,14 +25,13 @@ def get_app_models():
 
 
 def get_model_id(model):
+    app_label = model._meta.app_label
     try:
-        model_meta = model._meta
+        app_name = apps.get_app_config(app_label).name
     except LookupError:
-        app_label = model.__module__
-    else:
-        app_label = apps.get_app_config(model_meta.app_label).name
+        app_name = model.__module__
 
-    return (app_label, model.__name__)
+    return (app_name, model.__name__)
 
 
 def get_field_relationships(model):
