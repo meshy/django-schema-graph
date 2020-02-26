@@ -28,7 +28,6 @@ def test_models():
         "django.contrib.contenttypes": ("ContentType",),
         "django.contrib.sessions": ("Session",),
         "django.contrib.sites": ("Site",),
-        "tests": ("GenericFK",),
         "tests.basic": (
             "OutgoingForeignKey",
             "OutgoingManyToMany",
@@ -36,6 +35,7 @@ def test_models():
             "SelfReference",
             "Target",
         ),
+        "tests.generic": ("GenericFK",),
         "tests.inheritance": (
             "AbstractMultipleInheritance",
             "Concrete",
@@ -58,9 +58,12 @@ def test_foreign_key():
             ("django.contrib.auth", "Permission"),
             ("django.contrib.contenttypes", "ContentType"),
         ),
-        (("tests", "GenericFK"), ("django.contrib.contenttypes", "ContentType")),
         (("tests.basic", "OutgoingForeignKey"), ("tests.basic", "Target")),
         (("tests.basic", "SelfReference"), ("tests.basic", "SelfReference")),
+        (
+            ("tests.generic", "GenericFK"),
+            ("django.contrib.contenttypes", "ContentType"),
+        ),
     ]
     assert get_schema().foreign_keys == expected
 

@@ -11,6 +11,7 @@ SECRET_KEY = "not-for-production"
 INSTALLED_APPS = [
     "tests",
     "tests.basic",
+    "tests.generic",
     "tests.inheritance",
     "tests.proxy",
     "schema_graph",
