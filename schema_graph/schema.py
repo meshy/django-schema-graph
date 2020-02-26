@@ -24,9 +24,8 @@ def get_app_models():
             yield app, model
 
 
-def get_model_id(model, app=None):
-    if not app:
-        app = apps.get_app_config(model._meta.app_label)
+def get_model_id(model):
+    app = apps.get_app_config(model._meta.app_label)
 
     return (app.name, model.__name__)
 
