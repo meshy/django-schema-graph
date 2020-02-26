@@ -8,7 +8,8 @@ It looks like this:
 
 ![Django Schema Graph screenshot](docs-images/schema-graph.png)
 
-(Apologies that the image above doesn't work on PyPI. Check it out on GitHub.)
+(Apologies that the image above doesn't work on PyPI. [Check it out on
+GitHub](https://github.com/meshy/django-schema-graph/blob/master/README.md).)
 
 
 ## Installation
