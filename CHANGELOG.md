@@ -1,5 +1,13 @@
 # Changelog for django-schema-graph
 
+## [Unreleased]
+
+### Added
+
+- Abstract base models are now visible.
+- Proxy models now clearly show what they proxy.
+- Inheritance is visible as a new kind of connection.
+
 ## [1.0.0]
 
 ### Added
