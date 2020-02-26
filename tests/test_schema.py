@@ -28,16 +28,13 @@ def test_models():
         "django.contrib.contenttypes": ("ContentType",),
         "django.contrib.sessions": ("Session",),
         "django.contrib.sites": ("Site",),
-        "tests": (
-            "AnotherOneToOne",
-            "GenericFK",
-            "NoOutgoingConnections",
+        "tests": ("GenericFK", "NoOutgoingConnections", "ProxyNode", "ProxyNode2"),
+        "tests.basic": (
             "OutgoingForeignKey",
             "OutgoingManyToMany",
             "OutgoingOneToOne",
-            "ProxyNode",
-            "ProxyNode2",
             "SelfReference",
+            "Target",
         ),
         "tests.inheritance": (
             "AbstractMultipleInheritance",
@@ -61,16 +58,15 @@ def test_foreign_key():
             ("django.contrib.contenttypes", "ContentType"),
         ),
         (("tests", "GenericFK"), ("django.contrib.contenttypes", "ContentType")),
-        (("tests", "OutgoingForeignKey"), ("tests", "NoOutgoingConnections")),
-        (("tests", "SelfReference"), ("tests", "SelfReference")),
+        (("tests.basic", "OutgoingForeignKey"), ("tests.basic", "Target")),
+        (("tests.basic", "SelfReference"), ("tests.basic", "SelfReference")),
     ]
     assert get_schema().foreign_keys == expected
 
 
 def test_one_to_one():
     expected = [
-        (("tests", "AnotherOneToOne"), ("tests", "NoOutgoingConnections")),
-        (("tests", "OutgoingOneToOne"), ("tests", "NoOutgoingConnections")),
+        (("tests.basic", "OutgoingOneToOne"), ("tests.basic", "Target")),
         (
             ("tests.inheritance", "ConcreteSubclass2"),
             ("tests.inheritance", "ConcreteBase"),
@@ -84,7 +80,7 @@ def test_many_to_many():
         (("django.contrib.auth", "Group"), ("django.contrib.auth", "Permission")),
         (("django.contrib.auth", "User"), ("django.contrib.auth", "Group")),
         (("django.contrib.auth", "User"), ("django.contrib.auth", "Permission")),
-        (("tests", "OutgoingManyToMany"), ("tests", "NoOutgoingConnections")),
+        (("tests.basic", "OutgoingManyToMany"), ("tests.basic", "Target")),
     ]
     assert get_schema().many_to_manys == expected
 
@@ -160,7 +156,7 @@ def test_inheritance():
 
 def test_proxy():
     expected = [
-        (("tests", "ProxyNode"), ("tests", "OutgoingManyToMany")),
-        (("tests", "ProxyNode2"), ("tests", "OutgoingOneToOne")),
+        (("tests", "ProxyNode"), ("tests", "NoOutgoingConnections")),
+        (("tests", "ProxyNode2"), ("tests", "NoOutgoingConnections")),
     ]
     assert get_schema().proxies == expected
