@@ -12,6 +12,7 @@ INSTALLED_APPS = [
     "tests.basic",
     "tests.generic",
     "tests.inheritance",
+    "tests.installed",
     "tests.proxy",
     "schema_graph",
     "django.contrib.auth",

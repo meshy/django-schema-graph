@@ -25,8 +25,12 @@ def get_app_models():
 
 
 def get_model_id(model):
-    model_meta = model._meta
-    app_label = apps.get_app_config(model_meta.app_label).name
+    try:
+        model_meta = model._meta
+    except LookupError:
+        app_label = model.__module__
+    else:
+        app_label = apps.get_app_config(model_meta.app_label).name
 
     return (app_label, model.__name__)
 

@@ -16,6 +16,7 @@ def test_abstract_models():
             "AbstractSubclass1",
             "AbstractSubclass2",
         ),
+        "tests.not_installed.models": ("AbstractNotInstalled",),
     }
     if DJANGO_LT_19:
         expected.pop("django.contrib.sessions")
@@ -47,6 +48,7 @@ def test_models():
             "SubSubclass",
             "Subclass",
         ),
+        "tests.installed": ("ConcreteInstalled",),
         "tests.proxy": ("ProxyNode", "ProxyNode2", "Target"),
     }
     assert get_schema().models == expected
@@ -147,6 +149,10 @@ def test_inheritance():
         ),
         (("tests.inheritance", "SubSubclass"), ("tests.inheritance", "Subclass")),
         (("tests.inheritance", "Subclass"), ("tests.inheritance", "ConcreteBase")),
+        (
+            ("tests.installed", "ConcreteInstalled"),
+            ("tests.not_installed.models", "AbstractNotInstalled"),
+        ),
     ]
     if DJANGO_LT_19:
         expected.remove(
