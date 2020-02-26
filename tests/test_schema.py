@@ -10,7 +10,12 @@ def test_abstract_models():
     expected = {
         "django.contrib.auth": ("AbstractBaseUser", "AbstractUser", "PermissionsMixin"),
         "django.contrib.sessions": ("AbstractBaseSession",),
-        "tests": ("Abstract", "AbstractBase", "AbstractSubclass1", "AbstractSubclass2"),
+        "tests.inheritance": (
+            "Abstract",
+            "AbstractBase",
+            "AbstractSubclass1",
+            "AbstractSubclass2",
+        ),
     }
     if DJANGO_LT_19:
         expected.pop("django.contrib.sessions")
@@ -24,15 +29,8 @@ def test_models():
         "django.contrib.sessions": ("Session",),
         "django.contrib.sites": ("Site",),
         "tests": (
-            "AbstractMultipleInheritance",
             "AnotherOneToOne",
-            "Concrete",
-            "ConcreteBase",
-            "ConcreteInheritance",
-            "ConcreteSubclass1",
-            "ConcreteSubclass2",
             "GenericFK",
-            "MixedMultipleInheritance",
             "NoOutgoingConnections",
             "OutgoingForeignKey",
             "OutgoingManyToMany",
@@ -40,9 +38,17 @@ def test_models():
             "ProxyNode",
             "ProxyNode2",
             "SelfReference",
+        ),
+        "tests.inheritance": (
+            "AbstractMultipleInheritance",
+            "Concrete",
+            "ConcreteBase",
+            "ConcreteInheritance",
+            "ConcreteSubclass1",
+            "ConcreteSubclass2",
+            "MixedMultipleInheritance",
             "SubSubclass",
             "Subclass",
-            "Subclass2",
         ),
     }
     assert get_schema().models == expected
@@ -54,7 +60,6 @@ def test_foreign_key():
             ("django.contrib.auth", "Permission"),
             ("django.contrib.contenttypes", "ContentType"),
         ),
-        (("tests", "Concrete"), ("tests", "NoOutgoingConnections")),
         (("tests", "GenericFK"), ("django.contrib.contenttypes", "ContentType")),
         (("tests", "OutgoingForeignKey"), ("tests", "NoOutgoingConnections")),
         (("tests", "SelfReference"), ("tests", "SelfReference")),
@@ -65,8 +70,11 @@ def test_foreign_key():
 def test_one_to_one():
     expected = [
         (("tests", "AnotherOneToOne"), ("tests", "NoOutgoingConnections")),
-        (("tests", "ConcreteSubclass2"), ("tests", "ConcreteBase")),
         (("tests", "OutgoingOneToOne"), ("tests", "NoOutgoingConnections")),
+        (
+            ("tests.inheritance", "ConcreteSubclass2"),
+            ("tests.inheritance", "ConcreteBase"),
+        ),
     ]
     assert get_schema().one_to_ones == expected
 
@@ -96,20 +104,49 @@ def test_inheritance():
             ("django.contrib.sessions", "Session"),
             ("django.contrib.sessions", "AbstractBaseSession"),
         ),
-        (("tests", "AbstractMultipleInheritance"), ("tests", "AbstractSubclass1")),
-        (("tests", "AbstractMultipleInheritance"), ("tests", "AbstractSubclass2")),
-        (("tests", "AbstractSubclass1"), ("tests", "AbstractBase")),
-        (("tests", "AbstractSubclass2"), ("tests", "AbstractBase")),
-        (("tests", "Concrete"), ("tests", "Abstract")),
-        (("tests", "ConcreteInheritance"), ("tests", "ConcreteSubclass1")),
-        (("tests", "ConcreteInheritance"), ("tests", "ConcreteSubclass2")),
-        (("tests", "ConcreteSubclass1"), ("tests", "ConcreteBase")),
-        (("tests", "ConcreteSubclass2"), ("tests", "ConcreteBase")),
-        (("tests", "MixedMultipleInheritance"), ("tests", "AbstractBase")),
-        (("tests", "MixedMultipleInheritance"), ("tests", "ConcreteBase")),
-        (("tests", "SubSubclass"), ("tests", "Subclass")),
-        (("tests", "Subclass"), ("tests", "NoOutgoingConnections")),
-        (("tests", "Subclass2"), ("tests", "OutgoingForeignKey")),
+        (
+            ("tests.inheritance", "AbstractMultipleInheritance"),
+            ("tests.inheritance", "AbstractSubclass1"),
+        ),
+        (
+            ("tests.inheritance", "AbstractMultipleInheritance"),
+            ("tests.inheritance", "AbstractSubclass2"),
+        ),
+        (
+            ("tests.inheritance", "AbstractSubclass1"),
+            ("tests.inheritance", "AbstractBase"),
+        ),
+        (
+            ("tests.inheritance", "AbstractSubclass2"),
+            ("tests.inheritance", "AbstractBase"),
+        ),
+        (("tests.inheritance", "Concrete"), ("tests.inheritance", "Abstract")),
+        (
+            ("tests.inheritance", "ConcreteInheritance"),
+            ("tests.inheritance", "ConcreteSubclass1"),
+        ),
+        (
+            ("tests.inheritance", "ConcreteInheritance"),
+            ("tests.inheritance", "ConcreteSubclass2"),
+        ),
+        (
+            ("tests.inheritance", "ConcreteSubclass1"),
+            ("tests.inheritance", "ConcreteBase"),
+        ),
+        (
+            ("tests.inheritance", "ConcreteSubclass2"),
+            ("tests.inheritance", "ConcreteBase"),
+        ),
+        (
+            ("tests.inheritance", "MixedMultipleInheritance"),
+            ("tests.inheritance", "AbstractBase"),
+        ),
+        (
+            ("tests.inheritance", "MixedMultipleInheritance"),
+            ("tests.inheritance", "ConcreteBase"),
+        ),
+        (("tests.inheritance", "SubSubclass"), ("tests.inheritance", "Subclass")),
+        (("tests.inheritance", "Subclass"), ("tests.inheritance", "ConcreteBase")),
     ]
     if DJANGO_LT_19:
         expected.remove(

@@ -10,6 +10,7 @@ ROOT_URLCONF = "tests.urls"
 SECRET_KEY = "not-for-production"
 INSTALLED_APPS = [
     "tests",
+    "tests.inheritance",
     "schema_graph",
     "django.contrib.auth",
     "django.contrib.contenttypes",
