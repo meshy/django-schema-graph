@@ -1,4 +1,9 @@
+import django
+
 from schema_graph.schema import get_schema
+
+
+DJANGO_LT_19 = django.VERSION < (1, 9, 0)
 
 
 def test_abstract_models():
@@ -7,6 +12,8 @@ def test_abstract_models():
         "django.contrib.sessions": ("AbstractBaseSession",),
         "tests": ("Abstract", "AbstractBase", "AbstractSubclass1", "AbstractSubclass2"),
     }
+    if DJANGO_LT_19:
+        expected.pop("django.contrib.sessions")
     assert get_schema().abstract_models == expected
 
 
@@ -104,6 +111,13 @@ def test_inheritance():
         (("tests", "Subclass"), ("tests", "NoOutgoingConnections")),
         (("tests", "Subclass2"), ("tests", "OutgoingForeignKey")),
     ]
+    if DJANGO_LT_19:
+        expected.remove(
+            (
+                ("django.contrib.sessions", "Session"),
+                ("django.contrib.sessions", "AbstractBaseSession"),
+            )
+        )
     assert get_schema().inheritance == expected
 
 
