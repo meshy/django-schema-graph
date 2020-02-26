@@ -2,11 +2,13 @@ from collections import defaultdict
 
 from attr import attrib, attrs
 from django.apps import apps
+from django.db import models
 
 
 @attrs
 class Schema(object):
     # Vertices
+    abstract_models = attrib()
     models = attrib()
     proxies = attrib()
     # Edges
@@ -62,12 +64,19 @@ def get_field_relationships(model):
     return foreign_keys, one_to_one, many_to_many
 
 
+def is_model_subclass(obj):
+    if obj is models.Model:
+        return False
+    return issubclass(obj, models.Model)
+
+
 def get_schema():
+    abstract_nodes = defaultdict(set)
     nodes = defaultdict(tuple)
     foreign_keys = []
     one_to_one = []
     many_to_many = []
-    inheritance = []
+    inheritance = set()
     proxy = []
 
     for app, model in get_app_models():
@@ -82,11 +91,14 @@ def get_schema():
             continue
 
         # Subclassing
-        if model._meta.parents:
-            for parent_model in model._meta.parents:
-                parent_model_id = get_model_id(parent_model)
-                relationship = model_id, parent_model_id
-                inheritance.append(relationship)
+        for base in filter(is_model_subclass, model.__mro__):
+            base_app_label, base_model_name = get_model_id(base)
+            if base._meta.abstract:
+                abstract_nodes[base_app_label].add(base_model_name)
+            for parent in filter(is_model_subclass, base.__bases__):
+                inheritance.add(
+                    ((base_app_label, base_model_name), get_model_id(parent))
+                )
 
         # Fields
         fks, o2o, m2m = get_field_relationships(model)
@@ -97,8 +109,12 @@ def get_schema():
     for app_label in nodes:
         nodes[app_label] = tuple(sorted(nodes[app_label]))
 
+    for app_label in abstract_nodes:
+        abstract_nodes[app_label] = tuple(sorted(abstract_nodes[app_label]))
+
     return Schema(
         # Vertices
+        abstract_models=dict(abstract_nodes),
         models=dict(nodes),
         proxies=sorted(proxy),
         # Edges

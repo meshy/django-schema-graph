@@ -1,4 +1,20 @@
+import django
+
 from schema_graph.schema import get_schema
+
+
+DJANGO_LT_19 = django.VERSION < (1, 9, 0)
+
+
+def test_abstract_models():
+    expected = {
+        "django.contrib.auth": ("AbstractBaseUser", "AbstractUser", "PermissionsMixin"),
+        "django.contrib.sessions": ("AbstractBaseSession",),
+        "tests": ("Abstract", "AbstractBase", "AbstractSubclass1", "AbstractSubclass2"),
+    }
+    if DJANGO_LT_19:
+        expected.pop("django.contrib.sessions")
+    assert get_schema().abstract_models == expected
 
 
 def test_models():
@@ -8,9 +24,15 @@ def test_models():
         "django.contrib.sessions": ("Session",),
         "django.contrib.sites": ("Site",),
         "tests": (
+            "AbstractMultipleInheritance",
             "AnotherOneToOne",
             "Concrete",
+            "ConcreteBase",
+            "ConcreteInheritance",
+            "ConcreteSubclass1",
+            "ConcreteSubclass2",
             "GenericFK",
+            "MixedMultipleInheritance",
             "NoOutgoingConnections",
             "OutgoingForeignKey",
             "OutgoingManyToMany",
@@ -43,6 +65,7 @@ def test_foreign_key():
 def test_one_to_one():
     expected = [
         (("tests", "AnotherOneToOne"), ("tests", "NoOutgoingConnections")),
+        (("tests", "ConcreteSubclass2"), ("tests", "ConcreteBase")),
         (("tests", "OutgoingOneToOne"), ("tests", "NoOutgoingConnections")),
     ]
     assert get_schema().one_to_ones == expected
@@ -60,10 +83,41 @@ def test_many_to_many():
 
 def test_inheritance():
     expected = [
+        (
+            ("django.contrib.auth", "AbstractUser"),
+            ("django.contrib.auth", "AbstractBaseUser"),
+        ),
+        (
+            ("django.contrib.auth", "AbstractUser"),
+            ("django.contrib.auth", "PermissionsMixin"),
+        ),
+        (("django.contrib.auth", "User"), ("django.contrib.auth", "AbstractUser")),
+        (
+            ("django.contrib.sessions", "Session"),
+            ("django.contrib.sessions", "AbstractBaseSession"),
+        ),
+        (("tests", "AbstractMultipleInheritance"), ("tests", "AbstractSubclass1")),
+        (("tests", "AbstractMultipleInheritance"), ("tests", "AbstractSubclass2")),
+        (("tests", "AbstractSubclass1"), ("tests", "AbstractBase")),
+        (("tests", "AbstractSubclass2"), ("tests", "AbstractBase")),
+        (("tests", "Concrete"), ("tests", "Abstract")),
+        (("tests", "ConcreteInheritance"), ("tests", "ConcreteSubclass1")),
+        (("tests", "ConcreteInheritance"), ("tests", "ConcreteSubclass2")),
+        (("tests", "ConcreteSubclass1"), ("tests", "ConcreteBase")),
+        (("tests", "ConcreteSubclass2"), ("tests", "ConcreteBase")),
+        (("tests", "MixedMultipleInheritance"), ("tests", "AbstractBase")),
+        (("tests", "MixedMultipleInheritance"), ("tests", "ConcreteBase")),
         (("tests", "SubSubclass"), ("tests", "Subclass")),
         (("tests", "Subclass"), ("tests", "NoOutgoingConnections")),
         (("tests", "Subclass2"), ("tests", "OutgoingForeignKey")),
     ]
+    if DJANGO_LT_19:
+        expected.remove(
+            (
+                ("django.contrib.sessions", "Session"),
+                ("django.contrib.sessions", "AbstractBaseSession"),
+            )
+        )
     assert get_schema().inheritance == expected
 
 

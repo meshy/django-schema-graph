@@ -84,6 +84,8 @@ const fixModelStrings = (edges) => edges.map((pair) => {
 const edge_fk = {arrows: 'to'};
 const edge_m2m = {arrows: 'from;to'};
 const edge_1to1 = {arrows: {middle: {enabled: true}}};
+const edge_subclass = {dashes: true, arrows: 'to', label: 'Subclass'};
+const edge_proxy = {dashes: true, arrows: 'to', label: 'Proxy'};
 
 
 const options = {
@@ -101,7 +103,7 @@ const options = {
 export default {
   name: 'App',
   components: {Network},
-  props: ['models', 'connections'],
+  props: ['abstractModels', 'models', 'connections'],
   methods: {
     stabilizationProgress: function (ev) {
       const progress = (ev.iterations / ev.total) * 100;
@@ -119,15 +121,27 @@ export default {
     const connections = this.connections;
     let loaded = false;
 
+    const allApps = Object.keys(models).concat(Object.keys(abstractModels)).sort();
     let activeModels = {};
-    Object.keys(models).sort().forEach((app, i) => {
+    allApps.forEach((app, i) => {
       activeModels[app] = {
         active: true,
         models: {},
-        hardColor: getBorderColor(i, Object.keys(models).length),
-        softColor: getColor(i, Object.keys(models).length),
+        hardColor: getBorderColor(i, allApps.length),
+        softColor: getColor(i, allApps.length),
       };
+    });
+    Object.keys(models).forEach((app) => {
       for (const model of models[app]) {
+        activeModels[app].models[model] = {
+          active: true,
+          id: joinModelStrings([app, model]),
+          label: model,
+        };
+      };
+    });
+    Object.keys(abstractModels).forEach((app) => {
+      for (const model of abstractModels[app]) {
         activeModels[app].models[model] = {
           active: true,
           id: joinModelStrings([app, model]),
@@ -140,6 +154,8 @@ export default {
       ...fixModelStrings(connections.foreignkey).map(([from, to]) => ({...edge_fk, from, to})),
       ...fixModelStrings(connections.many2many).map(([from, to]) => ({...edge_m2m, from, to})),
       ...fixModelStrings(connections.one2one).map(([from, to]) => ({...edge_1to1, from, to})),
+      ...fixModelStrings(connections.subclass).map(([from, to]) => ({...edge_subclass, from, to})),
+      ...fixModelStrings(connections.proxy).map(([from, to]) => ({...edge_proxy, from, to})),
     ];
 
     return {
@@ -165,6 +181,24 @@ export default {
                   background: this.activeModels[app].softColor,
                   border: this.activeModels[app].hardColor,
                 },
+              });
+            }
+          });
+        }
+      });
+      Object.keys(abstractModels).forEach((app, appIndex) => {
+        if (this.activeModels[app].active) {
+          abstractModels[app].forEach((model) => {
+            if (this.activeModels[app].models[model].active) {
+              nodes.push({
+                app,
+                id: joinModelStrings([app, model]),
+                label: model,
+                color: {
+                  background: this.activeModels[app].softColor,
+                  border: this.activeModels[app].hardColor,
+                },
+                shapeProperties: {borderDashes: true},
               });
             }
           });
