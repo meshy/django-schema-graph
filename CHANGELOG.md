@@ -7,6 +7,9 @@ Version numbers should follow https://semver.org/spec/v2.0.0.html
 
 ## [Unreleased]
 
+
+## [1.1.0] - 2020-02-26
+
 ### Added
 
 - Abstract base models are now visible.
