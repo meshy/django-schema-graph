@@ -80,7 +80,7 @@ def get_schema():
     proxy = []
 
     for app, model in get_app_models():
-        app_label, model_name = model_id = get_model_id(model, app)
+        app_label, model_name = model_id = get_model_id(model)
         nodes[app_label] += (model_name,)
 
         # Proxy models
