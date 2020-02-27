@@ -9,6 +9,26 @@
     </v-btn>
     <v-navigation-drawer app temporary v-model="sidebar">
 
+      <v-toolbar flat>
+        <v-tooltip bottom attach=".main-app">
+          <template v-slot:activator="{ on }">
+            <v-btn v-on="on" @click="collapseAll">
+              <v-icon>mdi-arrow-collapse-all</v-icon>
+            </v-btn>
+          </template>
+          <span>Collapse all</span>
+        </v-tooltip>
+        <v-spacer></v-spacer>
+        <v-tooltip bottom attach=".main-app">
+          <template v-slot:activator="{ on }">
+            <v-btn v-on="on" @click="expandAll">
+              <v-icon>mdi-arrow-expand-all</v-icon>
+            </v-btn>
+          </template>
+          <span>Expand all</span>
+        </v-tooltip>
+      </v-toolbar>
+
       <v-list expand>
         <v-list-group
           v-for="app in Object.keys(activeModels)"
@@ -105,6 +125,16 @@ export default {
   components: {Network},
   props: ['abstractModels', 'models', 'connections'],
   methods: {
+    expandAll: function(ev) {
+      Object.keys(this.activeModels).forEach((app) => {
+        this.activeModels[app].active = true;
+      });
+    },
+    collapseAll: function(ev) {
+      Object.keys(this.activeModels).forEach((app) => {
+        this.activeModels[app].active = false;
+      });
+    },
     stabilizationProgress: function (ev) {
       const progress = (ev.iterations / ev.total) * 100;
       console.log(`Stabilization progress ${progress}%`);
