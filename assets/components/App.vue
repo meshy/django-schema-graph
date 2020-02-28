@@ -168,7 +168,10 @@ export default {
     const connections = this.connections;
     let loaded = false;
 
-    const allApps = Object.keys(models).concat(Object.keys(abstractModels)).sort();
+    const allApps = [...new Set([
+      ...Object.keys(models),
+      ...Object.keys(abstractModels)
+    ])].sort();
     let activeModels = {};
     allApps.forEach((app, i) => {
       activeModels[app] = {
