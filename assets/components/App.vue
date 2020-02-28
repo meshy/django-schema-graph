@@ -119,6 +119,30 @@ const options = {
   }
 };
 
+const modelNode = (app, model, softColor, hardColor) => {
+  return {
+    app,
+    id: joinModelStrings([app, model]),
+    label: model,
+    color: {
+      background: softColor,
+      border: hardColor,
+    },
+  }
+};
+const abstractModelNode = (app, model, softColor, hardColor) => {
+  return {
+    app,
+    id: joinModelStrings([app, model]),
+    label: model,
+    color: {
+      background: softColor,
+      border: hardColor,
+    },
+    shapeProperties: {borderDashes: true},
+  }
+};
+
 
 export default {
   name: 'App',
@@ -203,15 +227,7 @@ export default {
         if (this.activeModels[app].active) {
           models[app].forEach((model) => {
             if (this.activeModels[app].models[model].active) {
-              nodes.push({
-                app,
-                id: joinModelStrings([app, model]),
-                label: model,
-                color: {
-                  background: this.activeModels[app].softColor,
-                  border: this.activeModels[app].hardColor,
-                },
-              });
+              nodes.push(modelNode(app, model, this.activeModels[app].softColor, this.activeModels[app].hardColor));
             }
           });
         }
@@ -220,16 +236,7 @@ export default {
         if (this.activeModels[app].active) {
           abstractModels[app].forEach((model) => {
             if (this.activeModels[app].models[model].active) {
-              nodes.push({
-                app,
-                id: joinModelStrings([app, model]),
-                label: model,
-                color: {
-                  background: this.activeModels[app].softColor,
-                  border: this.activeModels[app].hardColor,
-                },
-                shapeProperties: {borderDashes: true},
-              });
+              nodes.push(abstractModelNode(app, model, this.activeModels[app].softColor, this.activeModels[app].hardColor));
             }
           });
         }
