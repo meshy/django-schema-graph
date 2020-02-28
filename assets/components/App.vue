@@ -131,16 +131,9 @@ const modelNode = (app, model, softColor, hardColor) => {
   }
 };
 const abstractModelNode = (app, model, softColor, hardColor) => {
-  return {
-    app,
-    id: joinModelStrings([app, model]),
-    label: model,
-    color: {
-      background: softColor,
-      border: hardColor,
-    },
-    shapeProperties: {borderDashes: true},
-  }
+  var node = modelNode(app, model, softColor, hardColor);
+  node.shapeProperties = {borderDashes: true}
+  return node
 };
 
 
