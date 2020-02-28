@@ -210,6 +210,7 @@ export default {
 
     return {
       activeModels,
+      allApps,
       loaded,
       edges,
       options,
@@ -218,21 +219,21 @@ export default {
   },
   computed: {
     nodes: function () {
+      const modelsAndFunctions = [
+        [models, modelNode],
+        [abstractModels, abstractModelNode]
+      ];
       var nodes = [];
-      Object.keys(models).forEach((app, appIndex) => {
-        if (this.activeModels[app].active) {
-          models[app].forEach((model) => {
-            if (this.activeModels[app].models[model].active) {
-              nodes.push(modelNode(app, model, this.activeModels[app].softColor, this.activeModels[app].hardColor));
-            }
-          });
-        }
-      });
-      Object.keys(abstractModels).forEach((app, appIndex) => {
-        if (this.activeModels[app].active) {
-          abstractModels[app].forEach((model) => {
-            if (this.activeModels[app].models[model].active) {
-              nodes.push(abstractModelNode(app, model, this.activeModels[app].softColor, this.activeModels[app].hardColor));
+      this.allApps.forEach((app, appIndex) => {
+        var appData = this.activeModels[app];
+        if (appData.active) {
+          modelsAndFunctions.forEach(([modelSet, node]) => {
+            if (modelSet.hasOwnProperty(app)) {
+              modelSet[app].forEach((model) => {
+                if (this.activeModels[app].models[model].active) {
+                  nodes.push(node(app, model, appData.softColor, appData.hardColor));
+                }
+              });
             }
           });
         }
