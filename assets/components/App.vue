@@ -103,7 +103,7 @@ const fixModelStrings = (edges) => edges.map((pair) => {
 
 const edge_fk = {arrows: 'to'};
 const edge_m2m = {arrows: 'from;to'};
-const edge_1to1 = {arrows: {middle: {enabled: true}}};
+const edge_1to1 = {arrows: {middle: {enabled: true, scaleFactor: 0.9, type: 'bar'}}};
 const edge_subclass = {dashes: true, arrows: 'to', label: 'Subclass'};
 const edge_proxy = {dashes: true, arrows: 'to', label: 'Proxy'};
 
@@ -113,7 +113,6 @@ const options = {
     smooth: {},
     arrows:{
       to: {scaleFactor: 0.8},
-      middle: {scaleFactor: 0.9, type: 'bar'},
       from: {scaleFactor: 0.8},
     }
   }
