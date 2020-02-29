@@ -79,10 +79,15 @@
   </div>
 </template>
 
-<style scoped>
+<style>
+  /* Override vuetify */
   .v-btn:not(.v-btn--text):not(.v-btn--outlined):focus::before {
-    opacity: 0; /* Override vuetify */
+    opacity: 0;
   }
+</style>
+
+<style scoped>
+  /* Own styles */
   .graph {
     height: 100vh;
   }
