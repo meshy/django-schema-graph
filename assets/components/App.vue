@@ -1,5 +1,6 @@
 <template>
   <div class="main-app">
+    <v-app>
     <v-btn fixed left top fab small
       color="#64B5F6"
       v-if="loaded"
@@ -74,6 +75,7 @@
       @stabilization-iterations-done="stabilizationIterationsDone"
     />
     <vue-progress-bar></vue-progress-bar>
+    </v-app>
   </div>
 </template>
 
@@ -81,12 +83,8 @@
   .v-btn:not(.v-btn--text):not(.v-btn--outlined):focus::before {
     opacity: 0; /* Override vuetify */
   }
-  .main-app {
-    display: flex;
+  .graph {
     height: 100vh;
-  }
-  .main-app > .graph {
-    flex-grow: 1;
   }
 </style>
 
