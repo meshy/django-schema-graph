@@ -35,27 +35,42 @@
             v-for="app in Object.keys(activeModels)"
             :key="app"
             v-model:value="activeModels[app].expanded"
-            :color="activeModels[app].hardColor"
+            :color="activeModels[app].visible ? activeModels[app].hardColor : inactiveColor"
           >
 
             <template v-slot:activator>
+              <v-list-item-icon
+                @click.stop="activeModels[app].visible = !activeModels[app].visible"
+              >
+                <v-icon
+                  v-if="activeModels[app].visible"
+                  v-bind:style="{color: activeModels[app].visible ? activeModels[app].hardColor : inactiveColor}"
+                >mdi-eye-outline</v-icon>
+                <v-icon v-else
+                  v-bind:style="{color: activeModels[app].visible ? activeModels[app].hardColor : inactiveColor}"
+                >mdi-eye-off-outline</v-icon>
+              </v-list-item-icon>
               <v-list-item-content>
                 <v-list-item-title
                   v-text="app"
-                  v-bind:style="{color: activeModels[app].hardColor}"
+                  v-bind:style="{color: activeModels[app].visible ? activeModels[app].hardColor : inactiveColor}"
                 ></v-list-item-title>
               </v-list-item-content>
             </template>
             <v-list-item dense link
               v-for="model, modelIndex in activeModels[app].models"
               :key="model.id"
+              :disabled="!activeModels[app].visible"
               @click="model.active = !model.active"
             >
               <v-list-item-content>
                 <v-list-item-title v-text="model.label"></v-list-item-title>
               </v-list-item-content>
               <v-list-item-action>
-                <v-icon v-if="model.active" :color="activeModels[app].hardColor" >
+                <v-icon v-if="!activeModels[app].visible && model.active">
+                  mdi-eye-outline
+                </v-icon>
+                <v-icon v-else-if="activeModels[app].visible && model.active" :color="activeModels[app].hardColor" >
                   mdi-eye-outline
                 </v-icon>
                 <v-icon v-else>
@@ -85,6 +100,9 @@
   /* Override vuetify */
   .v-btn:not(.v-btn--text):not(.v-btn--outlined):focus::before {
     opacity: 0;
+  }
+  .v-application--is-ltr .v-list-item__icon:first-child {
+    margin-right: 12px !important;
   }
   .v-application--is-ltr .v-list-item__icon:last-of-type:not(:only-child) {
     margin-left: 0 !important;
@@ -199,6 +217,7 @@ export default {
     allApps.forEach((app, i) => {
       activeModels[app] = {
         expanded: true,
+        visible: true,
         models: {},
         hardColor: getBorderColor(i, allApps.length),
         softColor: getColor(i, allApps.length),
@@ -260,6 +279,7 @@ export default {
     return {
       activeModels,
       allApps,
+      inactiveColor: 'rgba(0, 0, 0, 0.54)',
       loaded,
       edges,
       options,
@@ -275,18 +295,20 @@ export default {
       var nodes = [];
       this.allApps.forEach((app, appIndex) => {
         var appData = this.activeModels[app];
-        if (appData.expanded) {
-          modelsAndFunctions.forEach(([modelSet, node]) => {
-            if (modelSet.hasOwnProperty(app)) {
-              modelSet[app].forEach((model) => {
-                if (this.activeModels[app].models[model].active) {
-                  nodes.push(node(app, model, appData.softColor, appData.hardColor));
-                }
-              });
-            }
-          });
-        } else {
-          nodes.push(appNode(app, appData.softColor, appData.hardColor));
+        if (appData.visible) {
+          if (appData.expanded) {
+            modelsAndFunctions.forEach(([modelSet, node]) => {
+              if (modelSet.hasOwnProperty(app)) {
+                modelSet[app].forEach((model) => {
+                  if (this.activeModels[app].models[model].active) {
+                    nodes.push(node(app, model, appData.softColor, appData.hardColor));
+                  }
+                });
+              }
+            });
+          } else {
+            nodes.push(appNode(app, appData.softColor, appData.hardColor));
+          }
         }
       });
       return nodes;
