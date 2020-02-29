@@ -1,80 +1,80 @@
 <template>
   <div class="main-app">
     <v-app>
-    <v-btn fixed left top fab small
-      color="#64B5F6"
-      v-if="loaded"
-      @click="sidebar = true"
-    >
-      <v-icon>mdi-menu</v-icon>
-    </v-btn>
-    <v-navigation-drawer app temporary v-model="sidebar">
+      <v-btn fixed left top fab small
+        color="#64B5F6"
+        v-if="loaded"
+        @click="sidebar = true"
+      >
+        <v-icon>mdi-menu</v-icon>
+      </v-btn>
+      <v-navigation-drawer app temporary v-model="sidebar">
 
-      <v-toolbar flat>
-        <v-tooltip bottom attach=".main-app">
-          <template v-slot:activator="{ on }">
-            <v-btn v-on="on" @click="collapseAll">
-              <v-icon>mdi-arrow-collapse-all</v-icon>
-            </v-btn>
-          </template>
-          <span>Collapse all</span>
-        </v-tooltip>
-        <v-spacer></v-spacer>
-        <v-tooltip bottom attach=".main-app">
-          <template v-slot:activator="{ on }">
-            <v-btn v-on="on" @click="expandAll">
-              <v-icon>mdi-arrow-expand-all</v-icon>
-            </v-btn>
-          </template>
-          <span>Expand all</span>
-        </v-tooltip>
-      </v-toolbar>
+        <v-toolbar flat>
+          <v-tooltip bottom attach=".main-app">
+            <template v-slot:activator="{ on }">
+              <v-btn v-on="on" @click="collapseAll">
+                <v-icon>mdi-arrow-collapse-all</v-icon>
+              </v-btn>
+            </template>
+            <span>Collapse all</span>
+          </v-tooltip>
+          <v-spacer></v-spacer>
+          <v-tooltip bottom attach=".main-app">
+            <template v-slot:activator="{ on }">
+              <v-btn v-on="on" @click="expandAll">
+                <v-icon>mdi-arrow-expand-all</v-icon>
+              </v-btn>
+            </template>
+            <span>Expand all</span>
+          </v-tooltip>
+        </v-toolbar>
 
-      <v-list expand>
-        <v-list-group
-          v-for="app in Object.keys(activeModels)"
-          :key="app"
-          v-model:value="activeModels[app].active"
-          :color="activeModels[app].hardColor"
-        >
-
-          <template v-slot:activator>
-            <v-list-item-content>
-              <v-list-item-title
-                v-text="app"
-                v-bind:style="{color: activeModels[app].hardColor}"
-              ></v-list-item-title>
-            </v-list-item-content>
-          </template>
-          <v-list-item dense link
-            v-for="model, modelIndex in activeModels[app].models"
-            :key="model.id"
-            @click="model.active = !model.active"
+        <v-list expand>
+          <v-list-group
+            v-for="app in Object.keys(activeModels)"
+            :key="app"
+            v-model:value="activeModels[app].active"
+            :color="activeModels[app].hardColor"
           >
-            <v-list-item-content>
-              <v-list-item-title v-text="model.label"></v-list-item-title>
-            </v-list-item-content>
-            <v-list-item-action>
-              <v-checkbox
-                :color="activeModels[app].hardColor"
-                :input-value="model.active"
-              ></v-checkbox>
-            </v-list-item-action>
-          </v-list-item>
 
-        </v-list-group>
-      </v-list>
+            <template v-slot:activator>
+              <v-list-item-content>
+                <v-list-item-title
+                  v-text="app"
+                  v-bind:style="{color: activeModels[app].hardColor}"
+                ></v-list-item-title>
+              </v-list-item-content>
+            </template>
+            <v-list-item dense link
+              v-for="model, modelIndex in activeModels[app].models"
+              :key="model.id"
+              @click="model.active = !model.active"
+            >
+              <v-list-item-content>
+                <v-list-item-title v-text="model.label"></v-list-item-title>
+              </v-list-item-content>
+              <v-list-item-action>
+                <v-checkbox
+                  :color="activeModels[app].hardColor"
+                  :input-value="model.active"
+                ></v-checkbox>
+              </v-list-item-action>
+            </v-list-item>
 
-    </v-navigation-drawer>
-    <network
-      class="graph"
-      :nodes=nodes
-      :edges=edges
-      :options=options
-      @stabilization-progress="stabilizationProgress"
-      @stabilization-iterations-done="stabilizationIterationsDone"
-    />
-    <vue-progress-bar></vue-progress-bar>
+          </v-list-group>
+        </v-list>
+
+      </v-navigation-drawer>
+      <network
+        class="graph"
+        :nodes=nodes
+        :edges=edges
+        :options=options
+        @stabilization-progress="stabilizationProgress"
+        @stabilization-iterations-done="stabilizationIterationsDone"
+      />
+      <vue-progress-bar></vue-progress-bar>
     </v-app>
   </div>
 </template>
