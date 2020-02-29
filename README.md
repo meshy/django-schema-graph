@@ -6,9 +6,14 @@ will.
 
 It looks like this:
 
-![Django Schema Graph screenshot](docs-images/schema-graph.png)
+|               | Screenshot |
+| ---           | --- |
+| Models        | ![models screenshot](docs-images/models.png) |
+| Apps          | ![apps screenshot](docs-images/apps.png) |
+| Both together | ![models and apps screenshot](docs-images/combination.png) |
+| Graph editor  | ![menu screenshot](docs-images/menu.png) |
 
-(Apologies that the image above doesn't work on PyPI. [Check it out on
+(Apologies that the images above don't work on PyPI. [Check it out on
 GitHub](https://github.com/meshy/django-schema-graph/blob/master/README.md).)
 
 
