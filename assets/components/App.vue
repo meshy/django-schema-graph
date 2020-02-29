@@ -55,10 +55,12 @@
                 <v-list-item-title v-text="model.label"></v-list-item-title>
               </v-list-item-content>
               <v-list-item-action>
-                <v-checkbox
-                  :color="activeModels[app].hardColor"
-                  :input-value="model.active"
-                ></v-checkbox>
+                <v-icon v-if="model.active" :color="activeModels[app].hardColor" >
+                  mdi-eye-outline
+                </v-icon>
+                <v-icon v-else>
+                  mdi-eye-off-outline
+                </v-icon>
               </v-list-item-action>
             </v-list-item>
 
