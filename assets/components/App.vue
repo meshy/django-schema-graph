@@ -34,7 +34,7 @@
           <v-list-group
             v-for="app in Object.keys(activeModels)"
             :key="app"
-            v-model:value="activeModels[app].active"
+            v-model:value="activeModels[app].expanded"
             :color="activeModels[app].hardColor"
           >
 
@@ -165,12 +165,12 @@ export default {
   methods: {
     expandAll: function(ev) {
       Object.keys(this.activeModels).forEach((app) => {
-        this.activeModels[app].active = true;
+        this.activeModels[app].expanded = true;
       });
     },
     collapseAll: function(ev) {
       Object.keys(this.activeModels).forEach((app) => {
-        this.activeModels[app].active = false;
+        this.activeModels[app].expanded = false;
       });
     },
     stabilizationProgress: function (ev) {
@@ -196,7 +196,7 @@ export default {
     let activeModels = {};
     allApps.forEach((app, i) => {
       activeModels[app] = {
-        active: true,
+        expanded: true,
         models: {},
         hardColor: getBorderColor(i, allApps.length),
         softColor: getColor(i, allApps.length),
@@ -273,7 +273,7 @@ export default {
       var nodes = [];
       this.allApps.forEach((app, appIndex) => {
         var appData = this.activeModels[app];
-        if (appData.active) {
+        if (appData.expanded) {
           modelsAndFunctions.forEach(([modelSet, node]) => {
             if (modelSet.hasOwnProperty(app)) {
               modelSet[app].forEach((model) => {
