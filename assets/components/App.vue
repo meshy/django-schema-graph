@@ -30,7 +30,7 @@
           </v-tooltip>
         </v-toolbar>
 
-        <v-list expand>
+        <v-list expand dense>
           <v-list-group
             v-for="app in Object.keys(activeModels)"
             :key="app"
@@ -83,6 +83,12 @@
   /* Override vuetify */
   .v-btn:not(.v-btn--text):not(.v-btn--outlined):focus::before {
     opacity: 0;
+  }
+  .v-application--is-ltr .v-list-item__icon:last-of-type:not(:only-child) {
+    margin-left: 0 !important;
+  }
+  .v-list-group .v-list-group__header .v-list-item__icon.v-list-group__header__append-icon {
+    min-width: 24px !important;
   }
 </style>
 
