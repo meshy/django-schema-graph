@@ -9,7 +9,10 @@ Version numbers should follow https://semver.org/spec/v2.0.0.html
 
 ### Added
 
+- Collapsed model groups (apps) are now visible on the graph.
 - Expand-all / Collapse-all buttons in sidebar.
+- Show-all / Hide-all buttons in sidebar.
+
 
 ## [1.1.0] - 2020-02-26
 
