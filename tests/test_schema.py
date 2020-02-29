@@ -23,39 +23,6 @@ def test_abstract_models():
     assert get_schema().abstract_models == expected
 
 
-def test_apps():
-    expected = [
-        "django.contrib.auth",
-        "django.contrib.contenttypes",
-        "django.contrib.sessions",
-        "django.contrib.sites",
-        "tests.app_a",
-        "tests.app_b",
-        "tests.app_c",
-        "tests.app_d",
-        "tests.basic",
-        "tests.generic",
-        "tests.inheritance",
-        "tests.installed",
-        "tests.proxy",
-    ]
-    assert get_schema().apps == expected
-
-
-def test_app_dependencies():
-    expected = [
-        ("django.contrib.auth", "django.contrib.contenttypes"),
-        ("tests.app_a", "django.contrib.auth"),
-        ("tests.app_b", "django.contrib.auth"),
-        ("tests.app_c", "tests.app_b"),
-        ("tests.app_d", "tests.app_b"),
-        ("tests.app_d", "tests.app_c"),
-        ("tests.generic", "django.contrib.contenttypes"),
-        ("tests.installed", "tests.not_installed.models"),
-    ]
-    assert get_schema().app_dependencies == expected
-
-
 def test_models():
     expected = {
         "django.contrib.auth": ("Group", "Permission", "User"),

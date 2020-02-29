@@ -1,5 +1,4 @@
 from collections import defaultdict
-from itertools import chain
 
 from attr import attrib, attrs
 from django.apps import apps
@@ -10,11 +9,9 @@ from django.db import models
 class Schema(object):
     # Vertices
     abstract_models = attrib()
-    apps = attrib()
     models = attrib()
     proxies = attrib()
     # Edges
-    app_dependencies = attrib()
     foreign_keys = attrib()
     inheritance = attrib()
     many_to_manys = attrib()
@@ -118,20 +115,12 @@ def get_schema():
     for app_label in abstract_nodes:
         abstract_nodes[app_label] = tuple(sorted(abstract_nodes[app_label]))
 
-    app_dependencies = set()
-    connections = chain(foreign_keys, one_to_one, many_to_many, inheritance, proxy)
-    for ((app_1, _), (app_2, _)) in connections:
-        if app_1 != app_2:
-            app_dependencies.add((app_1, app_2))
-
     return Schema(
         # Vertices
         abstract_models=dict(abstract_nodes),
-        apps=sorted(nodes.keys()),
         models=dict(nodes),
         proxies=sorted(proxy),
         # Edges
-        app_dependencies=sorted(app_dependencies),
         foreign_keys=sorted(foreign_keys),
         inheritance=sorted(inheritance),
         many_to_manys=sorted(many_to_many),
