@@ -13,7 +13,7 @@
         <v-toolbar flat>
           <v-tooltip bottom attach=".main-app">
             <template v-slot:activator="{ on }">
-              <v-btn v-on="on" @click="collapseAll">
+              <v-btn small v-on="on" @click="collapseAll">
                 <v-icon>mdi-arrow-collapse-all</v-icon>
               </v-btn>
             </template>
@@ -22,7 +22,7 @@
           <v-spacer></v-spacer>
           <v-tooltip bottom attach=".main-app">
             <template v-slot:activator="{ on }">
-              <v-btn v-on="on" @click="expandAll">
+              <v-btn small v-on="on" @click="expandAll">
                 <v-icon>mdi-arrow-expand-all</v-icon>
               </v-btn>
             </template>
