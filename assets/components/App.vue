@@ -13,6 +13,24 @@
         <v-toolbar flat>
           <v-tooltip bottom attach=".main-app">
             <template v-slot:activator="{ on }">
+              <v-btn small v-on="on" @click="hideAll">
+                <v-icon>mdi-eye-off</v-icon>
+              </v-btn>
+            </template>
+            <span>Hide all</span>
+          </v-tooltip>
+          <v-spacer></v-spacer>
+          <v-tooltip bottom attach=".main-app">
+            <template v-slot:activator="{ on }">
+              <v-btn small v-on="on" @click="showAll">
+                <v-icon>mdi-eye</v-icon>
+              </v-btn>
+            </template>
+            <span>Show all</span>
+          </v-tooltip>
+          <v-spacer></v-spacer>
+          <v-tooltip bottom attach=".main-app">
+            <template v-slot:activator="{ on }">
               <v-btn small v-on="on" @click="collapseAll">
                 <v-icon>mdi-arrow-collapse-all</v-icon>
               </v-btn>
@@ -183,6 +201,16 @@ export default {
   components: {Network},
   props: ['abstractModels', 'models', 'connections'],
   methods: {
+    showAll: function(ev) {
+      Object.keys(this.activeModels).forEach((app) => {
+        this.activeModels[app].visible = true;
+      });
+    },
+    hideAll: function(ev) {
+      Object.keys(this.activeModels).forEach((app) => {
+        this.activeModels[app].visible = false;
+      });
+    },
     expandAll: function(ev) {
       Object.keys(this.activeModels).forEach((app) => {
         this.activeModels[app].expanded = true;
