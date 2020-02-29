@@ -213,22 +213,29 @@ export default {
     });
 
 
-    var interAppRelations = new Set();
+    var interAppRelations = [];
     Object.keys(connections).forEach((connectionType) => {
       for (const pair of connections[connectionType]) {
         const [from, to] = [pair[0], pair[1]];
         // Only external relations matter, not relations to self.
         if (from[0] != to[0]) {
           // Model -> App
-          interAppRelations.add([joinModelStrings(from), to[0]]);
+          interAppRelations.push([joinModelStrings(from), to[0]]);
           // App -> Model
-          interAppRelations.add([from[0], joinModelStrings(to)]);
+          interAppRelations.push([from[0], joinModelStrings(to)]);
           // App -> App
-          interAppRelations.add([from[0], to[0]]);
+          interAppRelations.push([from[0], to[0]]);
         }
       }
     });
-    interAppRelations = Array.from(interAppRelations);
+    // Unique sort.
+    interAppRelations = interAppRelations.filter(
+      function (relation, index, input) {
+        return index === input.findIndex(function (n) {
+          return n[0] == relation[0] && n[1] == relation[1]
+        });
+      }
+    ).sort();
 
     const edges = [
       ...fixModelStrings(connections.foreignkey).map(([from, to]) => ({...edge_fk, from, to})),
