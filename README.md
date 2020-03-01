@@ -6,7 +6,7 @@ will.
 
 It looks like this:
 
-|               | Screenshot |
+| Feature       | Screenshot |
 | ---           | --- |
 | Models        | ![models screenshot](docs-images/models.png) |
 | Apps          | ![apps screenshot](docs-images/apps.png) |
