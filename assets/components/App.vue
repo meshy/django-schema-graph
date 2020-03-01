@@ -76,6 +76,7 @@
               </v-list-item-content>
             </template>
             <v-list-item dense link
+              class="menu-model"
               v-for="model, modelIndex in activeModels[app].models"
               :key="model.id"
               :disabled="!activeModels[app].visible"
@@ -134,6 +135,9 @@
   /* Own styles */
   .graph {
     height: 100vh;
+  }
+  .menu-model {
+    padding-left: 52px;
   }
 </style>
 
