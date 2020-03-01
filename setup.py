@@ -4,7 +4,7 @@ import sys
 from setuptools import Command, find_packages, setup
 
 
-version = "1.1.0"
+version = "1.2.0"
 
 
 with open("README.md", "r") as fh:
