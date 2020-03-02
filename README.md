@@ -56,8 +56,9 @@ sensitive information about your website outside of local development.
 
 ## Support
 
-Tested with Django 1.8, and 1.11 - 3.0 on Python 2.7 and 3.5 - 3.8 (where those
-combinations make sense).
+Tests run on sensible combinations of:
+- Python (2.7, 3.5-3.8)
+- Django (1.8, 1.11-3.0)
 
 ## Alternatives
 
