@@ -41,7 +41,7 @@ Add to your URLs.
 from schema_graph.views import Schema
 urlpatterns += [
     # On Django 2+:
-    path("schema/" Schema.as_view()),
+    path("schema/", Schema.as_view()),
     # Or, on Django < 2:
     url(r"^schema/$", Schema.as_view()),
 ]
