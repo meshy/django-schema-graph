@@ -1,0 +1,17 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+django = "==1.8"
+django-environ = "*"
+pywatchman = "*"
+
+[packages]
+attrs = "*"
+pydeps = "*"
+django = "~=1.8"
+
+[requires]
+python_version = "2.7"
