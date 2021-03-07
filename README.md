@@ -57,7 +57,7 @@ sensitive information about your website outside of local development.
 ## Support
 
 Tests run on sensible combinations of:
-- Python (3.6-3.8)
+- Python (3.6-3.9)
 - Django (1.11-3.0)
 
 If you're stuck on old version of Python or Django, you may consider installing

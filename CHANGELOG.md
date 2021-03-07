@@ -13,6 +13,10 @@ Version numbers should follow https://semver.org/spec/v2.0.0.html
 - Dropped Python 3.5 support.
 - Dropped Django 1.8 support. 1.11 is now the minimum supported version.
 
+### Added
+
+- Added Python 3.9 support.
+
 
 ## [1.2.0] - 2020-03-01
 
