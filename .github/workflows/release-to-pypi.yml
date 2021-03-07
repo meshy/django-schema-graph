@@ -33,7 +33,7 @@ jobs:
 
       - name: Build python package
         run: |
-          python setup.py verify
+          ./verify-version.sh
           yarn run build
           python setup.py sdist
           python setup.py bdist_wheel

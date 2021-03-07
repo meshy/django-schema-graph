@@ -1,7 +1,7 @@
 import os
 import sys
 
-from setuptools import Command, find_packages, setup
+from setuptools import find_packages, setup
 
 
 version = "1.2.0"
@@ -11,28 +11,6 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 
-class VerifyVersionCommand(Command):
-    """Custom command to verify that the git tag matches our version."""
-
-    description = "verify that the git tag matches our version"
-    user_options = []
-
-    def initialize_options(self):
-        pass
-
-    def finalize_options(self):
-        pass
-
-    def run(self):
-        tag = os.getenv("GITHUB_REF")
-
-        if tag == "refs/tags/v" + version:
-            print("Git tag: {0} matches expected version.".format(tag))
-        else:
-            info = "Git tag: {0} does not match the version of this app: v{1}".format(
-                tag, version
-            )
-            sys.exit(info)
 
 
 setup(
@@ -60,7 +38,6 @@ setup(
         "Topic :: Documentation",
         "Topic :: Utilities",
     ],
-    cmdclass={"verify": VerifyVersionCommand},
     description="An interactive graph of your Django model structure.",
     include_package_data=True,
     install_requires=["attrs"],
