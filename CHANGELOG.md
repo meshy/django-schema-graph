@@ -10,6 +10,8 @@ Version numbers should follow https://semver.org/spec/v2.0.0.html
 ### Backwards incompatible
 
 - Dropped Python 2 support.
+- Dropped Django 1.8 support. 1.11 is now the minimum supported version.
+
 
 ## [1.2.0] - 2020-03-01
 
