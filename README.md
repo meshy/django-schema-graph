@@ -60,6 +60,14 @@ Tests run on sensible combinations of:
 - Python (3.5-3.8)
 - Django (1.11-3.0)
 
+If you're stuck on old version of Python or Django, you may consider installing
+old versions.
+They will probably have fewer features, and there will be no support for them.
+
+The last version to support Python 2.7 was 1.2.0
+
+The last version to support Django 1.8 was 1.2.0
+
 ## Alternatives
 
 - [`django-spaghetti-and-meatballs`](https://github.com/LegoStormtroopr/django-spaghetti-and-meatballs)
