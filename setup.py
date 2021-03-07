@@ -39,7 +39,7 @@ setup(
     author="Charlie Denton",
     author_email="charlie@meshy.co.uk",
     classifiers=[
-        "Development Status :: 1 - Planning",
+        "Development Status :: 4 - Beta",
         "Framework :: Django",
         "Framework :: Django :: 1.11",
         "Framework :: Django :: 2.0",
