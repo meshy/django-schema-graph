@@ -17,13 +17,9 @@ def debug_required(view_function):
     return view_wrapper
 
 
+@method_decorator(debug_required, name="dispatch")
 class Schema(TemplateView):
     template_name = "schema_graph/schema.html"
-
-    # Not using `name="dispatch"` here so that we can support Django 1.8.
-    @method_decorator(debug_required)
-    def dispatch(self, request, *args, **kwargs):
-        return super(Schema, self).dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         schema = get_schema()
