@@ -18,6 +18,10 @@ Version numbers should follow https://semver.org/spec/v2.0.0.html
 - Added Python 3.9 support.
 - Added Django 3.1 support.
 
+### Changed
+
+- Moved from `setup.py` to `poetry` for building released packages.
+
 
 ## [1.2.0] - 2020-03-01
 
