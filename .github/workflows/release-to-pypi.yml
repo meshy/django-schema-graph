@@ -25,7 +25,7 @@ jobs:
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install setuptools wheel twine
+          pip install setuptools wheel
 
       - name: Install JS dependencies
         run: |
@@ -35,13 +35,11 @@ jobs:
         run: |
           ./verify-version.sh
           yarn run build
-          python setup.py sdist
-          python setup.py bdist_wheel
-          twine check dist/*
+          poetry build
 
       - name: Upload to PyPI
         env:
-          TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
-          TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+          POETRY_HTTP_BASIC_PYPI_USERNAME: ${{ secrets.PYPI_USERNAME }}
+          POETRY_HTTP_BASIC_PYPI_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
         run: |
-          twine upload dist/*
+          poetry publish
