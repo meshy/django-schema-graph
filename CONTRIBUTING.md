@@ -20,9 +20,12 @@ This will watch the source files for changes and rebuild `main.js`
 
 ### Python
 
-Create a virtualenv and install `requirements.txt`
+Create a virtualenv, and install:
 
-Run `python run_test_server.py`
+    pip install pre-commit tox
+    pre-commit install
+
+Run the tests with `tox`.
 
 
 ## Source locations
