@@ -22,7 +22,7 @@ This will watch the source files for changes and rebuild `main.js`
 
 Create a virtualenv, and install:
 
-    pip install pre-commit tox
+    pip install pre-commit tox tox-poetry-dev-dependencies
     pre-commit install
 
 Run the tests with `tox`.
