@@ -63,7 +63,7 @@ setup(
     cmdclass={"verify": VerifyVersionCommand},
     description="An interactive graph of your Django model structure.",
     include_package_data=True,
-    install_requires=["attrs"],
+    install_requires=["attrs", "pydeps"],
     license="MIT",
     long_description=long_description,
     long_description_content_type="text/markdown",
