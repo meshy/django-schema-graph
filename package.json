@@ -15,7 +15,6 @@
     "babel-loader": "^8.0.6",
     "css-loader": "^3.4.2",
     "deepmerge": "^4.2.2",
-    "fibers": "^4.0.2",
     "sass": "^1.25.0",
     "sass-loader": "^8.0.2",
     "vis-network": "^7.3.4",
