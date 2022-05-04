@@ -14,3 +14,10 @@ else
     echo "GitHub ref does not match project version."
     exit 1
 fi
+
+if grep "## \[${version}\]" CHANGELOG.md > /dev/null ; then
+    echo "Version found in CHANGELOG.md"
+else
+    echo "Version not found in CHANGELOG.md"
+    exit 1
+fi
