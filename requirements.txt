@@ -1,4 +1,0 @@
-django-environ
-pre-commit==1.16.1
-pytest==4.3.0
-pytest-django
