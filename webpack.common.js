@@ -39,8 +39,8 @@ module.exports = {
   },
 
   plugins: [
-    new VuetifyLoaderPlugin(),
-    new VueLoaderPlugin()
+    new VueLoaderPlugin(),
+    new VuetifyLoaderPlugin()
   ],
 
   resolve: {
