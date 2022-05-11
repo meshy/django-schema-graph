@@ -266,6 +266,14 @@ export default {
     this.visData.edges = mountVisData(this, 'edges');
     this.network = new Network(container, this.visData, this.options);
 
+    this.network.on( 'doubleClick', function(properties) {
+      var adm_slug = properties.nodes.toString();
+      if (adm_slug.indexOf('Abstract') !== -1) {return}  //the abstract property should be inside properties
+      var n = adm_slug.lastIndexOf(".");
+      adm_slug = adm_slug.substring(n+1).replace("/", ".");
+      window.open("/admin/doc/models/" + adm_slug, '_blank');
+    });
+
     this.events.forEach(eventName =>
       this.network.on(eventName, props => this.$emit(translateEvent(eventName), props))
     );
