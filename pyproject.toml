@@ -19,6 +19,8 @@ classifiers = [
     "Framework :: Django :: 2.2",
     "Framework :: Django :: 3.0",
     "Framework :: Django :: 3.1",
+    "Framework :: Django :: 3.2",
+    "Framework :: Django :: 4.0",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
     "Natural Language :: English",
@@ -28,6 +30,7 @@ classifiers = [
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
     "Topic :: Database",
     "Topic :: Documentation",
     "Topic :: Utilities",
@@ -35,7 +38,7 @@ classifiers = [
 
 
 [tool.poetry.dependencies]
-python = ">=3.6,<3.10"
+python = ">=3.6,<3.11"
 attrs = ""
 
 [tool.poetry.dev-dependencies]
