@@ -8,7 +8,7 @@ version=$(poetry version --short)
 echo "GITHUB_REF = ${tag}"
 echo "Project version = ${version}"
 
-if [ "${tag}" == "${version}" ]; then
+if [ "${tag}" == "v${version}" ]; then
     echo "GitHub ref matches project version."
 else
     echo "GitHub ref does not match project version."
