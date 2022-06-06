@@ -142,7 +142,7 @@
 </style>
 
 <script>
-import Network from "./Network.vue";
+import { Network } from "vue-vis-network";
 
 const getColor = (index, numColors) => `hsl(${index * (360 / numColors)},50%,85%)`;
 const getBorderColor = (index, numColors) => `hsl(${index * (360 / numColors)},70%,40%)`;

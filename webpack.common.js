@@ -29,7 +29,6 @@ module.exports = {
             options: {
               implementation: require('sass'),
               sassOptions: {
-                fiber: require('fibers'),
                 indentedSyntax: true
               },
             },
@@ -40,8 +39,8 @@ module.exports = {
   },
 
   plugins: [
-    new VuetifyLoaderPlugin(),
-    new VueLoaderPlugin()
+    new VueLoaderPlugin(),
+    new VuetifyLoaderPlugin()
   ],
 
   resolve: {
