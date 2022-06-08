@@ -16,7 +16,10 @@ Version numbers should follow https://semver.org/spec/v2.0.0.html
 ### Added
 
 - Added Python 3.9 support.
+- Added Python 3.10 support.
 - Added Django 3.1 support.
+- Added Django 3.2 support.
+- Added Django 4.0 support.
 
 ### Changed
 
