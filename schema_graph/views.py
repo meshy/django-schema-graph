@@ -10,8 +10,12 @@ from schema_graph.schema import get_schema
 class Schema(TemplateView):
     template_name = "schema_graph/schema.html"
 
+    def access_permitted(self):
+        """When this returns True, the schema graph page is accessible."""
+        return settings.DEBUG
+
     def dispatch(self, request):
-        if not settings.DEBUG:
+        if not self.access_permitted():
             raise Http404()
         return super().dispatch(request)
 
