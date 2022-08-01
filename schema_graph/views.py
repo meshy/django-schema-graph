@@ -2,24 +2,18 @@ import json
 
 from django.conf import settings
 from django.http import Http404
-from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
 
 from schema_graph.schema import get_schema
 
 
-def debug_required(view_function):
-    def view_wrapper(request, *args, **kwargs):
-        if not settings.DEBUG:
-            raise Http404()
-        return view_function(request, *args, **kwargs)
-
-    return view_wrapper
-
-
-@method_decorator(debug_required, name="dispatch")
 class Schema(TemplateView):
     template_name = "schema_graph/schema.html"
+
+    def dispatch(self, request):
+        if not settings.DEBUG:
+            raise Http404()
+        return super().dispatch(request)
 
     def get_context_data(self, **kwargs):
         schema = get_schema()
