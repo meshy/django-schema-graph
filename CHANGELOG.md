@@ -7,6 +7,9 @@ Version numbers should follow https://semver.org/spec/v2.0.0.html
 
 ## [Unreleased]
 
+
+## [2.1.0] - 2022-08-01
+
 ### Added
 
 - Introduced `SCHEMA_GRAPH_VISIBLE` setting as a way to control access to the
