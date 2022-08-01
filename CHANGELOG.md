@@ -7,6 +7,17 @@ Version numbers should follow https://semver.org/spec/v2.0.0.html
 
 ## [Unreleased]
 
+### Added
+
+- Introduced `SCHEMA_GRAPH_VISIBLE` setting as a way to control access to the
+  `Schema` view. We will continue to default to using `DEBUG`.
+
+
+### Changed
+
+- We no longer use a decorator on the `Schema` view to override `dispatch`, and
+  now override it directly.
+
 
 ## [2.0.0] - 2022-08-01
 

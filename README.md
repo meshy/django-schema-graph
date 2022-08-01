@@ -51,8 +51,11 @@ urlpatterns += [
 
 Browse to `/schema/` (assuming that's where you put it in your URLs).
 
-Note: `DEBUG` mode is required, on the assumption that you don't want to leak
-sensitive information about your website outside of local development.
+You can control access to this page using the `SCHEMA_GRAPH_VISIBLE` setting,
+or by subclassing `schema_graph.views.Schema` and overriding `access_permitted`.
+By default the page is only visible when `DEBUG` is `True`,
+because we assume that you don't want to leak sensitive information about your
+website outside of local development.
 
 ## Support
 
