@@ -7,6 +7,9 @@ Version numbers should follow https://semver.org/spec/v2.0.0.html
 
 ## [Unreleased]
 
+
+## [2.0.0] - 2022-08-01
+
 ### Backwards incompatible
 
 - Dropped Python 2 support.
