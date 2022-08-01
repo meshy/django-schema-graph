@@ -19,3 +19,12 @@ class OutgoingForeignKey(models.Model):
 
 class OutgoingOneToOne(models.Model):
     connected = models.OneToOneField(Target, on_delete=models.CASCADE)
+
+
+class ThroughTable(models.Model):
+    source = models.ForeignKey("ManyToManyWithThroughTable", on_delete=models.CASCADE)
+    target = models.ForeignKey(Target, on_delete=models.CASCADE)
+
+
+class ManyToManyWithThroughTable(models.Model):
+    connected = models.ManyToManyField(Target, through=ThroughTable)

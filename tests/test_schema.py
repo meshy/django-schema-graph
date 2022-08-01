@@ -34,11 +34,13 @@ def test_models():
         "tests.app_c": ("InterAppOneToOne",),
         "tests.app_d": ("InterAppManyToMany", "InterAppProxy"),
         "tests.basic": (
+            "ManyToManyWithThroughTable",
             "OutgoingForeignKey",
             "OutgoingManyToMany",
             "OutgoingOneToOne",
             "SelfReference",
             "Target",
+            "ThroughTable",
         ),
         "tests.generic": ("GenericFK",),
         "tests.inheritance": (
@@ -67,6 +69,11 @@ def test_foreign_key():
         (("tests.app_b", "InterAppForeignKey"), ("django.contrib.auth", "User")),
         (("tests.basic", "OutgoingForeignKey"), ("tests.basic", "Target")),
         (("tests.basic", "SelfReference"), ("tests.basic", "SelfReference")),
+        (
+            ("tests.basic", "ThroughTable"),
+            ("tests.basic", "ManyToManyWithThroughTable"),
+        ),
+        (("tests.basic", "ThroughTable"), ("tests.basic", "Target")),
         (
             ("tests.generic", "GenericFK"),
             ("django.contrib.contenttypes", "ContentType"),
