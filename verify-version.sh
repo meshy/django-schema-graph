@@ -2,16 +2,16 @@
 
 set -e
 
-tag=${GITHUB_REF}
+tag=$(git describe --tags --abbrev=0 --exact-match)
 version=$(poetry version --short)
 
-echo "GITHUB_REF = ${tag}"
+echo "Current git tag = ${tag}"
 echo "Project version = ${version}"
 
 if [ "${tag}" == "v${version}" ]; then
-    echo "GitHub ref matches project version."
+    echo "Git tag matches project version"
 else
-    echo "GitHub ref does not match project version."
+    echo "Git tag does not match project version"
     exit 1
 fi
 
