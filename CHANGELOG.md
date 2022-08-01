@@ -25,6 +25,11 @@ Version numbers should follow https://semver.org/spec/v2.0.0.html
 
 - Moved from `setup.py` to `poetry` for building released packages.
 
+### Fixed
+
+- Many-to-many connections aren't added when using explicit through models.
+  The foreign-key connections from the through table are enough. #46
+
 
 ## [1.2.0] - 2020-03-01
 

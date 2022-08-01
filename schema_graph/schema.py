@@ -62,7 +62,12 @@ def get_field_relationships(model):
             one_to_one.append(relationship)
         # Many-to-many
         elif field.many_to_many and not field.auto_created:
-            many_to_many.append(relationship)
+            through_model = getattr(model, field.name).through
+            # We only add the M2M connection if the through-model is auto-created.
+            # This stops us from creating two sets of connections (because the
+            # connections will be created by the FK fields on the through model).
+            if through_model._meta.auto_created:
+                many_to_many.append(relationship)
 
     return foreign_keys, one_to_one, many_to_many
 
