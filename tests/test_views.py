@@ -36,19 +36,35 @@ def test_content():
     assert response.rendered_content.startswith("<!doctype html>")
 
 
-def test_debug():
-    """Schema should be accessible in DEBUG mode."""
+@pytest.mark.parametrize(
+    "settings_dict",
+    [
+        # SCHEMA_GRAPH_VISIBLE takes priority over DEBUG.
+        {"DEBUG": True, "SCHEMA_GRAPH_VISIBLE": True},
+        {"DEBUG": False, "SCHEMA_GRAPH_VISIBLE": True},
+        {"DEBUG": True},
+    ],
+)
+def test_accessible_settings(settings_dict):
     view = Schema.as_view()
     request = create_request()
-    with override_settings(DEBUG=True):
+    with override_settings(**settings_dict):
         response = view(request)
     assert response.status_code == 200
 
 
-def test_no_debug():
-    """Schema should be inaccessible outwith DEBUG mode."""
+@pytest.mark.parametrize(
+    "settings_dict",
+    [
+        # SCHEMA_GRAPH_VISIBLE takes priority over DEBUG.
+        {"DEBUG": True, "SCHEMA_GRAPH_VISIBLE": False},
+        {"DEBUG": False, "SCHEMA_GRAPH_VISIBLE": False},
+        {"DEBUG": False},
+    ],
+)
+def test_inaccessible_settings(settings_dict):
     view = Schema.as_view()
     request = create_request()
-    with override_settings(DEBUG=False):
+    with override_settings(**settings_dict):
         with pytest.raises(Http404):
             view(request)
