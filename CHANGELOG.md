@@ -17,6 +17,8 @@ Version numbers should follow https://semver.org/spec/v2.0.0.html
 
 - We no longer use a decorator on the `Schema` view to override `dispatch`, and
   now override it directly.
+- It is now possible to control access to the `Schema` view by subclassing and
+  overriding the `access_permitted` function.
 
 
 ## [2.0.0] - 2022-08-01
