@@ -7,6 +7,10 @@ Version numbers should follow https://semver.org/spec/v2.0.0.html
 
 ## [Unreleased]
 
+### Added
+
+- Added Python 3.11 support.
+
 ### Changed
 
 - Remove upper boundary on supported Python version.
@@ -17,6 +21,7 @@ Version numbers should follow https://semver.org/spec/v2.0.0.html
 ## Fixed
 
 - Fix broken CI by removing `tox-poetry-dev-dependencies`.
+
 
 ## [2.1.0] - 2022-08-01
 
