@@ -7,6 +7,13 @@ Version numbers should follow https://semver.org/spec/v2.0.0.html
 
 ## [Unreleased]
 
+## Fixed
+
+- Use `>=` to define minimum version numbers, not `~X.Y.Z`.
+  This fixes an issue where installing alongside other versions of `attrs`
+  caused an error:
+  `django-schema-graph 2.2.0 depends on attrs<22.0.0 and >=21.4.0`
+
 
 ## [2.2.0] - 2022-10-26
 
