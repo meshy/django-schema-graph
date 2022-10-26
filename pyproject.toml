@@ -38,7 +38,7 @@ classifiers = [
 
 
 [tool.poetry.dependencies]
-python = ">=3.6,<3.11"
+python = "^3.6"
 attrs = "^21.4.0"
 
 [tool.poetry.dev-dependencies]
