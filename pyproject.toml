@@ -40,8 +40,8 @@ classifiers = [
 
 
 [tool.poetry.dependencies]
-python = "^3.6"
-attrs = "^21.4.0"
+python = ">=3.6"
+attrs = ">=21.4.0"
 
 [tool.poetry.dev-dependencies]
 django-environ = "^0.4.5"
