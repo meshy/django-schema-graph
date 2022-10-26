@@ -7,6 +7,8 @@ Version numbers should follow https://semver.org/spec/v2.0.0.html
 
 ## [Unreleased]
 
+## [2.2.1] - 2022-10-26
+
 ## Fixed
 
 - Use `>=` to define minimum version numbers, not `~X.Y.Z`.
