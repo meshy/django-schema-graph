@@ -60,8 +60,8 @@ website outside of local development.
 ## Support
 
 Tests run on sensible combinations of:
-- Python (3.6-3.10)
-- Django (1.11-4.0)
+- Python (3.6-3.11)
+- Django (1.11-4.1)
 
 If you're stuck on old version of Python or Django, you may consider installing
 old versions.
