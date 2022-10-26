@@ -7,6 +7,9 @@ Version numbers should follow https://semver.org/spec/v2.0.0.html
 
 ## [Unreleased]
 
+
+## [2.2.0] - 2022-10-26
+
 ### Added
 
 - Added Python 3.11 support.
