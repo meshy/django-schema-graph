@@ -7,6 +7,10 @@ Version numbers should follow https://semver.org/spec/v2.0.0.html
 
 ## [Unreleased]
 
+### Changed
+
+- Python 3.10 tests now only run against Django 3.2+, because Django <3.2 does
+  not support Python 3.10.
 
 ## [2.1.0] - 2022-08-01
 
