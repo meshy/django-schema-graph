@@ -38,6 +38,6 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.8.3",
-    "vuetify": "^2.2.14"
+    "vuetify": "^2.6.10"
   }
 }
