@@ -18,6 +18,7 @@ def test_context():
     view = Schema(request=request)
     context = view.get_context_data()
     schema = get_schema()
+    assert json.loads(context["abstract_models"]) == schema.abstract_models
     assert json.loads(context["models"]) == schema.models
     assert json.loads(context["foreign_keys"]) == schema.foreign_keys
     assert json.loads(context["many_to_manys"]) == schema.many_to_manys
