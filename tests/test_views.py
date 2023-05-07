@@ -18,12 +18,12 @@ def test_context():
     view = Schema(request=request)
     context = view.get_context_data()
     schema = get_schema()
-    assert context["models"] == json.dumps(schema.models)
-    assert context["foreign_keys"] == json.dumps(schema.foreign_keys)
-    assert context["many_to_manys"] == json.dumps(schema.many_to_manys)
-    assert context["one_to_ones"] == json.dumps(schema.one_to_ones)
-    assert context["inheritance"] == json.dumps(schema.inheritance)
-    assert context["proxies"] == json.dumps(schema.proxies)
+    assert json.loads(context["models"]) == schema.models
+    assert json.loads(context["foreign_keys"]) == schema.foreign_keys
+    assert json.loads(context["many_to_manys"]) == schema.many_to_manys
+    assert json.loads(context["one_to_ones"]) == schema.one_to_ones
+    assert json.loads(context["inheritance"]) == schema.inheritance
+    assert json.loads(context["proxies"]) == schema.proxies
 
 
 def test_content():
