@@ -102,13 +102,11 @@
         </v-list>
 
       </v-navigation-drawer>
-      <network
+      <Graph
         class="graph"
         :nodes=nodes
         :edges=edges
-        :options=options
-        @stabilization-progress="stabilizationProgress"
-        @stabilization-iterations-done="stabilizationIterationsDone"
+        :completeLoad=completeLoad
       />
       <vue-progress-bar></vue-progress-bar>
     </v-app>
@@ -142,7 +140,8 @@
 </style>
 
 <script>
-import { Network } from "vue-vis-network";
+import Graph from "./Graph.vue";
+
 
 const getColor = (index, numColors) => `hsl(${index * (360 / numColors)},50%,85%)`;
 const getBorderColor = (index, numColors) => `hsl(${index * (360 / numColors)},70%,40%)`;
@@ -159,16 +158,6 @@ const edge_1to1 = {arrows: {middle: {enabled: true, scaleFactor: 0.9, type: 'bar
 const edge_subclass = {dashes: true, arrows: 'to', label: 'Subclass'};
 const edge_proxy = {dashes: true, arrows: 'to', label: 'Proxy'};
 
-
-const options = {
-  edges: {
-    smooth: {},
-    arrows:{
-      to: {scaleFactor: 0.8},
-      from: {scaleFactor: 0.8},
-    }
-  }
-};
 
 const appNode = (app, softColor, hardColor) => {
   return {
@@ -202,7 +191,7 @@ const abstractModelNode = (app, model, softColor, hardColor) => {
 
 export default {
   name: 'App',
-  components: {Network},
+  components: {Graph},
   props: ['abstractModels', 'models', 'connections'],
   methods: {
     showAll: function(ev) {
@@ -225,14 +214,7 @@ export default {
         this.activeModels[app].expanded = false;
       });
     },
-    stabilizationProgress: function (ev) {
-      const progress = (ev.iterations / ev.total) * 100;
-      console.log(`Stabilization progress ${progress}%`);
-      this.$Progress.set(progress);
-    },
-    stabilizationIterationsDone: function () {
-      console.log('Stabilization complete');
-      this.$Progress.finish();
+    completeLoad: function() {
       this.loaded = true;
     }
   },
@@ -314,7 +296,6 @@ export default {
       inactiveColor: 'rgba(0, 0, 0, 0.54)',
       loaded,
       edges,
-      options,
       sidebar: false,
     };
   },
