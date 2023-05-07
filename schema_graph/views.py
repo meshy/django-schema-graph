@@ -29,15 +29,24 @@ class Schema(TemplateView):
 
     def get_context_data(self, **kwargs):
         schema = get_schema()
+
+        abstract_models = schema.abstract_models
+        models = schema.models
+        foreign_keys = schema.foreign_keys
+        many_to_manys = schema.many_to_manys
+        one_to_ones = schema.one_to_ones
+        inheritance = schema.inheritance
+        proxies = schema.proxies
+
         kwargs.update(
             {
-                "abstract_models": json.dumps(schema.abstract_models),
-                "models": json.dumps(schema.models),
-                "foreign_keys": json.dumps(schema.foreign_keys),
-                "many_to_manys": json.dumps(schema.many_to_manys),
-                "one_to_ones": json.dumps(schema.one_to_ones),
-                "inheritance": json.dumps(schema.inheritance),
-                "proxies": json.dumps(schema.proxies),
+                "abstract_models": json.dumps(abstract_models),
+                "models": json.dumps(models),
+                "foreign_keys": json.dumps(foreign_keys),
+                "many_to_manys": json.dumps(many_to_manys),
+                "one_to_ones": json.dumps(one_to_ones),
+                "inheritance": json.dumps(inheritance),
+                "proxies": json.dumps(proxies),
             }
         )
         return super().get_context_data(**kwargs)
