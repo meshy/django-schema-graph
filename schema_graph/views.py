@@ -1,4 +1,5 @@
 import json
+from collections import defaultdict
 
 from django.conf import settings
 from django.http import Http404
@@ -30,13 +31,40 @@ class Schema(TemplateView):
     def get_context_data(self, **kwargs):
         schema = get_schema()
 
-        abstract_models = schema.abstract_models
-        models = schema.models
-        foreign_keys = schema.foreign_keys
-        many_to_manys = schema.many_to_manys
-        one_to_ones = schema.one_to_ones
-        inheritance = schema.inheritance
-        proxies = schema.proxies
+        old_ids = {node.id: (node.group, node.name) for node in schema.nodes}
+        abstract_models = defaultdict(list)
+        for node in schema.nodes:
+            if "abstract" in node.tags:
+                abstract_models[node.group].append(node.name)
+        models = defaultdict(list)
+        for node in schema.nodes:
+            if "abstract" not in node.tags:
+                models[node.group].append(node.name)
+        foreign_keys = [
+            (old_ids[edge.source], old_ids[edge.target])
+            for edge in schema.edges
+            if not edge.tags
+        ]
+        many_to_manys = [
+            (old_ids[edge.source], old_ids[edge.target])
+            for edge in schema.edges
+            if "many-to-many" in edge.tags
+        ]
+        one_to_ones = [
+            (old_ids[edge.source], old_ids[edge.target])
+            for edge in schema.edges
+            if "one-to-one" in edge.tags
+        ]
+        inheritance = [
+            (old_ids[edge.source], old_ids[edge.target])
+            for edge in schema.edges
+            if "subclass" in edge.tags
+        ]
+        proxies = [
+            (old_ids[edge.source], old_ids[edge.target])
+            for edge in schema.edges
+            if "proxy" in edge.tags
+        ]
 
         kwargs.update(
             {
