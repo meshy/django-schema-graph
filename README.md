@@ -60,16 +60,18 @@ website outside of local development.
 ## Support
 
 Tests run on sensible combinations of:
-- Python (3.6-3.11)
-- Django (1.11-4.1)
+- Python (3.10-3.11)
+- Django (3.2-4.1)
 
 If you're stuck on old version of Python or Django, you may consider installing
 old versions.
 They will probably have fewer features, and there will be no support for them.
 
-The last version to support Python 2.7 and 3.5 was 1.2.0
+The last version to support Python 2.7 and 3.5 was 1.2.0.
+The last version to support Python 3.6 to 3.9 was 2.2.1.
 
-The last version to support Django 1.8 was 1.2.0
+The last version to support Django 1.8 was 1.2.0.
+The last version to support Django 1.9 to 3.1 was 2.2.1.
 
 ## Alternatives
 
