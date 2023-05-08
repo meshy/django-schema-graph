@@ -14,7 +14,7 @@ import { Network } from "vue-vis-network";
 export default {
   name: "Graph",
   components: { Network },
-  props: ["nodes", "edges", "options", "completeLoad"],
+  props: ["nodes", "edges", "completeLoad"],
   data() {
     const options = {
       edges: {
