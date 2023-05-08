@@ -7,8 +7,6 @@
       />
       <Graph
         class="graph"
-        :nodes=graphData.getNodes()
-        :edges=graphData.edges
         :completeLoad=completeLoad
       />
       <vue-progress-bar></vue-progress-bar>
@@ -60,7 +58,6 @@ export default {
     return {
       inactiveColor: 'rgba(0, 0, 0, 0.54)',
       loaded,
-      graphData
     };
   },
 };

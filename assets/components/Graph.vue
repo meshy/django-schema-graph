@@ -1,7 +1,7 @@
 <template>
   <network
-    :nodes=nodes
-    :edges=edges
+    :nodes=graphData.getNodes()
+    :edges=graphData.edges
     :options=options
     @stabilization-progress="stabilizationProgress"
     @stabilization-iterations-done="stabilizationIterationsDone"
@@ -10,11 +10,12 @@
 
 <script>
 import { Network } from "vue-vis-network";
+import graphData from "../state/graphData.js";
 
 export default {
   name: "Graph",
   components: { Network },
-  props: ["nodes", "edges", "completeLoad"],
+  props: ["completeLoad"],
   data() {
     const options = {
       edges: {
@@ -26,7 +27,8 @@ export default {
       }
     };
     return {
-      options
+      options,
+      graphData,
     };
   },
   methods: {
