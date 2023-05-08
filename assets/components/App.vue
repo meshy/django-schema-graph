@@ -2,11 +2,6 @@
   <div class="main-app">
     <v-app>
       <GraphEditor
-        :activeModels=graphData.activeModels
-        :hideAll=graphData.hideAll
-        :showAll=graphData.showAll
-        :collapseAll=graphData.collapseAll
-        :expandAll=graphData.expandAll
         :inactiveColor=inactiveColor
         :loaded=loaded
       />

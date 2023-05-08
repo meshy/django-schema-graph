@@ -112,13 +112,19 @@
 </style>
 
 <script>
+import graphData from "../state/graphData.js";
 export default {
   name: "GraphEditor",
   components: {},
-  props: ["loaded", "activeModels", "hideAll", "showAll", "collapseAll", "expandAll", "inactiveColor"],
+  props: ["loaded", "inactiveColor"],
   data() {
     return {
       sidebar: false,
+      activeModels: graphData.activeModels,
+      hideAll: graphData.hideAll,
+      showAll: graphData.showAll,
+      collapseAll: graphData.collapseAll,
+      expandAll: graphData.expandAll,
     }
   },
   methods: {
