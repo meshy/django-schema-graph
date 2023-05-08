@@ -2,18 +2,18 @@
   <div class="main-app">
     <v-app>
       <GraphEditor
-        :activeModels=activeModels
-        :hideAll=hideAll
-        :showAll=showAll
-        :collapseAll=collapseAll
-        :expandAll=expandAll
+        :activeModels=graphData.activeModels
+        :hideAll=graphData.hideAll
+        :showAll=graphData.showAll
+        :collapseAll=graphData.collapseAll
+        :expandAll=graphData.expandAll
         :inactiveColor=inactiveColor
         :loaded=loaded
       />
       <Graph
         class="graph"
-        :nodes=nodes
-        :edges=edges
+        :nodes=graphData.getNodes()
+        :edges=graphData.edges
         :completeLoad=completeLoad
       />
       <vue-progress-bar></vue-progress-bar>
@@ -95,38 +95,55 @@ const abstractModelNode = (app, model, softColor, hardColor) => {
 };
 
 
-export default {
-  name: 'App',
-  components: {Graph, GraphEditor},
-  props: [],
-  methods: {
-    showAll: function(ev) {
-      Object.keys(this.activeModels).forEach((app) => {
-        this.activeModels[app].visible = true;
-      });
-    },
-    hideAll: function(ev) {
-      Object.keys(this.activeModels).forEach((app) => {
-        this.activeModels[app].visible = false;
-      });
-    },
-    expandAll: function(ev) {
-      Object.keys(this.activeModels).forEach((app) => {
-        this.activeModels[app].expanded = true;
-      });
-    },
-    collapseAll: function(ev) {
-      Object.keys(this.activeModels).forEach((app) => {
-        this.activeModels[app].expanded = false;
-      });
-    },
-    completeLoad: function() {
-      this.loaded = true;
-    }
+const graphData = {
+  edges: [],
+  showAll: function(ev) {
+    Object.keys(this.activeModels).forEach((app) => {
+      this.activeModels[app].visible = true;
+    });
   },
-  data() {
-    let loaded = false;
-
+  hideAll: function(ev) {
+    Object.keys(this.activeModels).forEach((app) => {
+      this.activeModels[app].visible = false;
+    });
+  },
+  expandAll: function(ev) {
+    Object.keys(this.activeModels).forEach((app) => {
+      this.activeModels[app].expanded = true;
+    });
+  },
+  collapseAll: function(ev) {
+    Object.keys(this.activeModels).forEach((app) => {
+      this.activeModels[app].expanded = false;
+    });
+  },
+  getNodes: function () {
+    const modelsAndFunctions = [
+      [models, modelNode],
+      [abstractModels, abstractModelNode]
+    ];
+    var nodes = [];
+    this.allApps.forEach((app, appIndex) => {
+      var appData = this.activeModels[app];
+      if (appData.visible) {
+        if (appData.expanded) {
+          modelsAndFunctions.forEach(([modelSet, node]) => {
+            if (modelSet.hasOwnProperty(app)) {
+              modelSet[app].forEach((model) => {
+                if (this.activeModels[app].models[model].active) {
+                  nodes.push(node(app, model, appData.softColor, appData.hardColor));
+                }
+              });
+            }
+          });
+        } else {
+          nodes.push(appNode(app, appData.softColor, appData.hardColor));
+        }
+      }
+    });
+    return nodes;
+  },
+  setup() {
     const allApps = [...new Set([
       ...Object.keys(models),
       ...Object.keys(abstractModels)
@@ -194,41 +211,31 @@ export default {
       ...interAppRelations.map(([from, to]) => ({...edge_app, from, to})),
     ];
 
+    this.activeModels = activeModels
+    this.allApps = allApps
+    this.edges = edges
+  },
+};
+
+
+export default {
+  name: 'App',
+  components: {Graph, GraphEditor},
+  props: [],
+  methods: {
+    completeLoad: function() {
+      this.loaded = true;
+    }
+  },
+  data() {
+    let loaded = false;
+    graphData.setup();
+
     return {
-      activeModels,
-      allApps,
       inactiveColor: 'rgba(0, 0, 0, 0.54)',
       loaded,
-      edges,
+      graphData
     };
-  },
-  computed: {
-    nodes: function () {
-      const modelsAndFunctions = [
-        [models, modelNode],
-        [abstractModels, abstractModelNode]
-      ];
-      var nodes = [];
-      this.allApps.forEach((app, appIndex) => {
-        var appData = this.activeModels[app];
-        if (appData.visible) {
-          if (appData.expanded) {
-            modelsAndFunctions.forEach(([modelSet, node]) => {
-              if (modelSet.hasOwnProperty(app)) {
-                modelSet[app].forEach((model) => {
-                  if (this.activeModels[app].models[model].active) {
-                    nodes.push(node(app, model, appData.softColor, appData.hardColor));
-                  }
-                });
-              }
-            });
-          } else {
-            nodes.push(appNode(app, appData.softColor, appData.hardColor));
-          }
-        }
-      });
-      return nodes;
-    },
   },
 };
 </script>
