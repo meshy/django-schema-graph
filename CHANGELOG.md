@@ -12,6 +12,11 @@ Version numbers should follow https://semver.org/spec/v2.0.0.html
 - Dropped support for Django < 3.2.
 - Dropped support for Python < 3.10.
 
+### Changed
+
+- Main "App" Vue component refactored into smaller component files.
+
+
 ## [2.2.1] - 2022-10-26
 
 ## Fixed
