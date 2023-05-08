@@ -98,7 +98,7 @@ const abstractModelNode = (app, model, softColor, hardColor) => {
 export default {
   name: 'App',
   components: {Graph, GraphEditor},
-  props: ['abstractModels', 'models', 'connections'],
+  props: [],
   methods: {
     showAll: function(ev) {
       Object.keys(this.activeModels).forEach((app) => {
@@ -125,8 +125,6 @@ export default {
     }
   },
   data() {
-    const models = this.models;
-    const connections = this.connections;
     let loaded = false;
 
     const allApps = [...new Set([
