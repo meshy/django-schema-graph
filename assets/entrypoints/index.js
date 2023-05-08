@@ -10,6 +10,6 @@ Vue.use(VueProgressBar, {
 new Vue({
   vuetify,
   render: function (h) {
-    return h(App, {props: {models: window.models, connections: window.connections}});
+    return h(App);
   }
 }).$mount(`#schema-graph-app`);
