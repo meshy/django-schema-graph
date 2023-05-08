@@ -1,6 +1,6 @@
 <template>
   <network
-    :nodes=graphData.getNodes()
+    :nodes=graphData.nodes
     :edges=graphData.edges
     :options=options
     @stabilization-progress="stabilizationProgress"

@@ -50,23 +50,27 @@ export default {
     Object.keys(this.activeModels).forEach((app) => {
       this.activeModels[app].visible = true;
     });
+    this.updateNodes();
   },
   hideAll: function(ev) {
     Object.keys(this.activeModels).forEach((app) => {
       this.activeModels[app].visible = false;
     });
+    this.updateNodes();
   },
   expandAll: function(ev) {
     Object.keys(this.activeModels).forEach((app) => {
       this.activeModels[app].expanded = true;
     });
+    this.updateNodes();
   },
   collapseAll: function(ev) {
     Object.keys(this.activeModels).forEach((app) => {
       this.activeModels[app].expanded = false;
     });
+    this.updateNodes();
   },
-  getNodes: function () {
+  updateNodes: function () {
     const modelsAndFunctions = [
       [models, modelNode],
       [abstractModels, abstractModelNode]
@@ -90,7 +94,7 @@ export default {
         }
       }
     });
-    return nodes;
+    this.nodes = nodes;
   },
   setup() {
     const allApps = [...new Set([
@@ -163,5 +167,6 @@ export default {
     this.activeModels = activeModels
     this.allApps = allApps
     this.edges = edges
+    this.updateNodes();
   },
 };
