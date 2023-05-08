@@ -40,4 +40,4 @@ class Schema(TemplateView):
                 "proxies": json.dumps(schema.proxies),
             }
         )
-        return super(Schema, self).get_context_data(**kwargs)
+        return super().get_context_data(**kwargs)
