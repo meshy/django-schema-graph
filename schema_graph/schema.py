@@ -6,7 +6,7 @@ from django.db import models
 
 
 @attrs
-class Schema(object):
+class Schema:
     # Vertices
     abstract_models = attrib()
     models = attrib()
