@@ -70,6 +70,18 @@ export default {
     });
     this.updateNodes();
   },
+  setAppExpanded: function(app, expanded) {
+    this.activeModels[app].expanded = expanded;
+    this.updateNodes();
+  },
+  setAppVisible: function(app, visible) {
+    this.activeModels[app].visible = visible;
+    this.updateNodes();
+  },
+  setModelActive: function(app, model, active) {
+    this.activeModels[app].models[model].active = active;
+    this.updateNodes();
+  },
   updateNodes: function () {
     const modelsAndFunctions = [
       [models, modelNode],
