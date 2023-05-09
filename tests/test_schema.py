@@ -1,188 +1,421 @@
 import django
 
-from schema_graph.schema import get_schema
+from schema_graph import schema
 
 
 DJANGO_LT_19 = django.VERSION < (1, 9, 0)
 
 
-def test_abstract_models():
-    expected = {
-        "django.contrib.auth": ("AbstractBaseUser", "AbstractUser", "PermissionsMixin"),
-        "django.contrib.sessions": ("AbstractBaseSession",),
-        "tests.inheritance": (
-            "Abstract",
-            "AbstractBase",
-            "AbstractSubclass1",
-            "AbstractSubclass2",
+def test_nodes():
+    assert schema.get_schema().nodes == (
+        schema.Node(
+            id="django.contrib.auth.base_user.AbstractBaseUser",
+            name="AbstractBaseUser",
+            group="django.contrib.auth",
+            tags=("abstract",),
         ),
-        "tests.not_installed.models": ("AbstractNotInstalled",),
-    }
-    if DJANGO_LT_19:
-        expected.pop("django.contrib.sessions")
-    assert get_schema().abstract_models == expected
-
-
-def test_models():
-    expected = {
-        "django.contrib.auth": ("Group", "Permission", "User"),
-        "django.contrib.contenttypes": ("ContentType",),
-        "django.contrib.sessions": ("Session",),
-        "django.contrib.sites": ("Site",),
-        "tests.app_a": ("InterAppSubclass",),
-        "tests.app_b": ("InterAppForeignKey",),
-        "tests.app_c": ("InterAppOneToOne",),
-        "tests.app_d": ("InterAppManyToMany", "InterAppProxy"),
-        "tests.basic": (
-            "ManyToManyWithThroughTable",
-            "OutgoingForeignKey",
-            "OutgoingManyToMany",
-            "OutgoingOneToOne",
-            "SelfReference",
-            "Target",
-            "ThroughTable",
+        schema.Node(
+            id="django.contrib.auth.models.AbstractUser",
+            name="AbstractUser",
+            group="django.contrib.auth",
+            tags=("abstract",),
         ),
-        "tests.generic": ("GenericFK",),
-        "tests.inheritance": (
-            "AbstractMultipleInheritance",
-            "Concrete",
-            "ConcreteBase",
-            "ConcreteInheritance",
-            "ConcreteSubclass1",
-            "ConcreteSubclass2",
-            "MixedMultipleInheritance",
-            "SubSubclass",
-            "Subclass",
+        schema.Node(
+            id="django.contrib.auth.models.Group",
+            name="Group",
+            group="django.contrib.auth",
         ),
-        "tests.installed": ("ConcreteInstalled",),
-        "tests.proxy": ("ProxyNode", "ProxyNode2", "Target"),
-    }
-    assert get_schema().models == expected
+        schema.Node(
+            id="django.contrib.auth.models.Permission",
+            name="Permission",
+            group="django.contrib.auth",
+        ),
+        schema.Node(
+            id="django.contrib.auth.models.PermissionsMixin",
+            name="PermissionsMixin",
+            group="django.contrib.auth",
+            tags=("abstract",),
+        ),
+        schema.Node(
+            id="django.contrib.auth.models.User",
+            name="User",
+            group="django.contrib.auth",
+        ),
+        schema.Node(
+            id="django.contrib.contenttypes.models.ContentType",
+            name="ContentType",
+            group="django.contrib.contenttypes",
+        ),
+        schema.Node(
+            id="django.contrib.sessions.base_session.AbstractBaseSession",
+            name="AbstractBaseSession",
+            group="django.contrib.sessions",
+            tags=("abstract",),
+        ),
+        schema.Node(
+            id="django.contrib.sessions.models.Session",
+            name="Session",
+            group="django.contrib.sessions",
+        ),
+        schema.Node(
+            id="django.contrib.sites.models.Site",
+            name="Site",
+            group="django.contrib.sites",
+        ),
+        schema.Node(
+            id="tests.app_a.models.InterAppSubclass",
+            name="InterAppSubclass",
+            group="tests.app_a",
+        ),
+        schema.Node(
+            id="tests.app_b.models.InterAppForeignKey",
+            name="InterAppForeignKey",
+            group="tests.app_b",
+        ),
+        schema.Node(
+            id="tests.app_c.models.InterAppOneToOne",
+            name="InterAppOneToOne",
+            group="tests.app_c",
+        ),
+        schema.Node(
+            id="tests.app_d.models.InterAppManyToMany",
+            name="InterAppManyToMany",
+            group="tests.app_d",
+        ),
+        schema.Node(
+            id="tests.app_d.models.InterAppProxy",
+            name="InterAppProxy",
+            group="tests.app_d",
+            tags=("proxy",),
+        ),
+        schema.Node(
+            id="tests.basic.models.ManyToManyWithThroughTable",
+            name="ManyToManyWithThroughTable",
+            group="tests.basic",
+        ),
+        schema.Node(
+            id="tests.basic.models.OutgoingForeignKey",
+            name="OutgoingForeignKey",
+            group="tests.basic",
+        ),
+        schema.Node(
+            id="tests.basic.models.OutgoingManyToMany",
+            name="OutgoingManyToMany",
+            group="tests.basic",
+        ),
+        schema.Node(
+            id="tests.basic.models.OutgoingOneToOne",
+            name="OutgoingOneToOne",
+            group="tests.basic",
+        ),
+        schema.Node(
+            id="tests.basic.models.SelfReference",
+            name="SelfReference",
+            group="tests.basic",
+        ),
+        schema.Node(
+            id="tests.basic.models.Target",
+            name="Target",
+            group="tests.basic",
+        ),
+        schema.Node(
+            id="tests.basic.models.ThroughTable",
+            name="ThroughTable",
+            group="tests.basic",
+        ),
+        schema.Node(
+            id="tests.generic.models.GenericFK",
+            name="GenericFK",
+            group="tests.generic",
+        ),
+        schema.Node(
+            id="tests.inheritance.models.Abstract",
+            name="Abstract",
+            tags=("abstract",),
+            group="tests.inheritance",
+        ),
+        schema.Node(
+            id="tests.inheritance.models.AbstractBase",
+            name="AbstractBase",
+            group="tests.inheritance",
+            tags=("abstract",),
+        ),
+        schema.Node(
+            id="tests.inheritance.models.AbstractMultipleInheritance",
+            name="AbstractMultipleInheritance",
+            group="tests.inheritance",
+        ),
+        schema.Node(
+            id="tests.inheritance.models.AbstractSubclass1",
+            name="AbstractSubclass1",
+            group="tests.inheritance",
+            tags=("abstract",),
+        ),
+        schema.Node(
+            id="tests.inheritance.models.AbstractSubclass2",
+            name="AbstractSubclass2",
+            group="tests.inheritance",
+            tags=("abstract",),
+        ),
+        schema.Node(
+            id="tests.inheritance.models.Concrete",
+            name="Concrete",
+            group="tests.inheritance",
+        ),
+        schema.Node(
+            id="tests.inheritance.models.ConcreteBase",
+            name="ConcreteBase",
+            group="tests.inheritance",
+        ),
+        schema.Node(
+            id="tests.inheritance.models.ConcreteInheritance",
+            name="ConcreteInheritance",
+            group="tests.inheritance",
+        ),
+        schema.Node(
+            id="tests.inheritance.models.ConcreteSubclass1",
+            name="ConcreteSubclass1",
+            group="tests.inheritance",
+        ),
+        schema.Node(
+            id="tests.inheritance.models.ConcreteSubclass2",
+            name="ConcreteSubclass2",
+            group="tests.inheritance",
+        ),
+        schema.Node(
+            id="tests.inheritance.models.MixedMultipleInheritance",
+            name="MixedMultipleInheritance",
+            group="tests.inheritance",
+        ),
+        schema.Node(
+            id="tests.inheritance.models.SubSubclass",
+            name="SubSubclass",
+            group="tests.inheritance",
+        ),
+        schema.Node(
+            id="tests.inheritance.models.Subclass",
+            name="Subclass",
+            group="tests.inheritance",
+        ),
+        schema.Node(
+            id="tests.installed.models.ConcreteInstalled",
+            name="ConcreteInstalled",
+            group="tests.installed",
+        ),
+        schema.Node(
+            id="tests.not_installed.models.AbstractNotInstalled",
+            name="AbstractNotInstalled",
+            group="tests.not_installed.models",
+            tags=("abstract",),
+        ),
+        schema.Node(
+            id="tests.proxy.models.ProxyNode",
+            name="ProxyNode",
+            group="tests.proxy",
+            tags=("proxy",),
+        ),
+        schema.Node(
+            id="tests.proxy.models.ProxyNode2",
+            name="ProxyNode2",
+            group="tests.proxy",
+            tags=("proxy",),
+        ),
+        schema.Node(
+            id="tests.proxy.models.Target",
+            name="Target",
+            group="tests.proxy",
+        ),
+    )
 
 
-def test_foreign_key():
+def test_edges():
     expected = [
-        (
-            ("django.contrib.auth", "Permission"),
-            ("django.contrib.contenttypes", "ContentType"),
+        schema.Edge(
+            "django.contrib.auth.models.AbstractUser",
+            "django.contrib.auth.base_user.AbstractBaseUser",
+            tags=("subclass",),
         ),
-        (("tests.app_b", "InterAppForeignKey"), ("django.contrib.auth", "User")),
-        (("tests.basic", "OutgoingForeignKey"), ("tests.basic", "Target")),
-        (("tests.basic", "SelfReference"), ("tests.basic", "SelfReference")),
-        (
-            ("tests.basic", "ThroughTable"),
-            ("tests.basic", "ManyToManyWithThroughTable"),
+        schema.Edge(
+            "django.contrib.auth.models.AbstractUser",
+            "django.contrib.auth.models.PermissionsMixin",
+            tags=("subclass",),
         ),
-        (("tests.basic", "ThroughTable"), ("tests.basic", "Target")),
-        (
-            ("tests.generic", "GenericFK"),
-            ("django.contrib.contenttypes", "ContentType"),
+        schema.Edge(
+            "django.contrib.auth.models.Group",
+            "django.contrib.auth.models.Permission",
+            tags=("many-to-many",),
         ),
-    ]
-    assert get_schema().foreign_keys == expected
-
-
-def test_one_to_one():
-    expected = [
-        (("tests.app_c", "InterAppOneToOne"), ("tests.app_b", "InterAppForeignKey")),
-        (("tests.basic", "OutgoingOneToOne"), ("tests.basic", "Target")),
-        (
-            ("tests.inheritance", "ConcreteSubclass2"),
-            ("tests.inheritance", "ConcreteBase"),
+        schema.Edge(
+            "django.contrib.auth.models.Permission",
+            "django.contrib.contenttypes.models.ContentType",
         ),
-    ]
-    assert get_schema().one_to_ones == expected
-
-
-def test_many_to_many():
-    expected = [
-        (("django.contrib.auth", "Group"), ("django.contrib.auth", "Permission")),
-        (("django.contrib.auth", "User"), ("django.contrib.auth", "Group")),
-        (("django.contrib.auth", "User"), ("django.contrib.auth", "Permission")),
-        (("tests.app_d", "InterAppManyToMany"), ("tests.app_b", "InterAppForeignKey")),
-        (("tests.basic", "OutgoingManyToMany"), ("tests.basic", "Target")),
-    ]
-    assert get_schema().many_to_manys == expected
-
-
-def test_inheritance():
-    expected = [
-        (
-            ("django.contrib.auth", "AbstractUser"),
-            ("django.contrib.auth", "AbstractBaseUser"),
+        schema.Edge(
+            "django.contrib.auth.models.User",
+            "django.contrib.auth.models.AbstractUser",
+            tags=("subclass",),
         ),
-        (
-            ("django.contrib.auth", "AbstractUser"),
-            ("django.contrib.auth", "PermissionsMixin"),
+        schema.Edge(
+            "django.contrib.auth.models.User",
+            "django.contrib.auth.models.Group",
+            tags=("many-to-many",),
         ),
-        (("django.contrib.auth", "User"), ("django.contrib.auth", "AbstractUser")),
-        (
-            ("django.contrib.sessions", "Session"),
-            ("django.contrib.sessions", "AbstractBaseSession"),
+        schema.Edge(
+            "django.contrib.auth.models.User",
+            "django.contrib.auth.models.Permission",
+            tags=("many-to-many",),
         ),
-        (("tests.app_a", "InterAppSubclass"), ("django.contrib.auth", "Group")),
-        (
-            ("tests.inheritance", "AbstractMultipleInheritance"),
-            ("tests.inheritance", "AbstractSubclass1"),
+        schema.Edge(
+            "django.contrib.sessions.models.Session",
+            "django.contrib.sessions.base_session.AbstractBaseSession",
+            tags=("subclass",),
         ),
-        (
-            ("tests.inheritance", "AbstractMultipleInheritance"),
-            ("tests.inheritance", "AbstractSubclass2"),
+        schema.Edge(
+            "tests.app_a.models.InterAppSubclass",
+            "django.contrib.auth.models.Group",
+            tags=("subclass",),
         ),
-        (
-            ("tests.inheritance", "AbstractSubclass1"),
-            ("tests.inheritance", "AbstractBase"),
+        schema.Edge(
+            "tests.app_b.models.InterAppForeignKey",
+            "django.contrib.auth.models.User",
         ),
-        (
-            ("tests.inheritance", "AbstractSubclass2"),
-            ("tests.inheritance", "AbstractBase"),
+        schema.Edge(
+            "tests.app_c.models.InterAppOneToOne",
+            "tests.app_b.models.InterAppForeignKey",
+            tags=("one-to-one",),
         ),
-        (("tests.inheritance", "Concrete"), ("tests.inheritance", "Abstract")),
-        (
-            ("tests.inheritance", "ConcreteInheritance"),
-            ("tests.inheritance", "ConcreteSubclass1"),
+        schema.Edge(
+            "tests.app_d.models.InterAppManyToMany",
+            "tests.app_b.models.InterAppForeignKey",
+            tags=("many-to-many",),
         ),
-        (
-            ("tests.inheritance", "ConcreteInheritance"),
-            ("tests.inheritance", "ConcreteSubclass2"),
+        schema.Edge(
+            "tests.app_d.models.InterAppProxy",
+            "tests.app_c.models.InterAppOneToOne",
+            tags=("proxy",),
         ),
-        (
-            ("tests.inheritance", "ConcreteSubclass1"),
-            ("tests.inheritance", "ConcreteBase"),
+        schema.Edge(
+            "tests.basic.models.OutgoingForeignKey",
+            "tests.basic.models.Target",
         ),
-        (
-            ("tests.inheritance", "ConcreteSubclass2"),
-            ("tests.inheritance", "ConcreteBase"),
+        schema.Edge(
+            "tests.basic.models.OutgoingManyToMany",
+            "tests.basic.models.Target",
+            tags=("many-to-many",),
         ),
-        (
-            ("tests.inheritance", "MixedMultipleInheritance"),
-            ("tests.inheritance", "AbstractBase"),
+        schema.Edge(
+            "tests.basic.models.OutgoingOneToOne",
+            "tests.basic.models.Target",
+            tags=("one-to-one",),
         ),
-        (
-            ("tests.inheritance", "MixedMultipleInheritance"),
-            ("tests.inheritance", "ConcreteBase"),
+        schema.Edge(
+            "tests.basic.models.SelfReference",
+            "tests.basic.models.SelfReference",
         ),
-        (("tests.inheritance", "SubSubclass"), ("tests.inheritance", "Subclass")),
-        (("tests.inheritance", "Subclass"), ("tests.inheritance", "ConcreteBase")),
-        (
-            ("tests.installed", "ConcreteInstalled"),
-            ("tests.not_installed.models", "AbstractNotInstalled"),
+        schema.Edge(
+            "tests.basic.models.ThroughTable",
+            "tests.basic.models.ManyToManyWithThroughTable",
+        ),
+        schema.Edge(
+            "tests.basic.models.ThroughTable",
+            "tests.basic.models.Target",
+        ),
+        schema.Edge(
+            "tests.generic.models.GenericFK",
+            "django.contrib.contenttypes.models.ContentType",
+        ),
+        schema.Edge(
+            "tests.inheritance.models.AbstractMultipleInheritance",
+            "tests.inheritance.models.AbstractSubclass1",
+            tags=("subclass",),
+        ),
+        schema.Edge(
+            "tests.inheritance.models.AbstractMultipleInheritance",
+            "tests.inheritance.models.AbstractSubclass2",
+            tags=("subclass",),
+        ),
+        schema.Edge(
+            "tests.inheritance.models.AbstractSubclass1",
+            "tests.inheritance.models.AbstractBase",
+            tags=("subclass",),
+        ),
+        schema.Edge(
+            "tests.inheritance.models.AbstractSubclass2",
+            "tests.inheritance.models.AbstractBase",
+            tags=("subclass",),
+        ),
+        schema.Edge(
+            "tests.inheritance.models.Concrete",
+            "tests.inheritance.models.Abstract",
+            tags=("subclass",),
+        ),
+        schema.Edge(
+            "tests.inheritance.models.ConcreteInheritance",
+            "tests.inheritance.models.ConcreteSubclass1",
+            tags=("subclass",),
+        ),
+        schema.Edge(
+            "tests.inheritance.models.ConcreteInheritance",
+            "tests.inheritance.models.ConcreteSubclass2",
+            tags=("subclass",),
+        ),
+        schema.Edge(
+            "tests.inheritance.models.ConcreteSubclass1",
+            "tests.inheritance.models.ConcreteBase",
+            tags=("subclass",),
+        ),
+        schema.Edge(
+            "tests.inheritance.models.ConcreteSubclass2",
+            "tests.inheritance.models.ConcreteBase",
+            tags=("one-to-one",),
+        ),
+        schema.Edge(
+            "tests.inheritance.models.ConcreteSubclass2",
+            "tests.inheritance.models.ConcreteBase",
+            tags=("subclass",),
+        ),
+        schema.Edge(
+            "tests.inheritance.models.MixedMultipleInheritance",
+            "tests.inheritance.models.AbstractBase",
+            tags=("subclass",),
+        ),
+        schema.Edge(
+            "tests.inheritance.models.MixedMultipleInheritance",
+            "tests.inheritance.models.ConcreteBase",
+            tags=("subclass",),
+        ),
+        schema.Edge(
+            "tests.inheritance.models.SubSubclass",
+            "tests.inheritance.models.Subclass",
+            tags=("subclass",),
+        ),
+        schema.Edge(
+            "tests.inheritance.models.Subclass",
+            "tests.inheritance.models.ConcreteBase",
+            tags=("subclass",),
+        ),
+        schema.Edge(
+            "tests.installed.models.ConcreteInstalled",
+            "tests.not_installed.models.AbstractNotInstalled",
+            tags=("subclass",),
+        ),
+        schema.Edge(
+            "tests.proxy.models.ProxyNode",
+            "tests.proxy.models.Target",
+            tags=("proxy",),
+        ),
+        schema.Edge(
+            "tests.proxy.models.ProxyNode2",
+            "tests.proxy.models.Target",
+            tags=("proxy",),
         ),
     ]
     if DJANGO_LT_19:
         expected.remove(
-            (
-                ("django.contrib.sessions", "Session"),
-                ("django.contrib.sessions", "AbstractBaseSession"),
+            schema.Edge(
+                "django.contrib.sessions.models.Session",
+                "django.contrib.sessions.models.AbstractBaseSession",
+                tags=("subclass",),
             )
         )
-    assert get_schema().inheritance == expected
 
-
-def test_proxy():
-    expected = [
-        (("tests.app_d", "InterAppProxy"), ("tests.app_c", "InterAppOneToOne")),
-        (("tests.proxy", "ProxyNode"), ("tests.proxy", "Target")),
-        (("tests.proxy", "ProxyNode2"), ("tests.proxy", "Target")),
-    ]
-    assert get_schema().proxies == expected
+    assert schema.get_schema().edges == tuple(expected)
