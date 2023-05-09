@@ -49,46 +49,48 @@
 
         <v-list expand dense>
           <v-list-group
-            v-for="app in Object.keys(activeModels)"
+            v-for="app in Object.keys(graphData.activeModels)"
             :key="app"
-            v-model:value="activeModels[app].expanded"
-            :color="activeModels[app].visible ? activeModels[app].hardColor : inactiveColor"
+            :value="graphData.activeModels[app].expanded"
+            :color="graphData.activeModels[app].visible ? graphData.activeModels[app].hardColor : inactiveColor"
           >
 
             <template v-slot:activator>
               <v-list-item-icon
-                @click.stop="activeModels[app].visible = !activeModels[app].visible"
+                @click.stop="graphData.setAppVisible(app, !graphData.activeModels[app].visible)"
               >
                 <v-icon
-                  v-if="activeModels[app].visible"
-                  v-bind:style="{color: activeModels[app].visible ? activeModels[app].hardColor : inactiveColor}"
+                  v-if="graphData.activeModels[app].visible"
+                  v-bind:style="{color: graphData.activeModels[app].visible ? graphData.activeModels[app].hardColor : inactiveColor}"
                 >mdi-eye-outline</v-icon>
                 <v-icon v-else
-                  v-bind:style="{color: activeModels[app].visible ? activeModels[app].hardColor : inactiveColor}"
+                  v-bind:style="{color: graphData.activeModels[app].visible ? graphData.activeModels[app].hardColor : inactiveColor}"
                 >mdi-eye-off-outline</v-icon>
               </v-list-item-icon>
-              <v-list-item-content>
+              <v-list-item-content
+                @click.stop="graphData.setAppExpanded(app, !graphData.activeModels[app].expanded)"
+              >
                 <v-list-item-title
                   v-text="app"
-                  v-bind:style="{color: activeModels[app].visible ? activeModels[app].hardColor : inactiveColor}"
+                  v-bind:style="{color: graphData.activeModels[app].visible ? graphData.activeModels[app].hardColor : inactiveColor}"
                 ></v-list-item-title>
               </v-list-item-content>
             </template>
             <v-list-item dense link
               class="menu-model"
-              v-for="model, modelIndex in activeModels[app].models"
+              v-for="model, modelIndex in graphData.activeModels[app].models"
               :key="model.id"
-              :disabled="!activeModels[app].visible"
-              @click="model.active = !model.active"
+              :disabled="!graphData.activeModels[app].visible"
+              @click.stop="graphData.setModelActive(app, model.label, !model.active)"
             >
               <v-list-item-content>
                 <v-list-item-title v-text="model.label"></v-list-item-title>
               </v-list-item-content>
               <v-list-item-action>
-                <v-icon v-if="!activeModels[app].visible && model.active">
+                <v-icon v-if="!graphData.activeModels[app].visible && model.active">
                   mdi-eye-outline
                 </v-icon>
-                <v-icon v-else-if="activeModels[app].visible && model.active" :color="activeModels[app].hardColor" >
+                <v-icon v-else-if="graphData.activeModels[app].visible && model.active" :color="graphData.activeModels[app].hardColor" >
                   mdi-eye-outline
                 </v-icon>
                 <v-icon v-else>
@@ -120,14 +122,22 @@ export default {
   data() {
     return {
       sidebar: false,
-      activeModels: graphData.activeModels,
-      hideAll: graphData.hideAll,
-      showAll: graphData.showAll,
-      collapseAll: graphData.collapseAll,
-      expandAll: graphData.expandAll,
+      graphData
     }
   },
   methods: {
+    hideAll: function () {
+      graphData.hideAll();
+    },
+    showAll: function () {
+      graphData.showAll();
+    },
+    collapseAll: function () {
+      graphData.collapseAll();
+    },
+    expandAll: function () {
+      graphData.expandAll();
+    },
   },
 };
 </script>
