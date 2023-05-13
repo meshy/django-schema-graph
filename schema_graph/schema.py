@@ -75,10 +75,21 @@ class Edge:
                 return cls(model_id, related_model_id, tags=("many-to-many",))
 
 
+@attrs.frozen(order=True)
+class Group:
+    id: str
+    name: str
+
+    @classmethod
+    def from_model(cls, model: type[models.Model]) -> Group:
+        return cls(id=get_app_name(model), name=get_app_name(model))
+
+
 @attrs.frozen
 class Graph:
     nodes: tuple[Node, ...]
     edges: tuple[Edge, ...]
+    groups: tuple[Group, ...]
 
 
 def get_app_models() -> Iterator[tuple[apps.AppConfig, type[models.Model]]]:
@@ -108,9 +119,11 @@ def is_model_subclass(obj):
 def get_schema() -> Graph:
     nodes = set()
     edges = set()
+    groups = set()
 
     for app, model in get_app_models():
         nodes.add(Node.from_model(model))
+        groups.add(Group.from_model(model))
 
         # Proxy models
         if model._meta.proxy:
@@ -120,6 +133,7 @@ def get_schema() -> Graph:
         # Subclassing
         for base in filter(is_model_subclass, model.__mro__):
             nodes.add(Node.from_model(base))
+            groups.add(Group.from_model(base))
             for parent in filter(is_model_subclass, base.__bases__):
                 edges.add(Edge.subclass(base, parent))
 
@@ -133,4 +147,5 @@ def get_schema() -> Graph:
     return Graph(
         nodes=tuple(sorted(nodes)),
         edges=tuple(sorted(edges)),
+        groups=tuple(sorted(groups)),
     )

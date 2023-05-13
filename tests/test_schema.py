@@ -413,3 +413,27 @@ def test_edges():
     ]
 
     assert schema.get_schema().edges == tuple(expected)
+
+
+def test_groups():
+    expected = [
+        schema.Group(id="django.contrib.auth", name="django.contrib.auth"),
+        schema.Group(
+            id="django.contrib.contenttypes", name="django.contrib.contenttypes"
+        ),
+        schema.Group(id="django.contrib.sessions", name="django.contrib.sessions"),
+        schema.Group(id="django.contrib.sites", name="django.contrib.sites"),
+        schema.Group(id="tests.app_a", name="tests.app_a"),
+        schema.Group(id="tests.app_b", name="tests.app_b"),
+        schema.Group(id="tests.app_c", name="tests.app_c"),
+        schema.Group(id="tests.app_d", name="tests.app_d"),
+        schema.Group(id="tests.basic", name="tests.basic"),
+        schema.Group(id="tests.generic", name="tests.generic"),
+        schema.Group(id="tests.inheritance", name="tests.inheritance"),
+        schema.Group(id="tests.installed", name="tests.installed"),
+        schema.Group(
+            id="tests.not_installed.models", name="tests.not_installed.models"
+        ),
+        schema.Group(id="tests.proxy", name="tests.proxy"),
+    ]
+    assert schema.get_schema().groups == tuple(expected)
