@@ -43,7 +43,7 @@ class Schema(TemplateView):
         foreign_keys = [
             (old_ids[edge.source], old_ids[edge.target])
             for edge in schema.edges
-            if not edge.tags
+            if "foreign-key" in edge.tags
         ]
         many_to_manys = [
             (old_ids[edge.source], old_ids[edge.target])

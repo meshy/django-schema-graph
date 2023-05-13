@@ -248,6 +248,7 @@ def test_edges():
         schema.Edge(
             "django.contrib.auth.models.Permission",
             "django.contrib.contenttypes.models.ContentType",
+            tags=("foreign-key",),
         ),
         schema.Edge(
             "django.contrib.auth.models.User",
@@ -277,6 +278,7 @@ def test_edges():
         schema.Edge(
             "tests.app_b.models.InterAppForeignKey",
             "django.contrib.auth.models.User",
+            tags=("foreign-key",),
         ),
         schema.Edge(
             "tests.app_c.models.InterAppOneToOne",
@@ -296,6 +298,7 @@ def test_edges():
         schema.Edge(
             "tests.basic.models.OutgoingForeignKey",
             "tests.basic.models.Target",
+            tags=("foreign-key",),
         ),
         schema.Edge(
             "tests.basic.models.OutgoingManyToMany",
@@ -310,18 +313,22 @@ def test_edges():
         schema.Edge(
             "tests.basic.models.SelfReference",
             "tests.basic.models.SelfReference",
+            tags=("foreign-key",),
         ),
         schema.Edge(
             "tests.basic.models.ThroughTable",
             "tests.basic.models.ManyToManyWithThroughTable",
+            tags=("foreign-key",),
         ),
         schema.Edge(
             "tests.basic.models.ThroughTable",
             "tests.basic.models.Target",
+            tags=("foreign-key",),
         ),
         schema.Edge(
             "tests.generic.models.GenericFK",
             "django.contrib.contenttypes.models.ContentType",
+            tags=("foreign-key",),
         ),
         schema.Edge(
             "tests.inheritance.models.AbstractMultipleInheritance",
