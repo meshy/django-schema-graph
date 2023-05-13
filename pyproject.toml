@@ -32,6 +32,7 @@ classifiers = [
 [tool.poetry.dependencies]
 python = ">=3.10"
 attrs = ">=21.4.0"
+cattrs = ">=22.1.0"
 
 [tool.poetry.dev-dependencies]
 django-environ = "^0.4.5"

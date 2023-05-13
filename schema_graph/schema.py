@@ -61,7 +61,7 @@ class Edge:
         related_model_id = get_model_id(related_model)
         # Foreign key
         if field.many_to_one:
-            return cls(model_id, related_model_id)
+            return cls(model_id, related_model_id, tags=("foreign-key",))
         # One to one
         elif field.one_to_one and not field.auto_created:
             return cls(model_id, related_model_id, tags=("one-to-one",))
