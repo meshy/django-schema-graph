@@ -106,31 +106,31 @@ def is_model_subclass(obj):
 
 
 def get_schema() -> Graph:
-    nodes = []
-    edges = []
+    nodes = set()
+    edges = set()
 
     for app, model in get_app_models():
-        nodes.append(Node.from_model(model))
+        nodes.add(Node.from_model(model))
 
         # Proxy models
         if model._meta.proxy:
-            edges.append(Edge.proxy(model, model._meta.proxy_for_model))
+            edges.add(Edge.proxy(model, model._meta.proxy_for_model))
             continue
 
         # Subclassing
         for base in filter(is_model_subclass, model.__mro__):
-            nodes.append(Node.from_model(base))
+            nodes.add(Node.from_model(base))
             for parent in filter(is_model_subclass, base.__bases__):
-                edges.append(Edge.subclass(base, parent))
+                edges.add(Edge.subclass(base, parent))
 
         # Relationships
         for field in model._meta.get_fields():
             edge = Edge.from_field(model, field)
             if edge is None:
                 continue
-            edges.append(edge)
+            edges.add(edge)
 
     return Graph(
-        nodes=tuple(sorted(set(nodes))),
-        edges=tuple(sorted(set(edges))),
+        nodes=tuple(sorted(nodes)),
+        edges=tuple(sorted(edges)),
     )
