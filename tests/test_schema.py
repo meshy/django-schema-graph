@@ -1,9 +1,4 @@
-import django
-
 from schema_graph import schema
-
-
-DJANGO_LT_19 = django.VERSION < (1, 9, 0)
 
 
 def test_nodes():
@@ -416,13 +411,5 @@ def test_edges():
             tags=("proxy",),
         ),
     ]
-    if DJANGO_LT_19:
-        expected.remove(
-            schema.Edge(
-                "django.contrib.sessions.models.Session",
-                "django.contrib.sessions.models.AbstractBaseSession",
-                tags=("subclass",),
-            )
-        )
 
     assert schema.get_schema().edges == tuple(expected)
