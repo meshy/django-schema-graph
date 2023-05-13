@@ -12,6 +12,7 @@
         subclass: {{ inheritance|safe }},
         proxy: {{ proxies|safe }},
       };
+      window.schema = {{ schema|safe }};
     </script>
     <style>
       html {

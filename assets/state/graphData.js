@@ -1,184 +1,242 @@
+import _ from 'lodash';
+
+// Helpers for deciding what colors to use.
 const getColor = (index, numColors) => `hsl(${index * (360 / numColors)},50%,85%)`;
 const getBorderColor = (index, numColors) => `hsl(${index * (360 / numColors)},70%,40%)`;
-const joinModelStrings = (appModelPair) => `${appModelPair[0]}/${appModelPair[1]}`;
-const fixModelStrings = (edges) => edges.map((pair) => {
-  return [joinModelStrings(pair[0]), joinModelStrings(pair[1])]
-});
 
-
-const edge_app = {arrows: 'middle'};
-const edge_fk = {arrows: 'to'};
-const edge_m2m = {arrows: 'from;to'};
-const edge_1to1 = {arrows: {middle: {enabled: true, scaleFactor: 0.9, type: 'bar'}}};
-const edge_subclass = {dashes: true, arrows: 'to', label: 'Subclass'};
-const edge_proxy = {dashes: true, arrows: 'to', label: 'Proxy'};
-
-
-const appNode = (app, softColor, hardColor) => {
+const makeGroupNode = (group) => {
   return {
-    app,
-    id: app,
-    label: app,
+    id: group.id,
+    label: group.name,
     color: {
-      background: softColor,
-      border: hardColor,
+      background: group.softColor,
+      border: group.hardColor,
     },
     shape: "box",
   }
 };
-const modelNode = (app, model, softColor, hardColor) => {
-  return {
-    app,
-    id: joinModelStrings([app, model]),
-    label: model,
+
+const makeNode = (node, background, border, nodeModifiers) => {
+  let nodeData = {
+    id: node.id,
+    label: node.name,
     color: {
-      background: softColor,
-      border: hardColor,
+      background,
+      border,
     },
   }
-};
-const abstractModelNode = (app, model, softColor, hardColor) => {
-  var node = modelNode(app, model, softColor, hardColor);
-  node.shapeProperties = {borderDashes: true}
-  return node
+  _.merge(nodeData, ...node.tags.map((tag) => nodeModifiers[tag]));
+  return nodeData;
 };
 
+const makeNodeEdge = (edge, edgeModifiers) => {
+  let edgeData = {
+    from: edge.source,
+    to: edge.target,
+  };
+  _.merge(edgeData, ...edge.tags.map((tag) => edgeModifiers[tag]));
+  return edgeData;
+};
+
+
+const makeGroupEdge = (source, target) => {
+  let edgeData = {
+    from: source,
+    to: target,
+    arrows: 'middle',
+  };
+  return edgeData;
+};
 
 export default {
+  allEdges: [],
+  nodes: [],
   edges: [],
-  showAll: function(ev) {
-    Object.keys(this.activeModels).forEach((app) => {
-      this.activeModels[app].visible = true;
+  groups: [],
+  activeNodeIDs: new Set(),
+  activeGroupIDs: new Set(),
+  collapsedGroupIDs: new Set(),
+  edgeModifiers: {
+    "one-to-one": {arrows: {middle: {enabled: true, scaleFactor: 0.9, type: 'bar'}}},
+    "subclass": {dashes: true, arrows: 'to', label: 'Subclass'},
+    "proxy": {dashes: true, arrows: 'to', label: 'Proxy'},
+    "many-to-many": {arrows: 'from;to'},
+    "foreign-key": {arrows: 'to'},
+  },
+  nodeModifiers: {
+    "abstract": {shapeProperties: {borderDashes: true}},
+  },
+
+  // Toolbar.
+  showAll: function () {
+    Object.keys(this.allGroups).map((groupID) => {
+      this.activeGroupIDs.add(groupID)
     });
-    this.updateNodes();
+    this.update();
   },
-  hideAll: function(ev) {
-    Object.keys(this.activeModels).forEach((app) => {
-      this.activeModels[app].visible = false;
+  hideAll: function () {
+    this.activeGroupIDs.clear();
+    this.update();
+  },
+  expandAll: function () {
+    this.collapsedGroupIDs.clear();
+    this.update();
+  },
+  collapseAll: function () {
+    Object.keys(this.allGroups).map((groupID) => {
+      this.collapsedGroupIDs.add(groupID)
     });
-    this.updateNodes();
+    this.update();
   },
-  expandAll: function(ev) {
-    Object.keys(this.activeModels).forEach((app) => {
-      this.activeModels[app].expanded = true;
+
+  // Node operations.
+  enableNode: function (nodeID) {
+    this.activeNodeIDs.add(nodeID);
+    this.update();
+  },
+  disableNode: function (nodeID) {
+    this.activeNodeIDs.delete(nodeID);
+    this.update();
+  },
+
+  //Group operations.
+  enableGroup: function (groupID) {
+    this.activeGroupIDs.add(groupID);
+    this.update();
+  },
+  disableGroup: function (groupID) {
+    this.activeGroupIDs.delete(groupID);
+    this.update();
+  },
+  expandGroup: function (groupID) {
+    this.collapsedGroupIDs.delete(groupID);
+    this.update();
+  },
+  collapseGroup: function (groupID) {
+    this.collapsedGroupIDs.add(groupID);
+    this.update();
+  },
+
+  // State queries.
+  isNodeEnabled: function (nodeID) {
+    let node = this.allNodes[nodeID];
+    if (this.collapsedGroupIDs.has(node.group)) {
+      return false;
+    };
+    if (!this.activeGroupIDs.has(node.group)) {
+      return false;
+    };
+    return this.activeNodeIDs.has(nodeID);
+  },
+  isGroupEnabled: function (groupID) {
+    return this.activeGroupIDs.has(groupID);
+  },
+  isGroupExpanded: function (groupID) {
+    return !this.collapsedGroupIDs.has(groupID);
+  },
+  // Data update.
+  update: function () {
+    // Empty the nodes array.
+    this.nodes.splice(0, this.nodes.length);
+    // Add normal nodes.
+    Object.keys(this.allNodes).forEach((nodeID) => {
+      var node = this.allNodes[nodeID];
+      if (this.isNodeEnabled(nodeID)) {
+        let group = this.allGroups[node.group];
+        this.nodes.push(
+          makeNode(node, group.softColor, group.hardColor, this.nodeModifiers)
+        );
+      }
     });
-    this.updateNodes();
-  },
-  collapseAll: function(ev) {
-    Object.keys(this.activeModels).forEach((app) => {
-      this.activeModels[app].expanded = false;
+    // Add group nodes.
+    Object.keys(this.allGroups).forEach((groupID) => {
+      if (this.isGroupEnabled(groupID) && !this.isGroupExpanded(groupID)) {
+        var group = this.allGroups[groupID];
+        this.nodes.push(makeGroupNode(group));
+      }
     });
-    this.updateNodes();
+
+    // Empty the groups array.
+    this.groups.splice(0, this.groups.length);
+
+    // Populate the groups array.
+    Object.keys(this.allGroups).forEach((groupID) => {
+      let group = this.allGroups[groupID];
+      let softColor;
+      let hardColor;
+      if (this.isGroupEnabled(groupID)) {
+        softColor = group.softColor;
+        hardColor = group.hardColor;
+      } else {
+        softColor = this.inactiveColor;
+        hardColor = this.inactiveColor;
+      }
+      let data = {
+        id: group.id,
+        label: group.name,
+        softColor,
+        hardColor,
+      };
+      this.groups.push(data);
+    });
   },
-  setAppExpanded: function(app, expanded) {
-    this.activeModels[app].expanded = expanded;
-    this.updateNodes();
-  },
-  setAppVisible: function(app, visible) {
-    this.activeModels[app].visible = visible;
-    this.updateNodes();
-  },
-  setModelActive: function(app, model, active) {
-    this.activeModels[app].models[model].active = active;
-    this.updateNodes();
-  },
-  updateNodes: function () {
-    const modelsAndFunctions = [
-      [models, modelNode],
-      [abstractModels, abstractModelNode]
-    ];
-    var nodes = [];
-    this.allApps.forEach((app, appIndex) => {
-      var appData = this.activeModels[app];
-      if (appData.visible) {
-        if (appData.expanded) {
-          modelsAndFunctions.forEach(([modelSet, node]) => {
-            if (modelSet.hasOwnProperty(app)) {
-              modelSet[app].forEach((model) => {
-                if (this.activeModels[app].models[model].active) {
-                  nodes.push(node(app, model, appData.softColor, appData.hardColor));
-                }
-              });
-            }
-          });
-        } else {
-          nodes.push(appNode(app, appData.softColor, appData.hardColor));
+  setup: function(inactiveColor) {
+    this.inactiveColor = inactiveColor;
+
+    // Store group data for later.
+    this.allGroups = {};
+    window.schema.groups.forEach((group, i) => {
+      this.allGroups[group.id] = {
+        ...group,
+        softColor: getColor(i, window.schema.groups.length),
+        hardColor: getBorderColor(i, window.schema.groups.length),
+        nodes: [],
+      };
+    });
+    // Store node data for later.
+    this.allNodes = {};
+    window.schema.nodes.forEach((node, i) => {
+      this.allNodes[node.id] = node;
+      this.allGroups[node.group].nodes.push(node.id);
+    });
+    // Store edge data for later.
+    this.allEdges = [...window.schema.edges];
+
+    // Set up the initial state.
+    this.collapsedGroupIDs.clear();
+    Object.keys(this.allGroups).forEach((groupID) => {
+      this.activeGroupIDs.add(groupID);
+    });
+    Object.keys(this.allNodes).map((nodeID) => {
+      this.activeNodeIDs.add(nodeID);
+    });
+    // Empty the edges array.
+    this.edges.splice(0, this.edges.length);
+    // Populate the edges array.
+    this.allEdges.forEach((edge) => {
+      edge = makeNodeEdge(edge, this.edgeModifiers);
+      this.edges.push(edge);
+    });
+    // Also add edges to/from the groups.
+    let interGroupRelations = [];
+    window.schema.edges.forEach((edge) => {
+      // Only external relations matter, not relations to self.
+      if (edge.source != edge.target) {
+        const fromGroup = this.allNodes[edge.source].group;
+        const toGroup = this.allNodes[edge.target].group;
+        // Node -> Group
+        interGroupRelations.push(makeGroupEdge(edge.source, toGroup));
+        // Group -> Node
+        interGroupRelations.push(makeGroupEdge(fromGroup, edge.target));
+        // Group -> Group
+        if (fromGroup != toGroup) {
+          interGroupRelations.push(makeGroupEdge(fromGroup, toGroup));
         }
       }
     });
-    this.nodes = nodes;
-  },
-  setup() {
-    const allApps = [...new Set([
-      ...Object.keys(models),
-      ...Object.keys(abstractModels)
-    ])].sort();
-    let activeModels = {};
-    allApps.forEach((app, i) => {
-      activeModels[app] = {
-        expanded: true,
-        visible: true,
-        models: {},
-        hardColor: getBorderColor(i, allApps.length),
-        softColor: getColor(i, allApps.length),
-      };
-    });
-    Object.keys(models).forEach((app) => {
-      for (const model of models[app]) {
-        activeModels[app].models[model] = {
-          active: true,
-          id: joinModelStrings([app, model]),
-          label: model,
-        };
-      };
-    });
-    Object.keys(abstractModels).forEach((app) => {
-      for (const model of abstractModels[app]) {
-        activeModels[app].models[model] = {
-          active: true,
-          id: joinModelStrings([app, model]),
-          label: model,
-        };
-      };
-    });
+    this.edges.push(..._.uniqWith(interGroupRelations, _.isEqual));
 
-
-    var interAppRelations = [];
-    Object.keys(connections).forEach((connectionType) => {
-      for (const pair of connections[connectionType]) {
-        const [from, to] = [pair[0], pair[1]];
-        // Only external relations matter, not relations to self.
-        if (from[0] != to[0]) {
-          // Model -> App
-          interAppRelations.push([joinModelStrings(from), to[0]]);
-          // App -> Model
-          interAppRelations.push([from[0], joinModelStrings(to)]);
-          // App -> App
-          interAppRelations.push([from[0], to[0]]);
-        }
-      }
-    });
-    // Unique sort.
-    interAppRelations = interAppRelations.filter(
-      function (relation, index, input) {
-        return index === input.findIndex(function (n) {
-          return n[0] == relation[0] && n[1] == relation[1]
-        });
-      }
-    ).sort();
-
-    const edges = [
-      ...fixModelStrings(connections.foreignkey).map(([from, to]) => ({...edge_fk, from, to})),
-      ...fixModelStrings(connections.many2many).map(([from, to]) => ({...edge_m2m, from, to})),
-      ...fixModelStrings(connections.one2one).map(([from, to]) => ({...edge_1to1, from, to})),
-      ...fixModelStrings(connections.subclass).map(([from, to]) => ({...edge_subclass, from, to})),
-      ...fixModelStrings(connections.proxy).map(([from, to]) => ({...edge_proxy, from, to})),
-      ...interAppRelations.map(([from, to]) => ({...edge_app, from, to})),
-    ];
-
-    this.activeModels = activeModels
-    this.allApps = allApps
-    this.edges = edges
-    this.updateNodes();
-  },
+    // Set up the graph.
+    this.update();
+  }
 };

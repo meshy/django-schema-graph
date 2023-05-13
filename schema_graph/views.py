@@ -1,6 +1,7 @@
 import json
 from collections import defaultdict
 
+from cattrs.preconf.json import make_converter as make_json_converter
 from django.conf import settings
 from django.http import Http404
 from django.views.generic import TemplateView
@@ -77,4 +78,6 @@ class Schema(TemplateView):
                 "proxies": json.dumps(proxies),
             }
         )
+        json_converter = make_json_converter()
+        kwargs["schema"] = json_converter.dumps(schema)
         return super().get_context_data(**kwargs)

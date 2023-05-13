@@ -2,7 +2,6 @@
   <div class="main-app">
     <v-app>
       <GraphEditor
-        :inactiveColor=inactiveColor
         :loaded=loaded
       />
       <Graph
@@ -53,12 +52,11 @@ export default {
   },
   data() {
     let loaded = false;
-    graphData.setup();
+    graphData.setup('rgba(0, 0, 0, 0.54)');
 
     return {
-      inactiveColor: 'rgba(0, 0, 0, 0.54)',
       loaded,
-    };
+    }
   },
 };
 </script>

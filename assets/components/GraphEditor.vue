@@ -49,48 +49,57 @@
 
         <v-list expand dense>
           <v-list-group
-            v-for="app in Object.keys(graphData.activeModels)"
-            :key="app"
-            :value="graphData.activeModels[app].expanded"
-            :color="graphData.activeModels[app].visible ? graphData.activeModels[app].hardColor : inactiveColor"
+            v-for="group in graphData.groups"
+            :key="group.id"
+            :value="graphData.isGroupExpanded(group.id) && graphData.isGroupEnabled(group.id)"
+            :color="group.hardColor"
           >
 
             <template v-slot:activator>
-              <v-list-item-icon
-                @click.stop="graphData.setAppVisible(app, !graphData.activeModels[app].visible)"
-              >
-                <v-icon
-                  v-if="graphData.activeModels[app].visible"
-                  v-bind:style="{color: graphData.activeModels[app].visible ? graphData.activeModels[app].hardColor : inactiveColor}"
-                >mdi-eye-outline</v-icon>
-                <v-icon v-else
-                  v-bind:style="{color: graphData.activeModels[app].visible ? graphData.activeModels[app].hardColor : inactiveColor}"
-                >mdi-eye-off-outline</v-icon>
-              </v-list-item-icon>
-              <v-list-item-content
-                @click.stop="graphData.setAppExpanded(app, !graphData.activeModels[app].expanded)"
-              >
+              <v-list-item-content>
                 <v-list-item-title
-                  v-text="app"
-                  v-bind:style="{color: graphData.activeModels[app].visible ? graphData.activeModels[app].hardColor : inactiveColor}"
+                  v-text="group.label"
+                  v-bind:style="{color: group.hardColor}"
+                  :title="group.label"
                 ></v-list-item-title>
               </v-list-item-content>
+              <v-icon
+                v-if="graphData.isGroupEnabled(group.id)"
+                v-bind:style="{color: group.hardColor}"
+                @click.stop="toggleGroupEnabled(group.id)"
+              >mdi-eye-outline</v-icon>
+              <v-icon v-else
+                v-bind:style="{color: group.hardColor}"
+                @click.stop="toggleGroupEnabled(group.id)"
+              >mdi-eye-off-outline</v-icon>
+
+              <v-icon
+                v-if="graphData.isGroupExpanded(group.id)"
+                v-bind:style="{color: group.hardColor}"
+                @click.stop="toggleGroupExpanded(group.id)"
+              > mdi-arrow-expand-vertical </v-icon>
+              <v-icon v-else
+                v-bind:style="{color: group.hardColor}"
+                @click.stop="toggleGroupExpanded(group.id)"
+              > mdi-arrow-collapse-vertical </v-icon>
             </template>
-            <v-list-item dense link
-              class="menu-model"
-              v-for="model, modelIndex in graphData.activeModels[app].models"
-              :key="model.id"
-              :disabled="!graphData.activeModels[app].visible"
-              @click.stop="graphData.setModelActive(app, model.label, !model.active)"
+            <v-list-item dense
+              v-for="nodeID in graphData.allGroups[group.id].nodes"
+              :key="nodeID"
+              :disabled="!graphData.isGroupEnabled(group.id)"
+              @click.stop="toggleNodeEnabled(nodeID)"
             >
               <v-list-item-content>
-                <v-list-item-title v-text="model.label"></v-list-item-title>
+                <v-list-item-title
+                  v-text="graphData.allNodes[nodeID].name"
+                  :title="graphData.allNodes[nodeID].name"
+                />
               </v-list-item-content>
               <v-list-item-action>
-                <v-icon v-if="!graphData.activeModels[app].visible && model.active">
-                  mdi-eye-outline
-                </v-icon>
-                <v-icon v-else-if="graphData.activeModels[app].visible && model.active" :color="graphData.activeModels[app].hardColor" >
+                <v-icon
+                  v-if="graphData.isNodeEnabled(nodeID)"
+                  :color="group.hardColor"
+                >
                   mdi-eye-outline
                 </v-icon>
                 <v-icon v-else>
@@ -99,6 +108,7 @@
               </v-list-item-action>
             </v-list-item>
 
+          <v-divider></v-divider>
           </v-list-group>
         </v-list>
 
@@ -106,23 +116,16 @@
   </div>
 </template>
 
-<style scoped>
-  /* Own styles */
-  .menu-model {
-    padding-left: 52px;
-  }
-</style>
-
 <script>
 import graphData from "../state/graphData.js";
 export default {
   name: "GraphEditor",
   components: {},
-  props: ["loaded", "inactiveColor"],
+  props: ["loaded"],
   data() {
     return {
       sidebar: false,
-      graphData
+      graphData,
     }
   },
   methods: {
@@ -137,6 +140,27 @@ export default {
     },
     expandAll: function () {
       graphData.expandAll();
+    },
+    toggleGroupEnabled: function (groupID) {
+      if (graphData.isGroupEnabled(groupID)) {
+        graphData.disableGroup(groupID);
+      } else {
+        graphData.enableGroup(groupID);
+      }
+    },
+    toggleGroupExpanded: function (groupID) {
+      if (graphData.isGroupExpanded(groupID)) {
+        graphData.collapseGroup(groupID);
+      } else {
+        graphData.expandGroup(groupID);
+      }
+    },
+    toggleNodeEnabled: function (nodeID) {
+      if (graphData.isNodeEnabled(nodeID)) {
+        graphData.disableNode(nodeID);
+      } else {
+        graphData.enableNode(nodeID);
+      }
     },
   },
 };
