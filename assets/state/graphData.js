@@ -65,6 +65,7 @@ export default {
   },
   nodeModifiers: {
     "abstract": {shapeProperties: {borderDashes: true}},
+    "proxy": {color: {background: 'white'}},
   },
 
   // Toolbar.
