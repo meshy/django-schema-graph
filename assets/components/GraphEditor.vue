@@ -154,12 +154,14 @@ export default {
   methods: {
     hideAll: function () {
       graphData.hideAll();
+      this.foldAll();
     },
     showAll: function () {
       graphData.showAll();
     },
     collapseAll: function () {
       graphData.collapseAll();
+      this.foldAll();
     },
     expandAll: function () {
       graphData.expandAll();
