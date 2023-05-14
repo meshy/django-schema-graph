@@ -7,7 +7,7 @@
       >
         <v-icon>mdi-menu</v-icon>
       </v-btn>
-      <v-navigation-drawer app temporary v-model="sidebar">
+      <v-navigation-drawer app temporary v-model="sidebar" width=384>
 
         <v-toolbar flat>
           <v-tooltip bottom>
@@ -44,6 +44,24 @@
               </v-btn>
             </template>
             <span>Expand all</span>
+          </v-tooltip>
+          <v-spacer></v-spacer>
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on }">
+              <v-btn small v-on="on" @click="foldAll">
+                <v-icon>mdi-chevron-up</v-icon>
+              </v-btn>
+            </template>
+            <span>Fold all</span>
+          </v-tooltip>
+          <v-spacer></v-spacer>
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on }">
+              <v-btn small v-on="on" @click="unfoldAll">
+                <v-icon>mdi-chevron-down</v-icon>
+              </v-btn>
+            </template>
+            <span>Unfold all</span>
           </v-tooltip>
         </v-toolbar>
 
@@ -145,6 +163,16 @@ export default {
     },
     expandAll: function () {
       graphData.expandAll();
+    },
+    foldAll: function () {
+      Object.keys(this.isOpen).map((key) => {
+        this.isOpen[key] = false;
+      });
+    },
+    unfoldAll: function () {
+      Object.keys(this.isOpen).map((key) => {
+        this.isOpen[key] = true;
+      });
     },
     toggleGroupEnabled: function (groupID) {
       if (graphData.isGroupEnabled(groupID)) {
