@@ -16,151 +16,463 @@ def test_context():
     request = create_request()
     view = Schema(request=request)
     context = view.get_context_data()
-    assert json.loads(context["abstract_models"]) == {
-        "django.contrib.auth": ["AbstractBaseUser", "AbstractUser", "PermissionsMixin"],
-        "django.contrib.sessions": ["AbstractBaseSession"],
-        "tests.inheritance": [
-            "Abstract",
-            "AbstractBase",
-            "AbstractSubclass1",
-            "AbstractSubclass2",
+
+    assert json.loads(context["schema"]) == {
+        "nodes": [
+            {
+                "id": "django.contrib.auth.base_user.AbstractBaseUser",
+                "name": "AbstractBaseUser",
+                "group": "django.contrib.auth",
+                "tags": ["abstract"],
+            },
+            {
+                "id": "django.contrib.auth.models.AbstractUser",
+                "name": "AbstractUser",
+                "group": "django.contrib.auth",
+                "tags": ["abstract"],
+            },
+            {
+                "id": "django.contrib.auth.models.Group",
+                "name": "Group",
+                "group": "django.contrib.auth",
+                "tags": [],
+            },
+            {
+                "id": "django.contrib.auth.models.Permission",
+                "name": "Permission",
+                "group": "django.contrib.auth",
+                "tags": [],
+            },
+            {
+                "id": "django.contrib.auth.models.PermissionsMixin",
+                "name": "PermissionsMixin",
+                "group": "django.contrib.auth",
+                "tags": ["abstract"],
+            },
+            {
+                "id": "django.contrib.auth.models.User",
+                "name": "User",
+                "group": "django.contrib.auth",
+                "tags": [],
+            },
+            {
+                "id": "django.contrib.contenttypes.models.ContentType",
+                "name": "ContentType",
+                "group": "django.contrib.contenttypes",
+                "tags": [],
+            },
+            {
+                "id": "django.contrib.sessions.base_session.AbstractBaseSession",
+                "name": "AbstractBaseSession",
+                "group": "django.contrib.sessions",
+                "tags": ["abstract"],
+            },
+            {
+                "id": "django.contrib.sessions.models.Session",
+                "name": "Session",
+                "group": "django.contrib.sessions",
+                "tags": [],
+            },
+            {
+                "id": "django.contrib.sites.models.Site",
+                "name": "Site",
+                "group": "django.contrib.sites",
+                "tags": [],
+            },
+            {
+                "id": "tests.app_a.models.InterAppSubclass",
+                "name": "InterAppSubclass",
+                "group": "tests.app_a",
+                "tags": [],
+            },
+            {
+                "id": "tests.app_b.models.InterAppForeignKey",
+                "name": "InterAppForeignKey",
+                "group": "tests.app_b",
+                "tags": [],
+            },
+            {
+                "id": "tests.app_c.models.InterAppOneToOne",
+                "name": "InterAppOneToOne",
+                "group": "tests.app_c",
+                "tags": [],
+            },
+            {
+                "id": "tests.app_d.models.InterAppManyToMany",
+                "name": "InterAppManyToMany",
+                "group": "tests.app_d",
+                "tags": [],
+            },
+            {
+                "id": "tests.app_d.models.InterAppProxy",
+                "name": "InterAppProxy",
+                "group": "tests.app_d",
+                "tags": ["proxy"],
+            },
+            {
+                "id": "tests.basic.models.ManyToManyWithThroughTable",
+                "name": "ManyToManyWithThroughTable",
+                "group": "tests.basic",
+                "tags": [],
+            },
+            {
+                "id": "tests.basic.models.OutgoingForeignKey",
+                "name": "OutgoingForeignKey",
+                "group": "tests.basic",
+                "tags": [],
+            },
+            {
+                "id": "tests.basic.models.OutgoingManyToMany",
+                "name": "OutgoingManyToMany",
+                "group": "tests.basic",
+                "tags": [],
+            },
+            {
+                "id": "tests.basic.models.OutgoingOneToOne",
+                "name": "OutgoingOneToOne",
+                "group": "tests.basic",
+                "tags": [],
+            },
+            {
+                "id": "tests.basic.models.SelfReference",
+                "name": "SelfReference",
+                "group": "tests.basic",
+                "tags": [],
+            },
+            {
+                "id": "tests.basic.models.Target",
+                "name": "Target",
+                "group": "tests.basic",
+                "tags": [],
+            },
+            {
+                "id": "tests.basic.models.ThroughTable",
+                "name": "ThroughTable",
+                "group": "tests.basic",
+                "tags": [],
+            },
+            {
+                "id": "tests.generic.models.GenericFK",
+                "name": "GenericFK",
+                "group": "tests.generic",
+                "tags": [],
+            },
+            {
+                "id": "tests.inheritance.models.Abstract",
+                "name": "Abstract",
+                "group": "tests.inheritance",
+                "tags": ["abstract"],
+            },
+            {
+                "id": "tests.inheritance.models.AbstractBase",
+                "name": "AbstractBase",
+                "group": "tests.inheritance",
+                "tags": ["abstract"],
+            },
+            {
+                "id": "tests.inheritance.models.AbstractMultipleInheritance",
+                "name": "AbstractMultipleInheritance",
+                "group": "tests.inheritance",
+                "tags": [],
+            },
+            {
+                "id": "tests.inheritance.models.AbstractSubclass1",
+                "name": "AbstractSubclass1",
+                "group": "tests.inheritance",
+                "tags": ["abstract"],
+            },
+            {
+                "id": "tests.inheritance.models.AbstractSubclass2",
+                "name": "AbstractSubclass2",
+                "group": "tests.inheritance",
+                "tags": ["abstract"],
+            },
+            {
+                "id": "tests.inheritance.models.Concrete",
+                "name": "Concrete",
+                "group": "tests.inheritance",
+                "tags": [],
+            },
+            {
+                "id": "tests.inheritance.models.ConcreteBase",
+                "name": "ConcreteBase",
+                "group": "tests.inheritance",
+                "tags": [],
+            },
+            {
+                "id": "tests.inheritance.models.ConcreteInheritance",
+                "name": "ConcreteInheritance",
+                "group": "tests.inheritance",
+                "tags": [],
+            },
+            {
+                "id": "tests.inheritance.models.ConcreteSubclass1",
+                "name": "ConcreteSubclass1",
+                "group": "tests.inheritance",
+                "tags": [],
+            },
+            {
+                "id": "tests.inheritance.models.ConcreteSubclass2",
+                "name": "ConcreteSubclass2",
+                "group": "tests.inheritance",
+                "tags": [],
+            },
+            {
+                "id": "tests.inheritance.models.MixedMultipleInheritance",
+                "name": "MixedMultipleInheritance",
+                "group": "tests.inheritance",
+                "tags": [],
+            },
+            {
+                "id": "tests.inheritance.models.SubSubclass",
+                "name": "SubSubclass",
+                "group": "tests.inheritance",
+                "tags": [],
+            },
+            {
+                "id": "tests.inheritance.models.Subclass",
+                "name": "Subclass",
+                "group": "tests.inheritance",
+                "tags": [],
+            },
+            {
+                "id": "tests.installed.models.ConcreteInstalled",
+                "name": "ConcreteInstalled",
+                "group": "tests.installed",
+                "tags": [],
+            },
+            {
+                "id": "tests.not_installed.models.AbstractNotInstalled",
+                "name": "AbstractNotInstalled",
+                "group": "tests.not_installed.models",
+                "tags": ["abstract"],
+            },
+            {
+                "id": "tests.proxy.models.ProxyNode",
+                "name": "ProxyNode",
+                "group": "tests.proxy",
+                "tags": ["proxy"],
+            },
+            {
+                "id": "tests.proxy.models.ProxyNode2",
+                "name": "ProxyNode2",
+                "group": "tests.proxy",
+                "tags": ["proxy"],
+            },
+            {
+                "id": "tests.proxy.models.Target",
+                "name": "Target",
+                "group": "tests.proxy",
+                "tags": [],
+            },
         ],
-        "tests.not_installed.models": ["AbstractNotInstalled"],
+        "edges": [
+            {
+                "source": "django.contrib.auth.models.AbstractUser",
+                "target": "django.contrib.auth.base_user.AbstractBaseUser",
+                "tags": ["subclass"],
+            },
+            {
+                "source": "django.contrib.auth.models.AbstractUser",
+                "target": "django.contrib.auth.models.PermissionsMixin",
+                "tags": ["subclass"],
+            },
+            {
+                "source": "django.contrib.auth.models.Group",
+                "target": "django.contrib.auth.models.Permission",
+                "tags": ["many-to-many"],
+            },
+            {
+                "source": "django.contrib.auth.models.Permission",
+                "target": "django.contrib.contenttypes.models.ContentType",
+                "tags": ["foreign-key"],
+            },
+            {
+                "source": "django.contrib.auth.models.User",
+                "target": "django.contrib.auth.models.AbstractUser",
+                "tags": ["subclass"],
+            },
+            {
+                "source": "django.contrib.auth.models.User",
+                "target": "django.contrib.auth.models.Group",
+                "tags": ["many-to-many"],
+            },
+            {
+                "source": "django.contrib.auth.models.User",
+                "target": "django.contrib.auth.models.Permission",
+                "tags": ["many-to-many"],
+            },
+            {
+                "source": "django.contrib.sessions.models.Session",
+                "target": "django.contrib.sessions.base_session.AbstractBaseSession",
+                "tags": ["subclass"],
+            },
+            {
+                "source": "tests.app_a.models.InterAppSubclass",
+                "target": "django.contrib.auth.models.Group",
+                "tags": ["subclass"],
+            },
+            {
+                "source": "tests.app_b.models.InterAppForeignKey",
+                "target": "django.contrib.auth.models.User",
+                "tags": ["foreign-key"],
+            },
+            {
+                "source": "tests.app_c.models.InterAppOneToOne",
+                "target": "tests.app_b.models.InterAppForeignKey",
+                "tags": ["one-to-one"],
+            },
+            {
+                "source": "tests.app_d.models.InterAppManyToMany",
+                "target": "tests.app_b.models.InterAppForeignKey",
+                "tags": ["many-to-many"],
+            },
+            {
+                "source": "tests.app_d.models.InterAppProxy",
+                "target": "tests.app_c.models.InterAppOneToOne",
+                "tags": ["proxy"],
+            },
+            {
+                "source": "tests.basic.models.OutgoingForeignKey",
+                "target": "tests.basic.models.Target",
+                "tags": ["foreign-key"],
+            },
+            {
+                "source": "tests.basic.models.OutgoingManyToMany",
+                "target": "tests.basic.models.Target",
+                "tags": ["many-to-many"],
+            },
+            {
+                "source": "tests.basic.models.OutgoingOneToOne",
+                "target": "tests.basic.models.Target",
+                "tags": ["one-to-one"],
+            },
+            {
+                "source": "tests.basic.models.SelfReference",
+                "target": "tests.basic.models.SelfReference",
+                "tags": ["foreign-key"],
+            },
+            {
+                "source": "tests.basic.models.ThroughTable",
+                "target": "tests.basic.models.ManyToManyWithThroughTable",
+                "tags": ["foreign-key"],
+            },
+            {
+                "source": "tests.basic.models.ThroughTable",
+                "target": "tests.basic.models.Target",
+                "tags": ["foreign-key"],
+            },
+            {
+                "source": "tests.generic.models.GenericFK",
+                "target": "django.contrib.contenttypes.models.ContentType",
+                "tags": ["foreign-key"],
+            },
+            {
+                "source": "tests.inheritance.models.AbstractMultipleInheritance",
+                "target": "tests.inheritance.models.AbstractSubclass1",
+                "tags": ["subclass"],
+            },
+            {
+                "source": "tests.inheritance.models.AbstractMultipleInheritance",
+                "target": "tests.inheritance.models.AbstractSubclass2",
+                "tags": ["subclass"],
+            },
+            {
+                "source": "tests.inheritance.models.AbstractSubclass1",
+                "target": "tests.inheritance.models.AbstractBase",
+                "tags": ["subclass"],
+            },
+            {
+                "source": "tests.inheritance.models.AbstractSubclass2",
+                "target": "tests.inheritance.models.AbstractBase",
+                "tags": ["subclass"],
+            },
+            {
+                "source": "tests.inheritance.models.Concrete",
+                "target": "tests.inheritance.models.Abstract",
+                "tags": ["subclass"],
+            },
+            {
+                "source": "tests.inheritance.models.ConcreteInheritance",
+                "target": "tests.inheritance.models.ConcreteSubclass1",
+                "tags": ["subclass"],
+            },
+            {
+                "source": "tests.inheritance.models.ConcreteInheritance",
+                "target": "tests.inheritance.models.ConcreteSubclass2",
+                "tags": ["subclass"],
+            },
+            {
+                "source": "tests.inheritance.models.ConcreteSubclass1",
+                "target": "tests.inheritance.models.ConcreteBase",
+                "tags": ["subclass"],
+            },
+            {
+                "source": "tests.inheritance.models.ConcreteSubclass2",
+                "target": "tests.inheritance.models.ConcreteBase",
+                "tags": ["one-to-one"],
+            },
+            {
+                "source": "tests.inheritance.models.ConcreteSubclass2",
+                "target": "tests.inheritance.models.ConcreteBase",
+                "tags": ["subclass"],
+            },
+            {
+                "source": "tests.inheritance.models.MixedMultipleInheritance",
+                "target": "tests.inheritance.models.AbstractBase",
+                "tags": ["subclass"],
+            },
+            {
+                "source": "tests.inheritance.models.MixedMultipleInheritance",
+                "target": "tests.inheritance.models.ConcreteBase",
+                "tags": ["subclass"],
+            },
+            {
+                "source": "tests.inheritance.models.SubSubclass",
+                "target": "tests.inheritance.models.Subclass",
+                "tags": ["subclass"],
+            },
+            {
+                "source": "tests.inheritance.models.Subclass",
+                "target": "tests.inheritance.models.ConcreteBase",
+                "tags": ["subclass"],
+            },
+            {
+                "source": "tests.installed.models.ConcreteInstalled",
+                "target": "tests.not_installed.models.AbstractNotInstalled",
+                "tags": ["subclass"],
+            },
+            {
+                "source": "tests.proxy.models.ProxyNode",
+                "target": "tests.proxy.models.Target",
+                "tags": ["proxy"],
+            },
+            {
+                "source": "tests.proxy.models.ProxyNode2",
+                "target": "tests.proxy.models.Target",
+                "tags": ["proxy"],
+            },
+        ],
+        "groups": [
+            {"id": "django.contrib.auth", "name": "django.contrib.auth"},
+            {
+                "id": "django.contrib.contenttypes",
+                "name": "django.contrib.contenttypes",
+            },
+            {"id": "django.contrib.sessions", "name": "django.contrib.sessions"},
+            {"id": "django.contrib.sites", "name": "django.contrib.sites"},
+            {"id": "tests.app_a", "name": "tests.app_a"},
+            {"id": "tests.app_b", "name": "tests.app_b"},
+            {"id": "tests.app_c", "name": "tests.app_c"},
+            {"id": "tests.app_d", "name": "tests.app_d"},
+            {"id": "tests.basic", "name": "tests.basic"},
+            {"id": "tests.generic", "name": "tests.generic"},
+            {"id": "tests.inheritance", "name": "tests.inheritance"},
+            {"id": "tests.installed", "name": "tests.installed"},
+            {"id": "tests.not_installed.models", "name": "tests.not_installed.models"},
+            {"id": "tests.proxy", "name": "tests.proxy"},
+        ],
     }
-    assert json.loads(context["models"]) == {
-        "django.contrib.auth": ["Group", "Permission", "User"],
-        "django.contrib.contenttypes": ["ContentType"],
-        "django.contrib.sessions": ["Session"],
-        "django.contrib.sites": ["Site"],
-        "tests.app_a": ["InterAppSubclass"],
-        "tests.app_b": ["InterAppForeignKey"],
-        "tests.app_c": ["InterAppOneToOne"],
-        "tests.app_d": ["InterAppManyToMany", "InterAppProxy"],
-        "tests.basic": [
-            "ManyToManyWithThroughTable",
-            "OutgoingForeignKey",
-            "OutgoingManyToMany",
-            "OutgoingOneToOne",
-            "SelfReference",
-            "Target",
-            "ThroughTable",
-        ],
-        "tests.generic": ["GenericFK"],
-        "tests.inheritance": [
-            "AbstractMultipleInheritance",
-            "Concrete",
-            "ConcreteBase",
-            "ConcreteInheritance",
-            "ConcreteSubclass1",
-            "ConcreteSubclass2",
-            "MixedMultipleInheritance",
-            "SubSubclass",
-            "Subclass",
-        ],
-        "tests.installed": ["ConcreteInstalled"],
-        "tests.proxy": ["ProxyNode", "ProxyNode2", "Target"],
-    }
-    assert json.loads(context["foreign_keys"]) == [
-        [
-            ["django.contrib.auth", "Permission"],
-            ["django.contrib.contenttypes", "ContentType"],
-        ],
-        [["tests.app_b", "InterAppForeignKey"], ["django.contrib.auth", "User"]],
-        [["tests.basic", "OutgoingForeignKey"], ["tests.basic", "Target"]],
-        [["tests.basic", "SelfReference"], ["tests.basic", "SelfReference"]],
-        [
-            ["tests.basic", "ThroughTable"],
-            ["tests.basic", "ManyToManyWithThroughTable"],
-        ],
-        [["tests.basic", "ThroughTable"], ["tests.basic", "Target"]],
-        [
-            ["tests.generic", "GenericFK"],
-            ["django.contrib.contenttypes", "ContentType"],
-        ],
-    ]
-    assert json.loads(context["many_to_manys"]) == [
-        [["django.contrib.auth", "Group"], ["django.contrib.auth", "Permission"]],
-        [["django.contrib.auth", "User"], ["django.contrib.auth", "Group"]],
-        [["django.contrib.auth", "User"], ["django.contrib.auth", "Permission"]],
-        [["tests.app_d", "InterAppManyToMany"], ["tests.app_b", "InterAppForeignKey"]],
-        [["tests.basic", "OutgoingManyToMany"], ["tests.basic", "Target"]],
-    ]
-    assert json.loads(context["one_to_ones"]) == [
-        [["tests.app_c", "InterAppOneToOne"], ["tests.app_b", "InterAppForeignKey"]],
-        [["tests.basic", "OutgoingOneToOne"], ["tests.basic", "Target"]],
-        [
-            ["tests.inheritance", "ConcreteSubclass2"],
-            ["tests.inheritance", "ConcreteBase"],
-        ],
-    ]
-    assert json.loads(context["inheritance"]) == [
-        [
-            ["django.contrib.auth", "AbstractUser"],
-            ["django.contrib.auth", "AbstractBaseUser"],
-        ],
-        [
-            ["django.contrib.auth", "AbstractUser"],
-            ["django.contrib.auth", "PermissionsMixin"],
-        ],
-        [["django.contrib.auth", "User"], ["django.contrib.auth", "AbstractUser"]],
-        [
-            ["django.contrib.sessions", "Session"],
-            ["django.contrib.sessions", "AbstractBaseSession"],
-        ],
-        [["tests.app_a", "InterAppSubclass"], ["django.contrib.auth", "Group"]],
-        [
-            ["tests.inheritance", "AbstractMultipleInheritance"],
-            ["tests.inheritance", "AbstractSubclass1"],
-        ],
-        [
-            ["tests.inheritance", "AbstractMultipleInheritance"],
-            ["tests.inheritance", "AbstractSubclass2"],
-        ],
-        [
-            ["tests.inheritance", "AbstractSubclass1"],
-            ["tests.inheritance", "AbstractBase"],
-        ],
-        [
-            ["tests.inheritance", "AbstractSubclass2"],
-            ["tests.inheritance", "AbstractBase"],
-        ],
-        [["tests.inheritance", "Concrete"], ["tests.inheritance", "Abstract"]],
-        [
-            ["tests.inheritance", "ConcreteInheritance"],
-            ["tests.inheritance", "ConcreteSubclass1"],
-        ],
-        [
-            ["tests.inheritance", "ConcreteInheritance"],
-            ["tests.inheritance", "ConcreteSubclass2"],
-        ],
-        [
-            ["tests.inheritance", "ConcreteSubclass1"],
-            ["tests.inheritance", "ConcreteBase"],
-        ],
-        [
-            ["tests.inheritance", "ConcreteSubclass2"],
-            ["tests.inheritance", "ConcreteBase"],
-        ],
-        [
-            ["tests.inheritance", "MixedMultipleInheritance"],
-            ["tests.inheritance", "AbstractBase"],
-        ],
-        [
-            ["tests.inheritance", "MixedMultipleInheritance"],
-            ["tests.inheritance", "ConcreteBase"],
-        ],
-        [["tests.inheritance", "SubSubclass"], ["tests.inheritance", "Subclass"]],
-        [["tests.inheritance", "Subclass"], ["tests.inheritance", "ConcreteBase"]],
-        [
-            ["tests.installed", "ConcreteInstalled"],
-            ["tests.not_installed.models", "AbstractNotInstalled"],
-        ],
-    ]
-    assert json.loads(context["proxies"]) == [
-        [["tests.app_d", "InterAppProxy"], ["tests.app_c", "InterAppOneToOne"]],
-        [["tests.proxy", "ProxyNode"], ["tests.proxy", "Target"]],
-        [["tests.proxy", "ProxyNode2"], ["tests.proxy", "Target"]],
-    ]
 
 
 def test_content():

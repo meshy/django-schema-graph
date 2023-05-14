@@ -1,9 +1,4 @@
-import django
-
 from schema_graph import schema
-
-
-DJANGO_LT_19 = django.VERSION < (1, 9, 0)
 
 
 def test_nodes():
@@ -248,6 +243,7 @@ def test_edges():
         schema.Edge(
             "django.contrib.auth.models.Permission",
             "django.contrib.contenttypes.models.ContentType",
+            tags=("foreign-key",),
         ),
         schema.Edge(
             "django.contrib.auth.models.User",
@@ -277,6 +273,7 @@ def test_edges():
         schema.Edge(
             "tests.app_b.models.InterAppForeignKey",
             "django.contrib.auth.models.User",
+            tags=("foreign-key",),
         ),
         schema.Edge(
             "tests.app_c.models.InterAppOneToOne",
@@ -296,6 +293,7 @@ def test_edges():
         schema.Edge(
             "tests.basic.models.OutgoingForeignKey",
             "tests.basic.models.Target",
+            tags=("foreign-key",),
         ),
         schema.Edge(
             "tests.basic.models.OutgoingManyToMany",
@@ -310,18 +308,22 @@ def test_edges():
         schema.Edge(
             "tests.basic.models.SelfReference",
             "tests.basic.models.SelfReference",
+            tags=("foreign-key",),
         ),
         schema.Edge(
             "tests.basic.models.ThroughTable",
             "tests.basic.models.ManyToManyWithThroughTable",
+            tags=("foreign-key",),
         ),
         schema.Edge(
             "tests.basic.models.ThroughTable",
             "tests.basic.models.Target",
+            tags=("foreign-key",),
         ),
         schema.Edge(
             "tests.generic.models.GenericFK",
             "django.contrib.contenttypes.models.ContentType",
+            tags=("foreign-key",),
         ),
         schema.Edge(
             "tests.inheritance.models.AbstractMultipleInheritance",
@@ -409,13 +411,29 @@ def test_edges():
             tags=("proxy",),
         ),
     ]
-    if DJANGO_LT_19:
-        expected.remove(
-            schema.Edge(
-                "django.contrib.sessions.models.Session",
-                "django.contrib.sessions.models.AbstractBaseSession",
-                tags=("subclass",),
-            )
-        )
 
     assert schema.get_schema().edges == tuple(expected)
+
+
+def test_groups():
+    expected = [
+        schema.Group(id="django.contrib.auth", name="django.contrib.auth"),
+        schema.Group(
+            id="django.contrib.contenttypes", name="django.contrib.contenttypes"
+        ),
+        schema.Group(id="django.contrib.sessions", name="django.contrib.sessions"),
+        schema.Group(id="django.contrib.sites", name="django.contrib.sites"),
+        schema.Group(id="tests.app_a", name="tests.app_a"),
+        schema.Group(id="tests.app_b", name="tests.app_b"),
+        schema.Group(id="tests.app_c", name="tests.app_c"),
+        schema.Group(id="tests.app_d", name="tests.app_d"),
+        schema.Group(id="tests.basic", name="tests.basic"),
+        schema.Group(id="tests.generic", name="tests.generic"),
+        schema.Group(id="tests.inheritance", name="tests.inheritance"),
+        schema.Group(id="tests.installed", name="tests.installed"),
+        schema.Group(
+            id="tests.not_installed.models", name="tests.not_installed.models"
+        ),
+        schema.Group(id="tests.proxy", name="tests.proxy"),
+    ]
+    assert schema.get_schema().groups == tuple(expected)

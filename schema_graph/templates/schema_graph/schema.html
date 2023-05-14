@@ -3,14 +3,17 @@
   <head>
     <script defer src='{% static "schema_graph/main.js" %}'></script>
     <script>
-      window.abstractModels = {{ abstract_models|safe }};
-      window.models = {{ models|safe }};
-      window.connections = {
-        foreignkey: {{ foreign_keys|safe }},
-        many2many: {{ many_to_manys|safe }},
-        one2one: {{ one_to_ones|safe }},
-        subclass: {{ inheritance|safe }},
-        proxy: {{ proxies|safe }},
+      window.schema = {{ schema|safe }};
+      window.edgeModifiers = {
+        "one-to-one": {arrows: {middle: {enabled: true, scaleFactor: 0.9, type: 'bar'}}},
+        "subclass": {dashes: true, arrows: 'to', label: 'Subclass'},
+        "proxy": {dashes: true, arrows: 'to', label: 'Proxy'},
+        "many-to-many": {arrows: 'from;to'},
+        "foreign-key": {arrows: 'to'},
+      };
+      window.nodeModifiers = {
+        "abstract": {shapeProperties: {borderDashes: true}},
+        "proxy": {color: {background: 'white'}},
       };
     </script>
     <style>

@@ -1,17 +1,14 @@
 <template>
-  <div class="main-app">
-    <v-app>
-      <GraphEditor
-        :inactiveColor=inactiveColor
-        :loaded=loaded
-      />
-      <Graph
-        class="graph"
-        :completeLoad=completeLoad
-      />
-      <vue-progress-bar></vue-progress-bar>
-    </v-app>
-  </div>
+  <v-app>
+    <GraphEditor
+      :loaded=loaded
+    />
+    <Graph
+      class="graph"
+      :completeLoad=completeLoad
+    />
+    <vue-progress-bar></vue-progress-bar>
+  </v-app>
 </template>
 
 <style>
@@ -53,12 +50,11 @@ export default {
   },
   data() {
     let loaded = false;
-    graphData.setup();
+    graphData.setup('rgba(0, 0, 0, 0.54)');
 
     return {
-      inactiveColor: 'rgba(0, 0, 0, 0.54)',
       loaded,
-    };
+    }
   },
 };
 </script>
