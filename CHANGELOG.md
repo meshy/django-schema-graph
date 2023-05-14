@@ -7,6 +7,8 @@ Version numbers should follow https://semver.org/spec/v2.0.0.html
 
 ## [Unreleased]
 
+## [3.0.0] - 2023-05-14
+
 ### Backwards incompatible
 
 - Dropped support for Django < 3.2.
