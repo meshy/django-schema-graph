@@ -10,7 +10,7 @@
       <v-navigation-drawer app temporary v-model="sidebar">
 
         <v-toolbar flat>
-          <v-tooltip bottom attach=".main-app">
+          <v-tooltip bottom>
             <template v-slot:activator="{ on }">
               <v-btn small v-on="on" @click="hideAll">
                 <v-icon>mdi-eye-off</v-icon>
@@ -19,7 +19,7 @@
             <span>Hide all</span>
           </v-tooltip>
           <v-spacer></v-spacer>
-          <v-tooltip bottom attach=".main-app">
+          <v-tooltip bottom>
             <template v-slot:activator="{ on }">
               <v-btn small v-on="on" @click="showAll">
                 <v-icon>mdi-eye</v-icon>
@@ -28,7 +28,7 @@
             <span>Show all</span>
           </v-tooltip>
           <v-spacer></v-spacer>
-          <v-tooltip bottom attach=".main-app">
+          <v-tooltip bottom>
             <template v-slot:activator="{ on }">
               <v-btn small v-on="on" @click="collapseAll">
                 <v-icon>mdi-arrow-collapse-all</v-icon>
@@ -37,7 +37,7 @@
             <span>Collapse all</span>
           </v-tooltip>
           <v-spacer></v-spacer>
-          <v-tooltip bottom attach=".main-app">
+          <v-tooltip bottom>
             <template v-slot:activator="{ on }">
               <v-btn small v-on="on" @click="expandAll">
                 <v-icon>mdi-arrow-expand-all</v-icon>
