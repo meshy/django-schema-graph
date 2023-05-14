@@ -179,6 +179,7 @@ export default {
     toggleGroupEnabled: function (groupID) {
       if (graphData.isGroupEnabled(groupID)) {
         graphData.disableGroup(groupID);
+        this.isOpen[groupID] = false;
       } else {
         graphData.enableGroup(groupID);
       }
@@ -186,6 +187,7 @@ export default {
     toggleGroupExpanded: function (groupID) {
       if (graphData.isGroupExpanded(groupID)) {
         graphData.collapseGroup(groupID);
+        this.isOpen[groupID] = false;
       } else {
         graphData.expandGroup(groupID);
       }
