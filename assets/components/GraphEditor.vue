@@ -126,7 +126,7 @@ export default {
     return {
       sidebar: false,
       graphData,
-      isOpen: Object.fromEntries(graphData.groups.map((group) => [group.id, true]))
+      isOpen: Object.fromEntries(graphData.groups.map((group) => [group.id, false]))
     }
   },
   methods: {
