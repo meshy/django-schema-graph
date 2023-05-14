@@ -4,6 +4,17 @@
     <script defer src='{% static "schema_graph/main.js" %}'></script>
     <script>
       window.schema = {{ schema|safe }};
+      window.edgeModifiers = {
+        "one-to-one": {arrows: {middle: {enabled: true, scaleFactor: 0.9, type: 'bar'}}},
+        "subclass": {dashes: true, arrows: 'to', label: 'Subclass'},
+        "proxy": {dashes: true, arrows: 'to', label: 'Proxy'},
+        "many-to-many": {arrows: 'from;to'},
+        "foreign-key": {arrows: 'to'},
+      };
+      window.nodeModifiers = {
+        "abstract": {shapeProperties: {borderDashes: true}},
+        "proxy": {color: {background: 'white'}},
+      };
     </script>
     <style>
       html {

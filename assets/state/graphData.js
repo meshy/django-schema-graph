@@ -56,17 +56,6 @@ export default {
   activeNodeIDs: new Set(),
   activeGroupIDs: new Set(),
   collapsedGroupIDs: new Set(),
-  edgeModifiers: {
-    "one-to-one": {arrows: {middle: {enabled: true, scaleFactor: 0.9, type: 'bar'}}},
-    "subclass": {dashes: true, arrows: 'to', label: 'Subclass'},
-    "proxy": {dashes: true, arrows: 'to', label: 'Proxy'},
-    "many-to-many": {arrows: 'from;to'},
-    "foreign-key": {arrows: 'to'},
-  },
-  nodeModifiers: {
-    "abstract": {shapeProperties: {borderDashes: true}},
-    "proxy": {color: {background: 'white'}},
-  },
 
   // Toolbar.
   showAll: function () {
@@ -183,6 +172,8 @@ export default {
   },
   setup: function(inactiveColor) {
     this.inactiveColor = inactiveColor;
+    this.nodeModifiers = window.nodeModifiers;
+    this.edgeModifiers = window.edgeModifiers;
 
     // Store group data for later.
     this.allGroups = {};
