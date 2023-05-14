@@ -17,9 +17,29 @@ const makeGroupNode = (group) => {
 };
 
 const makeNode = (node, background, border, nodeModifiers) => {
+  let title = `
+    <dl style="display: grid; grid-template-columns: auto auto; grid-auto-columns: 1fr; gap: 5px .5em; align-items: baseline;">
+      <dt style="text-align: right">name:</dt>
+        <dd><code style="border: 1px solid ${border}; background-color: ${background};">
+          ${node.name}
+        </code></dd>
+      <dt style="text-align: right">group:</dt>
+        <dd><code style="border: 1px solid ${border}; background-color: ${background};">
+          ${node.group}
+        </code></dd>
+  `;
+  if (node.tags.length) {
+    title += '<dt style="text-align: right">tags:</dt><dd>';
+    for (let tag of node.tags) {
+      title += `<code style="border: 1px solid #999;">${tag}</code> `;
+    }
+    title += '</dd>';
+  }
+  title += '</dl>';
   let nodeData = {
     id: node.id,
     label: node.name,
+    title: title,
     color: {
       background,
       border,
