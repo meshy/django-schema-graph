@@ -7,6 +7,8 @@ Version numbers should follow https://semver.org/spec/v2.0.0.html
 
 ## [Unreleased]
 
+## [3.1.0] - 2023-05-15
+
 ### Added
 
 - Hovering over a node now shows a tooltip with its name, group, and tags.
