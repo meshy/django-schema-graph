@@ -53,6 +53,7 @@
             :key="group.id"
             v-model:value="isOpen[group.id]"
             :color="group.hardColor"
+            :title="group.label"
           >
 
             <template v-slot:activator>
@@ -60,27 +61,30 @@
                 <v-list-item-title
                   v-text="group.label"
                   v-bind:style="{color: group.hardColor}"
-                  :title="group.label"
                 ></v-list-item-title>
               </v-list-item-content>
               <v-icon
                 v-if="graphData.isGroupEnabled(group.id)"
                 v-bind:style="{color: group.hardColor}"
                 @click.stop="toggleGroupEnabled(group.id)"
+                title="Hide group"
               >mdi-eye-outline</v-icon>
               <v-icon v-else
                 v-bind:style="{color: group.hardColor}"
                 @click.stop="toggleGroupEnabled(group.id)"
+                title="Show group"
               >mdi-eye-off-outline</v-icon>
 
               <v-icon
                 v-if="graphData.isGroupExpanded(group.id)"
                 v-bind:style="{color: group.hardColor}"
                 @click.stop="toggleGroupExpanded(group.id)"
+                title="Collapse group"
               > mdi-arrow-expand-vertical </v-icon>
               <v-icon v-else
                 v-bind:style="{color: group.hardColor}"
                 @click.stop="toggleGroupExpanded(group.id)"
+                title="Expand group"
               > mdi-arrow-collapse-vertical </v-icon>
             </template>
             <v-list-item dense
@@ -88,14 +92,14 @@
               :key="nodeID"
               :disabled="!graphData.isGroupEnabled(group.id)"
               @click.stop="toggleNodeEnabled(nodeID)"
+              :title="graphData.allNodes[nodeID].name"
             >
               <v-list-item-content>
                 <v-list-item-title
                   v-text="graphData.allNodes[nodeID].name"
-                  :title="graphData.allNodes[nodeID].name"
                 />
               </v-list-item-content>
-              <v-list-item-action>
+              <v-list-item-action title="Show/hide">
                 <v-icon
                   v-if="graphData.isNodeEnabled(nodeID)"
                   :color="group.hardColor"
