@@ -11,10 +11,20 @@ Version numbers should follow https://semver.org/spec/v2.0.0.html
 
 - Dropped support for Django < 3.2.
 - Dropped support for Python < 3.10.
+- Data format returned from `schema_graph.schema.get_schema` has been overhauled.
+- Template context now only includes the new schema data format.
+- The JS front-end has been rewritten to handle the new format.
+
 
 ### Changed
 
 - Main "App" Vue component refactored into smaller component files.
+- The JS code now tries to refer to "nodes" and "edges", not "models" and "apps".
+- More options have been added to the sidebar to offer finer control.
+  This has resulted in the sidebar getting wider.
+- The list of groups in the sidebar is now collapsed by default.
+- More items in the sidebar show tooltips on hover (using the title HTML attribute).
+- Graph nodes representing Proxy models now appear with a white background.
 
 
 ## [2.2.1] - 2022-10-26
