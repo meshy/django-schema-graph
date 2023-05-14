@@ -51,7 +51,7 @@
           <v-list-group
             v-for="group in graphData.groups"
             :key="group.id"
-            :value="graphData.isGroupExpanded(group.id) && graphData.isGroupEnabled(group.id)"
+            v-model:value="isOpen[group.id]"
             :color="group.hardColor"
           >
 
@@ -126,6 +126,7 @@ export default {
     return {
       sidebar: false,
       graphData,
+      isOpen: Object.fromEntries(graphData.groups.map((group) => [group.id, true]))
     }
   },
   methods: {
