@@ -1,16 +1,14 @@
 <template>
-  <div class="main-app">
-    <v-app>
-      <GraphEditor
-        :loaded=loaded
-      />
-      <Graph
-        class="graph"
-        :completeLoad=completeLoad
-      />
-      <vue-progress-bar></vue-progress-bar>
-    </v-app>
-  </div>
+  <v-app>
+    <GraphEditor
+      :loaded=loaded
+    />
+    <Graph
+      class="graph"
+      :completeLoad=completeLoad
+    />
+    <vue-progress-bar></vue-progress-bar>
+  </v-app>
 </template>
 
 <style>
