@@ -3,15 +3,6 @@
   <head>
     <script defer src='{% static "schema_graph/main.js" %}'></script>
     <script>
-      window.abstractModels = {{ abstract_models|safe }};
-      window.models = {{ models|safe }};
-      window.connections = {
-        foreignkey: {{ foreign_keys|safe }},
-        many2many: {{ many_to_manys|safe }},
-        one2one: {{ one_to_ones|safe }},
-        subclass: {{ inheritance|safe }},
-        proxy: {{ proxies|safe }},
-      };
       window.schema = {{ schema|safe }};
     </script>
     <style>

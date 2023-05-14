@@ -1,6 +1,3 @@
-import json
-from collections import defaultdict
-
 from cattrs.preconf.json import make_converter as make_json_converter
 from django.conf import settings
 from django.http import Http404
@@ -31,53 +28,6 @@ class Schema(TemplateView):
 
     def get_context_data(self, **kwargs):
         schema = get_schema()
-
-        old_ids = {node.id: (node.group, node.name) for node in schema.nodes}
-        abstract_models = defaultdict(list)
-        for node in schema.nodes:
-            if "abstract" in node.tags:
-                abstract_models[node.group].append(node.name)
-        models = defaultdict(list)
-        for node in schema.nodes:
-            if "abstract" not in node.tags:
-                models[node.group].append(node.name)
-        foreign_keys = [
-            (old_ids[edge.source], old_ids[edge.target])
-            for edge in schema.edges
-            if "foreign-key" in edge.tags
-        ]
-        many_to_manys = [
-            (old_ids[edge.source], old_ids[edge.target])
-            for edge in schema.edges
-            if "many-to-many" in edge.tags
-        ]
-        one_to_ones = [
-            (old_ids[edge.source], old_ids[edge.target])
-            for edge in schema.edges
-            if "one-to-one" in edge.tags
-        ]
-        inheritance = [
-            (old_ids[edge.source], old_ids[edge.target])
-            for edge in schema.edges
-            if "subclass" in edge.tags
-        ]
-        proxies = [
-            (old_ids[edge.source], old_ids[edge.target])
-            for edge in schema.edges
-            if "proxy" in edge.tags
-        ]
-
-        kwargs.update(
-            {
-                "abstract_models": json.dumps(abstract_models),
-                "models": json.dumps(models),
-                "foreign_keys": json.dumps(foreign_keys),
-                "many_to_manys": json.dumps(many_to_manys),
-                "one_to_ones": json.dumps(one_to_ones),
-                "inheritance": json.dumps(inheritance),
-                "proxies": json.dumps(proxies),
-            }
-        )
         json_converter = make_json_converter()
         kwargs["schema"] = json_converter.dumps(schema)
         return super().get_context_data(**kwargs)
